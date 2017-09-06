@@ -1,33 +1,33 @@
 package com.brcd.bean;
 
 public class TbBusiness {
-    private Integer businessId;//业务Id(每个商户对应一个)
+    private Integer businessId;
 
-    private Integer wechatPay;//是否开通线下支付(0/1)--1代表开通
+    private Integer wechatPay;
 
-    private Integer wechatRate;//费率(代表万分之几)例如78 代表:百分之0.78
+    private Integer wechatRate;
 
-    private Integer wechatT0;//是否开通t+0(0/1)--1代表开通
+    private Integer wechatT0;
 
-    private String wechatIndustry;//所属行业
+    private String wechatIndustry;
 
-    private String wechatType;//微信账号类型
+    private String wechatType;
 
-    private String wechatNum;//微信账号
+    private String wechatNum;
 
-    private Integer alipay;//支付宝是否开通(0/1)--1代表开通
+    private Integer alipay;
 
-    private Integer aliRate;//支付宝费率
+    private Integer aliRate;
 
-    private Integer aliT0;//支付宝t+0状态(0/1)--1代表开通
+    private Integer aliT0;
 
-    private String aliIndustry;//支付宝账号所属行业
+    private String aliIndustry;
 
-    private String aliType;//支付宝账号类型
+    private String aliType;
 
-    private String alipayNum;//支付宝账号
+    private String alipayNum;
 
-    private String businessUid;//商户外键
+    private String businessUid;
 
     public String getBusinessUid() {
         return businessUid;
@@ -141,23 +141,5 @@ public class TbBusiness {
         this.alipayNum = alipayNum == null ? null : alipayNum.trim();
     }
 
-    @Override
-    public String toString() {
-        return "TbBusiness{" +
-                "businessId=" + businessId +
-                ", wechatPay=" + wechatPay +
-                ", wechatRate=" + wechatRate +
-                ", wechatT0=" + wechatT0 +
-                ", wechatIndustry='" + wechatIndustry + '\'' +
-                ", wechatType='" + wechatType + '\'' +
-                ", wechatNum='" + wechatNum + '\'' +
-                ", alipay=" + alipay +
-                ", aliRate=" + aliRate +
-                ", aliT0=" + aliT0 +
-                ", aliIndustry='" + aliIndustry + '\'' +
-                ", aliType='" + aliType + '\'' +
-                ", alipayNum='" + alipayNum + '\'' +
-                ", businessUid='" + businessUid + '\'' +
-                '}';
-    }
+
 }

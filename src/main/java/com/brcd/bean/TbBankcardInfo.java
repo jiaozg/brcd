@@ -1,25 +1,25 @@
 package com.brcd.bean;
 
 public class TbBankcardInfo {
-    private Integer bankId;//银行卡信息主键
+    private Integer bankId;
 
-    private String bankcardType;//银行卡账户类型
+    private String bankcardType;
 
-    private String bankcardName;//账户户名
+    private String bankcardName;
 
-    private String bankcardNum;//银行卡卡号
+    private String bankcardNum;
 
-    private String bankName;//开户银行名称
+    private String bankName;
 
-    private String bankProvince;//开户行所在省
+    private String bankProvince;
 
-    private String bankCity;//开户行所在市
+    private String bankCity;
 
-    private String bankDetailed;//支行
+    private String bankDetailed;
 
-    private String bandContact;//银联点
+    private String bandContact;
 
-    private String businessUid;//商户Id
+    private String businessUid;
 
     public String  getBusinessUid() {
         return businessUid;
@@ -101,19 +101,5 @@ public class TbBankcardInfo {
         this.bandContact = bandContact == null ? null : bandContact.trim();
     }
 
-    @Override
-    public String toString() {
-        return "TbBankcardInfo{" +
-                "bankId=" + bankId +
-                ", bankcardType='" + bankcardType + '\'' +
-                ", bankcardName='" + bankcardName + '\'' +
-                ", bankcardNum='" + bankcardNum + '\'' +
-                ", bankName='" + bankName + '\'' +
-                ", bankProvince='" + bankProvince + '\'' +
-                ", bankCity='" + bankCity + '\'' +
-                ", bankDetailed='" + bankDetailed + '\'' +
-                ", bandContact='" + bandContact + '\'' +
-                ", businessUid='" + businessUid + '\'' +
-                '}';
-    }
+
 }
