@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.TbBusinessMapper">
+    <!--添加开通业务信息-->
+    <insert id="insertTbBusiness" parameterType="com.brcd.bean.TbBusiness" >
+        INSERT INTO tb_business (business_id, wechat_pay, wechat_rate,
+        wechat_t_0, wechat_industry, wechat_type,
+        wechat_num, alipay, ali_rate,
+        ali_t_0, ali_industry, ali_type,
+        alipay_num, business_uid)
+        VALUES (#{businessId}, #{wechatPay}, #{wechatRate},
+        #{wechatT0}, #{wechatIndustry}, #{wechatType},
+        #{wechatNum}, #{alipay}, #{aliRate},
+        #{aliT0}, #{aliIndustry}, #{aliType},
+        #{alipayNum}, #{businessUid})
+    </insert>
+</mapper>

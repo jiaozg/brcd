@@ -1,5 +1,6 @@
 package com.brcd.mapper;
 
+import com.brcd.bean.TbBusinessUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TbBusinessUserMapper {
 
+    //添加商户信息
+    void insertBusinessUser(TbBusinessUser businessUser);
 
 }

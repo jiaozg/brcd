@@ -1,5 +1,6 @@
 package com.brcd.mapper;
 
+import com.brcd.bean.TbBusiness;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TbBusinessMapper {
 
+    /*
+     * 添加开通业务数据信息
+     */
+    void insertTbBusiness(TbBusiness business);
 }
