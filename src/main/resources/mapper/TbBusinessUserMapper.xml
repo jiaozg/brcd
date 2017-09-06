@@ -52,39 +52,35 @@
 
     private String registerLicensePicture; 开户许可证照片
 
-    private Integer businessId;
-
-    private Integer bankId;
-
     private TbBankcardInfo tbBankcardInfo;
 
     private  TbAgent tbAgent;
     -->
 <!--修改商户信息-->
-<update id="updateBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+<update id="updateTbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
     UPDATE  tb_business_user SET
-    businessUserType=#{businessUserType} ,
-    manageName=#{manageName},
-    businessUsername=#{businessUsername},
-    legalPeopleName=#{legalPeopleName},
-    legalPeopleIdentityCard=#{legalPeopleIdentityCard},
-    contactPeople=#{contactPeople},
-    contactPhone=#{contactPhone},
-    contactMail=#{contactMail},
-    servicePhone=#{servicePhone},
-    manageAddress=#{manageAddress},
-    manageProvince=#{manageProvince},
-    manageCity=#{manageCity},
-    manageDistrict=#{manageDistrict},
-    registerAddress=#{registerAddress},
-    identityCardFront=#{identityCardFront},
-    identityCardReverse=#{identityCardReverse},
-    identityCardHand=#{identityCardHand},
-    bankCardFront=#{bankCardFront},
-    businessLicensePicture=#{businessLicensePicture},
-    doorPicture=#{doorPicture},
-    registerLicensePicture=#{registerLicensePicture}
-    WHERE businessUid=#{businessUid};
+    business_user_type=#{businessUserType} ,
+    manage_name=#{manageName},
+    business_username=#{businessUsername},
+    legal_people_name=#{legalPeopleName},
+    legal_people_identity_card=#{legalPeopleIdentityCard},
+    contact_people=#{contactPeople},
+    contact_phone=#{contactPhone},
+    contact_mail=#{contactMail},
+    service_phone=#{servicePhone},
+    manage_address=#{manageAddress},
+    manage_province=#{manageProvince},
+    manage_city=#{manageCity},
+    manage_district=#{manageDistrict},
+    register_address=#{registerAddress},
+    identity_card_front=#{identityCardFront},
+    identity_card_reverse=#{identityCardReverse},
+    identity_card_hand=#{identityCardHand},
+    bank_card_front=#{bankCardFront},
+    business_license_picture=#{businessLicensePicture},
+    door_picture=#{doorPicture},
+    register_license_picture=#{registerLicensePicture}
+    WHERE business_uid=#{businessUid}
 
 </update>
 
