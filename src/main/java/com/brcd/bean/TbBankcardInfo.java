@@ -22,8 +22,9 @@ public class TbBankcardInfo {
 
     private String bandContact;
 
-   /* public Integer getBankId() {
-        return bankId;
+
+
+      /*  return bankId;
     }
 
     public void setBankId(Integer bankId) {
