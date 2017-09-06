@@ -1,20 +1,18 @@
 package com.brcd.mapper;
 
-import com.brcd.bean.TbBusiness;
+import com.brcd.bean.TbBankcardInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
- * 业务类持久层
  * Created by admin on 2017/9/6.
  */
 @Mapper
 @Repository
-public interface TbBusinessMapper {
+public interface TbBankcardInfoMapper {
     /**
-     * 商户业务修改
-     * @param tbBusiness
+     * 银行卡信息修改
+     * @param tbBankcardInfo
      */
-    void updateTbBusiness(TbBusiness tbBusiness);
-
+    void updateTbBankcardInfo(TbBankcardInfo tbBankcardInfo);
 }
