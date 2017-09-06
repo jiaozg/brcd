@@ -1,9 +1,11 @@
 package com.brcd.bean;
 
 
+import lombok.Data;
+
+
 import java.util.Date;
 
-import lombok.Data;
 
 @Data
 public class TbBusinessUser {
@@ -65,4 +67,4 @@ public class TbBusinessUser {
 
     private  TbBusiness tbBusiness;
 
-}
+
