@@ -3,31 +3,32 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
+
 <!--修改商户信息-->
-<update id="updateBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+<update id="updateTbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
     UPDATE  tb_business_user SET
-    businessUserType=#{businessUserType} ,
-    manageName=#{manageName},
-    businessUsername=#{businessUsername},
-    legalPeopleName=#{legalPeopleName},
-    legalPeopleIdentityCard=#{legalPeopleIdentityCard},
-    contactPeople=#{contactPeople},
-    contactPhone=#{contactPhone},
-    contactMail=#{contactMail},
-    servicePhone=#{servicePhone},
-    manageAddress=#{manageAddress},
-    manageProvince=#{manageProvince},
-    manageCity=#{manageCity},
-    manageDistrict=#{manageDistrict},
-    registerAddress=#{registerAddress},
-    identityCardFront=#{identityCardFront},
-    identityCardReverse=#{identityCardReverse},
-    identityCardHand=#{identityCardHand},
-    bankCardFront=#{bankCardFront},
-    businessLicensePicture=#{businessLicensePicture},
-    doorPicture=#{doorPicture},
-    registerLicensePicture=#{registerLicensePicture}
-    WHERE businessUid=#{businessUid};
+    business_user_type=#{businessUserType} ,
+    manage_name=#{manageName},
+    business_username=#{businessUsername},
+    legal_people_name=#{legalPeopleName},
+    legal_people_identity_card=#{legalPeopleIdentityCard},
+    contact_people=#{contactPeople},
+    contact_phone=#{contactPhone},
+    contact_mail=#{contactMail},
+    service_phone=#{servicePhone},
+    manage_address=#{manageAddress},
+    manage_province=#{manageProvince},
+    manage_city=#{manageCity},
+    manage_district=#{manageDistrict},
+    register_address=#{registerAddress},
+    identity_card_front=#{identityCardFront},
+    identity_card_reverse=#{identityCardReverse},
+    identity_card_hand=#{identityCardHand},
+    bank_card_front=#{bankCardFront},
+    business_license_picture=#{businessLicensePicture},
+    door_picture=#{doorPicture},
+    register_license_picture=#{registerLicensePicture}
+    WHERE business_uid=#{businessUid}
 
 </update>
 
@@ -55,4 +56,36 @@
         #{startTime}, #{endTime}, #{businessUserKey})
     </insert>
 
+    <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
+        <id column="business_uid" property="businessUid"></id>
+        <result column="manage_name" property="manageName"></result>
+    </resultMap>
+
+    <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user b where 1=1
+        <if test="businessUid != null">
+            and b.business_uid = #{businessUid}
+        </if>
+        <if test="businessUserType != null">
+            and b.business_user_type = #{businessUserType}
+        </if>
+        <if test="manageName != null">
+            and b.manage_name LIKE '%${manageName}%'
+        </if>
+        <if test="businessUserStatus != null">
+            and business_user_status = #{businessUserStatus}
+        </if>
+        <if test="startTime != null">
+            and b.start_time > #{startTime}
+        </if>
+        <if test="endTime != null">
+            and b.end_time &lt; #{endTime}
+        </if>
+        <if test="legalPeopleName != null">
+            and legal_people_name like '%${legalPeopleName}%'
+        </if>
+        <if test="contactPhone != null">
+            and contact_phone = #{contactPhone}
+        </if>
+    </select>
 </mapper>
