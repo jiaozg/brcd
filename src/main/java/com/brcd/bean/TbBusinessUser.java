@@ -1,5 +1,8 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
+@Data
 public class TbBusinessUser {
     private Long businessUid;
 
@@ -53,7 +56,7 @@ public class TbBusinessUser {
 
     private Integer bankId;
 
-    public Long getBusinessUid() {
+    /*public Long getBusinessUid() {
         return businessUid;
     }
 
@@ -259,5 +262,5 @@ public class TbBusinessUser {
 
     public void setBankId(Integer bankId) {
         this.bankId = bankId;
-    }
+    }*/
 }

@@ -1,5 +1,8 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
+@Data
 public class TbBusiness {
     private Integer businessId;
 
@@ -27,7 +30,7 @@ public class TbBusiness {
 
     private String alipayNum;
 
-    public Integer getBusinessId() {
+   /* public Integer getBusinessId() {
         return businessId;
     }
 
@@ -129,5 +132,5 @@ public class TbBusiness {
 
     public void setAlipayNum(String alipayNum) {
         this.alipayNum = alipayNum == null ? null : alipayNum.trim();
-    }
+    }*/
 }

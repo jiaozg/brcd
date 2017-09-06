@@ -1,5 +1,8 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
+@Data
 public class TbAreaDictionary {
     private String arceName;
 
@@ -9,7 +12,7 @@ public class TbAreaDictionary {
 
     private Integer upArceOde;
 
-    public String getArceName() {
+  /*  public String getArceName() {
         return arceName;
     }
 
@@ -39,5 +42,5 @@ public class TbAreaDictionary {
 
     public void setUpArceOde(Integer upArceOde) {
         this.upArceOde = upArceOde;
-    }
+    }*/
 }
