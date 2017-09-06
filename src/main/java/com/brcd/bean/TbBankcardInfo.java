@@ -19,6 +19,16 @@ public class TbBankcardInfo {
 
     private String bandContact;
 
+    private String businessUid;
+
+    public String  getBusinessUid() {
+        return businessUid;
+    }
+
+    public void setBusinessUid(String businessUid) {
+        this.businessUid = businessUid;
+    }
+
     public Integer getBankId() {
         return bankId;
     }

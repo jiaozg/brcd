@@ -3,6 +3,7 @@ package com.brcd.bean;
 
  */
 public class TbAgent {
+
     private Long id;
 
     private Long agentNumber;
