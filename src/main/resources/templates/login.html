@@ -1,43 +1,90 @@
-<head>
+<head xmlns:th="http://www.w3.org/1999/xhtml">
     <style>
         /* Loading Spinner */
-        .spinner{margin:0;width:70px;height:18px;margin:-35px 0 0 -9px;position:absolute;top:50%;left:50%;text-align:center}.spinner > div{width:18px;height:18px;background-color:#333;border-radius:100%;display:inline-block;-webkit-animation:bouncedelay 1.4s infinite ease-in-out;animation:bouncedelay 1.4s infinite ease-in-out;-webkit-animation-fill-mode:both;animation-fill-mode:both}.spinner .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.spinner .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bouncedelay{0%,80%,100%{-webkit-transform:scale(0.0)}40%{-webkit-transform:scale(1.0)}}@keyframes bouncedelay{0%,80%,100%{transform:scale(0.0);-webkit-transform:scale(0.0)}40%{transform:scale(1.0);-webkit-transform:scale(1.0)}}
+        .spinner {
+            margin: 0;
+            width: 70px;
+            height: 18px;
+            margin: -35px 0 0 -9px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center
+        }
+
+        .spinner > div {
+            width: 18px;
+            height: 18px;
+            background-color: #333;
+            border-radius: 100%;
+            display: inline-block;
+            -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+            animation: bouncedelay 1.4s infinite ease-in-out;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both
+        }
+
+        .spinner .bounce1 {
+            -webkit-animation-delay: -.32s;
+            animation-delay: -.32s
+        }
+
+        .spinner .bounce2 {
+            -webkit-animation-delay: -.16s;
+            animation-delay: -.16s
+        }
+
+        @-webkit-keyframes bouncedelay {
+            0%, 80%, 100% {
+                -webkit-transform: scale(0.0)
+            }
+            40% {
+                -webkit-transform: scale(1.0)
+            }
+        }
+
+        @keyframes bouncedelay {
+            0%, 80%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0)
+            }
+            40% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0)
+            }
+        }
     </style>
     <meta charset="UTF-8">
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <!--[if IE]>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <title> 服务商管理平台 </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <link rel="stylesheet" type="text/css" href="../static/assets/bootstrap/css/bootstrap.css">
-
-    <link rel="stylesheet" type="text/css" href="../static/assets/helpers/backgrounds.css">
-    <link rel="stylesheet" type="text/css" href="../static/assets/helpers/utils.css">
-
-
+    <link rel="stylesheet" type="text/css" href="../static/assets/bootstrap/css/bootstrap.css"
+          th:href="@{assets/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" href="../static/assets/helpers/backgrounds.css"
+          th:href="@{/assets/helpers/backgrounds.css}">
+    <link rel="stylesheet" type="text/css" href="../static/assets/helpers/utils.css"
+          th:href="@{/assets/helpers/utils.css}">
     <!-- JS Core -->
-
-    <script type="text/javascript" src="../static/assets/js-core/jquery-core.js"></script>
-    <script type="text/javascript" src="../static/assets/js-core/jquery-ui-core.js"></script>
-    <script type="text/javascript" src="../static/assets/js-core/jquery-cookie.js"></script>
-
-
-
-
-
+    <script type="text/javascript" src="../static/assets/js-core/jquery-core.js"
+            th:src="@{assets/js-core/jquery-core.js}"></script>
+    <script type="text/javascript" src="../static/assets/js-core/jquery-ui-core.js"
+            th:src="@{/assets/js-core/jquery-ui-core.js}"></script>
+    <script type="text/javascript" src="../static/assets/js-core/jquery-cookie.js"
+            th:src="@{/assets/js-core/jquery-cookie.js}"></script>
     <script type="text/javascript">
-        $(window).load(function(){
-            setTimeout(function() {
-                $('#loading').fadeOut( 400, "linear" );
+        $(window).load(function () {
+            setTimeout(function () {
+                $('#loading').fadeOut(400, "linear");
             }, 300);
         });
-        $(function(){
+        $(function () {
             if (self != top) {
-                top.window.location = "/a/login";
+                top.window.location = "AgentLogin";
             }
         });
     </script>
-
 
 
 </head>
@@ -52,7 +99,7 @@
 
 <style type="text/css">
 
-    html,body {
+    html, body {
         height: 100%;
         background: #fff;
     }
@@ -60,9 +107,13 @@
 </style>
 <div class="center-vertical">
     <div class="center-content row">
-        <img class="mrg25B center-margin radius-all-100 display-block" src="../static/assets/image-resources/login-logo.png" alt="">
-        <form action="/a/login" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin" method="post">
-            <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">服务商管理平台 <span class="opacity-80">v1.0</span></h3>
+        <img class="mrg25B center-margin radius-all-100 display-block"
+             src="../static/assets/image-resources/login-logo.png" th:src="@{/assets/image-resources/login-logo.png}"
+             alt="">
+        <form action="AgentLogin" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin"
+              method="post">
+            <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">服务商管理平台 <span class="opacity-80">v1.0</span>
+            </h3>
             <div id="login-form" class="content-box bg-default">
                 <div class="content-box-wrapper pad20A">
 
@@ -71,7 +122,7 @@
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-envelope-o"></i>
                             </span>
-                            <input type="text" class="form-control" id="userName" name="username" placeholder="用户名">
+                            <input type="text" class="form-control" id="userName" name="account" placeholder="用户名">
                         </div>
                     </div>
                     <div class="form-group">
@@ -79,18 +130,20 @@
                             <span class="input-group-addon addon-inside bg-gray">
                                 <i class="glyph-icon icon-unlock-alt"></i>
                             </span>
-                            <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="密码">
+                            <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                                   placeholder="密码">
                         </div>
                     </div>
-
                     <div class="header">
-                        <div id="messageBox" class="alert alert-error hide"><button data-dismiss="alert" class="close">×</button>
+                        <div id="messageBox" class="alert alert-error hide">
+                            <button data-dismiss="alert" class="close">×</button>
                             <label id="loginError" class="error"></label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <!--<button type="submit" class="btn btn-block btn-primary">登 录</button>-->
-                        <a href="home/home.html" class="btn btn-block btn-primary">登 录</a>
+                        <button type="submit" class="btn btn-block btn-primary">登 录</button>
+                        <!--<a href="AgentLogin" class="btn btn-block btn-primary">登 录</a>-->
+                        <center><span th:text="${errorMsg}" style="color: red;"></span></center>
                     </div>
                     <div class="row">
                         <div class="checkbox-primary col-md-6" style="height: 20px;">
@@ -100,7 +153,8 @@
                             </label>
                         </div>
                         <div class="text-right col-md-6">
-                            <a href="#" class="switch-button" switch-target="#login-forgot" switch-parent="#login-form" title="Recover password">忘记密码?</a>
+                            <a href="#" class="switch-button" switch-target="#login-forgot" switch-parent="#login-form"
+                               title="Recover password">忘记密码?</a>
                         </div>
                     </div>
                 </div>
