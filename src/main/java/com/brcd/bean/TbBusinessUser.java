@@ -1,8 +1,12 @@
 package com.brcd.bean;
 
+
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
+
 public class TbBusinessUser {
     private String businessUid;
 
@@ -52,9 +56,26 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
+    private Integer businessId;
+
+
+    private Integer bankId;
+    private Integer businessUserStatus;
+    private Date startTime;
+    private Date endTime;
+
+  
+
+
 
     private TbBankcardInfo tbBankcardInfo;
 
+    private  TbBusiness tbBusiness;
 
- 
+    
+
+    
+
+
+
 }
