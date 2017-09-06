@@ -1,7 +1,11 @@
 package com.brcd.bean;
-/*
 
+import lombok.Data;
+
+/*
+使用lombok
  */
+@Data
 public class TbAgent {
 
     private Long id;
@@ -82,7 +86,7 @@ public class TbAgent {
 
     private String remark;
 
-    public Long getId() {
+    /*public Long getId() {
         return id;
     }
 
@@ -392,5 +396,5 @@ public class TbAgent {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
+    }*/
 }

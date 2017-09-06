@@ -1,7 +1,9 @@
 package com.brcd.bean;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class TbOrder {
     private String orderNum;
 
@@ -23,7 +25,7 @@ public class TbOrder {
 
     private Date createTime;
 
-    public String getOrderNum() {
+   /* public String getOrderNum() {
         return orderNum;
     }
 
@@ -101,5 +103,5 @@ public class TbOrder {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
+    }*/
 }

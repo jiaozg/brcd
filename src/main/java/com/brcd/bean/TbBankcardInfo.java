@@ -1,5 +1,8 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
+@Data
 public class TbBankcardInfo {
     private Integer bankId;
 
@@ -19,18 +22,9 @@ public class TbBankcardInfo {
 
     private String bandContact;
 
-    private String businessUid;
 
-    public String  getBusinessUid() {
-        return businessUid;
-    }
 
-    public void setBusinessUid(String businessUid) {
-        this.businessUid = businessUid;
-    }
-
-    public Integer getBankId() {
-        return bankId;
+      /*  return bankId;
     }
 
     public void setBankId(Integer bankId) {
@@ -99,5 +93,5 @@ public class TbBankcardInfo {
 
     public void setBandContact(String bandContact) {
         this.bandContact = bandContact == null ? null : bandContact.trim();
-    }
+    }*/
 }

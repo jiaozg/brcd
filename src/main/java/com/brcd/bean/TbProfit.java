@@ -1,8 +1,10 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
+@Data
 public class TbProfit {
     private String payoffNum;
 
@@ -32,7 +34,7 @@ public class TbProfit {
 
     private String remark;
 
-    public String getPayoffNum() {
+    /*public String getPayoffNum() {
         return payoffNum;
     }
 
@@ -142,5 +144,5 @@ public class TbProfit {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
+    }*/
 }
