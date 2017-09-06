@@ -3,7 +3,9 @@ package com.brcd.bean;
 
 import lombok.Data;
 
+
 import java.util.Date;
+
 
 @Data
 public class TbBusinessUser {
@@ -55,26 +57,14 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
-    private Integer businessId;
-
-
-    private Integer bankId;
     private Integer businessUserStatus;
+
     private Date startTime;
+
     private Date endTime;
-
-  
-
-
 
     private TbBankcardInfo tbBankcardInfo;
 
     private  TbBusiness tbBusiness;
 
-    
 
-    
-
-
-
-}

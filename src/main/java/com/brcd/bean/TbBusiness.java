@@ -30,5 +30,7 @@ public class TbBusiness {
 
     private String alipayNum;
 
+    private String businessUid;
+
 
 }
