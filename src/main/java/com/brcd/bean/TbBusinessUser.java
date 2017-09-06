@@ -52,7 +52,7 @@ public class TbBusinessUser {
 
     private TbBankcardInfo tbBankcardInfo;
 
-    private  TbAgent tbAgent;
+    private  TbBusiness tbBusiness;
 
     public TbBankcardInfo getTbBankcardInfo() {
         return tbBankcardInfo;
@@ -62,12 +62,12 @@ public class TbBusinessUser {
         this.tbBankcardInfo = tbBankcardInfo;
     }
 
-    public TbAgent getTbAgent() {
-        return tbAgent;
+    public TbBusiness getTbBusiness() {
+        return tbBusiness;
     }
 
-    public void setTbAgent(TbAgent tbAgent) {
-        this.tbAgent = tbAgent;
+    public void setTbBusiness(TbBusiness tbBusiness) {
+        this.tbBusiness = tbBusiness;
     }
 
     public String getBusinessUid() {
