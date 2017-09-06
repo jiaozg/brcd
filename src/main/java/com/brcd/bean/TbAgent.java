@@ -10,7 +10,7 @@ public class TbAgent {
 
     private Long id;
 
-    private Long agentNumber;
+    private String agentNumber;
 
     private Integer agentGrade;
 
