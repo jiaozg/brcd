@@ -1,29 +1,45 @@
 <!DOCTYPE html>
-<html style="overflow-x:auto;overflow-y:auto;">
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>欢迎 - Powered By JeeSite</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
-    <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
-    <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
-    <script src="../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <link href="../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="author" content="http://jeesite.com/"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10"/>
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <script src="../../static/static/jquery/jquery-1.8.3.min.js" th:src="@{/static/jquery/jquery-1.8.3.min.js}"
+            type="text/javascript"></script>
+    <link href="../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css"
+          th:href="@{/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}" type="text/css" rel="stylesheet"/>
     <script src="../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
-    <!--[if lte IE 7]><link href="../../static/static/bootstrap/2.3.1/awesome/font-awesome-ie7.min.css" type="text/css" rel="stylesheet" /><![endif]-->
-    <!--[if lte IE 6]><link href="../../static/static/bootstrap/bsie/css/bootstrap-ie6.min.css" type="text/css" rel="stylesheet" />
-<script src="../../static/static/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
-    <link href="../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
-    <script src="../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
-    <link href="../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
-    <link href="../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
-    <script src="../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
-    <script src="../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-    <script src="../../static/static/common/mustache.min.js" type="text/javascript"></script>
-    <link href="../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
-    <script src="../../static/static/common/jeesite.js" type="text/javascript"></script>
-    <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-    <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
+    <link href="../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome.min.css}" type="text/css" rel="stylesheet"/>
+    <!--[if lte IE 7]>
+    <link href="../../static/static/bootstrap/2.3.1/awesome/font-awesome-ie7.min.css" th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome-ie7.min.css}" type="text/css" rel="stylesheet"/>
+    <![endif]-->
+    <!--[if lte IE 6]>
+    <link href="../../static/static/bootstrap/bsie/css/bootstrap-ie6.min.css" th:href="@{/static/bootstrap/bsie/css/bootstrap-ie6.min.css}" type="text/css" rel="stylesheet"/>
+    <script src="../../static/static/bootstrap/bsie/js/bootstrap-ie.min.js" th:src="@{/static/bootstrap/bsie/js/bootstrap-ie.min.js}" type="text/javascript"></script><![endif]-->
+    <link href="../../static/static/jquery-select2/3.4/select2.min.css" th:href="@{/static/jquery-select2/3.4/select2.min.css}" rel="stylesheet"/>
+    <script src="../../static/static/jquery-select2/3.4/select2.min.js" th:src="@{/static/jquery-select2/3.4/select2.min.js}" type="text/javascript"></script>
+    <link href="../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" th:href="@{/static/jquery-validation/1.11.0/jquery.validate.min.css}" type="text/css" rel="stylesheet"/>
+    <script src="../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" th:src="@{/static/jquery-validation/1.11.0/jquery.validate.min.js}" type="text/javascript"></script>
+    <link href="../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" th:href="@{/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}" rel="stylesheet"/>
+    <script src="../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" th:src="@{/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js}" type="text/javascript"></script>
+    <script src="../../static/static/My97DatePicker/WdatePicker.js" th:src="@{/static/My97DatePicker/WdatePicker.js}" type="text/javascript"></script>
+    <script src="../../static/static/common/mustache.min.js" th:src="@{/static/common/mustache.min.js}" type="text/javascript"></script>
+    <link href="../../static/static/common/jeesite.css" th:href="@{/static/common/jeesite.css}" type="text/css" rel="stylesheet"/>
+    <script src="../../static/static/common/jeesite.js" th:src="@{/static/common/jeesite.js}" type="text/javascript"></script>
+    <script type="text/javascript">var ctx = '/a', ctxStatic = '/static';</script>
+    <!-- Baidu tongji analytics -->
+    <script>var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();</script>
 
 
     <meta name="decorator" content="default"/>
@@ -31,20 +47,20 @@
     <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
     <script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
     <script type="text/javascript">
-        function addDate(dadd){
+        function addDate(dadd) {
             var a = new Date()
             a = a.valueOf()
             a = a + dadd * 24 * 60 * 60 * 1000
             a = new Date(a)
-            var month=a.getMonth()+1;
+            var month = a.getMonth() + 1;
             var day = a.getDate();
-            if(month<10){
-                month = "0"+month;
+            if (month < 10) {
+                month = "0" + month;
             }
-            if(day<10){
-                day = "0"+day;
+            if (day < 10) {
+                day = "0" + day;
             }
-            var val = a.getFullYear()+"-"+month+"-"+day;
+            var val = a.getFullYear() + "-" + month + "-" + day;
             return val;
         }
         $(function () {
@@ -89,96 +105,96 @@
                     Highcharts.each(Highcharts.charts, function (chart) {
                         if (chart !== thisChart) {
                             if (chart.xAxis[0].setExtremes) { // It is null while updating
-                                chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, { trigger: 'syncExtremes' });
+                                chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
                             }
                         }
                     });
                 }
             }
-            // Get the data. The contents of the data file can be viewed at
-            // https://github.com/highcharts/highcharts/blob/master/samples/data/activity.json
-          /*  $.ajax({
-                url:"/a/statistics/activity",
-                type:"get",
-                dataType : "json",
-                data: {},
-                success: function(activity){
-                    /!* $.getJSON('/a/statistics/activity', function (activity) { *!/
-                    $.each(activity.datasets, function (i, dataset) {
-                        // Add X values
-                        dataset.data = Highcharts.map(dataset.data, function (val, j) {
-                            return [activity.xData[j], val];
-                        });
-                        $('<div class="chart">')
-                            .appendTo('#container')
-                            .highcharts({
-                                chart: {
-                                    marginLeft: 90, // Keep all charts left aligned
-                                    marginRight:50,
-                                    spacingTop: 20,
-                                    spacingBottom: 20
-                                },
-                                title: {
-                                    text: dataset.name,
-                                    align: 'left',
-                                    margin: 0,
-                                    x: 30
-                                },
-                                credits: {
-                                    enabled: false
-                                },
-                                legend: {
-                                    enabled: false
-                                },
-                                xAxis: {
-                                    crosshair: true,
-                                    events: {
-                                        setExtremes: syncExtremes
-                                    },
-                                    labels: {
-                                        formatter: function() {
-                                            return addDate(this.value-6);
-                                        }
-                                    }
-                                },
-                                yAxis: {
-                                    title: {
-                                        text: null
-                                    }
-                                },
-                                tooltip: {
-                                    positioner: function () {
-                                        return {
-                                            x: this.chart.chartWidth - this.label.width, // right aligned
-                                            y: -1 // align to title
-                                        };
-                                    },
-                                    borderWidth: 0,
-                                    backgroundColor: 'none',
-                                    pointFormat: '{point.y}',
-                                    headerFormat: '',
-                                    shadow: false,
-                                    style: {
-                                        fontSize: '18px'
-                                    },
-                                    valueDecimals: dataset.valueDecimals
-                                },
-                                series: [{
-                                    data: dataset.data,
-                                    name: dataset.name,
-                                    type: dataset.type,
-                                    color: Highcharts.getOptions().colors[i],
-                                    fillOpacity: 0.3,
-                                    tooltip: {
-                                        valueSuffix: ' ' + dataset.unit
-                                    }
-                                }]
-                            });
-                    });
-                    /!*  }); *!/
-                }
-            });
-        });*/
+        // Get the data. The contents of the data file can be viewed at
+        // https://github.com/highcharts/highcharts/blob/master/samples/data/activity.json
+        /*  $.ajax({
+         url:"/a/statistics/activity",
+         type:"get",
+         dataType : "json",
+         data: {},
+         success: function(activity){
+         /!* $.getJSON('/a/statistics/activity', function (activity) { *!/
+         $.each(activity.datasets, function (i, dataset) {
+         // Add X values
+         dataset.data = Highcharts.map(dataset.data, function (val, j) {
+         return [activity.xData[j], val];
+         });
+         $('<div class="chart">')
+         .appendTo('#container')
+         .highcharts({
+         chart: {
+         marginLeft: 90, // Keep all charts left aligned
+         marginRight:50,
+         spacingTop: 20,
+         spacingBottom: 20
+         },
+         title: {
+         text: dataset.name,
+         align: 'left',
+         margin: 0,
+         x: 30
+         },
+         credits: {
+         enabled: false
+         },
+         legend: {
+         enabled: false
+         },
+         xAxis: {
+         crosshair: true,
+         events: {
+         setExtremes: syncExtremes
+         },
+         labels: {
+         formatter: function() {
+         return addDate(this.value-6);
+         }
+         }
+         },
+         yAxis: {
+         title: {
+         text: null
+         }
+         },
+         tooltip: {
+         positioner: function () {
+         return {
+         x: this.chart.chartWidth - this.label.width, // right aligned
+         y: -1 // align to title
+         };
+         },
+         borderWidth: 0,
+         backgroundColor: 'none',
+         pointFormat: '{point.y}',
+         headerFormat: '',
+         shadow: false,
+         style: {
+         fontSize: '18px'
+         },
+         valueDecimals: dataset.valueDecimals
+         },
+         series: [{
+         data: dataset.data,
+         name: dataset.name,
+         type: dataset.type,
+         color: Highcharts.getOptions().colors[i],
+         fillOpacity: 0.3,
+         tooltip: {
+         valueSuffix: ' ' + dataset.unit
+         }
+         }]
+         });
+         });
+         /!*  }); *!/
+         }
+         });
+         });*/
     </script>
     <style>
         .chart {
@@ -198,10 +214,16 @@
 <div id="container"></div>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
-if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
+if (!(self.frameElement && self.frameElement.tagName == "IFRAME")) {
     $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
-    $("#btnMenu").click(function(){
-        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=3290c1ca7f004e6c89ec0e799fa75412', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+    $("#btnMenu").click(function () {
+        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=3290c1ca7f004e6c89ec0e799fa75412', {
+            title: '选择菜单',
+            buttons: {'关闭': true},
+            width: 300,
+            height: 350,
+            top: 10
+        });
         //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
     });
 }//-->
