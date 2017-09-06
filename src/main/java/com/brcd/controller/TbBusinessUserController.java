@@ -37,9 +37,9 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/insertBusinessUser")
     @ResponseBody
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo){
+    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         businessUser.setBusinessUid("11233");
-        businessManagementService.insertBusinessUser(businessUser,business,bankcardInfo);
+        businessManagementService.insertBusinessUser(businessUser, business, bankcardInfo);
         System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
 
         String s = businessUser.toString();
@@ -48,8 +48,9 @@ public class TbBusinessUserController {
         System.out.printf(s);
         System.out.printf(s1);
         System.out.printf(s2);
-        String sss = s +"      "+s1+"         "+s2;
+        String sss = s + "      " + s1 + "         " + s2;
         return sss;
+    }
 
     @RequestMapping("/query")
     @ResponseBody

@@ -17,7 +17,7 @@ import java.util.List;
  * Created by admin on 2017/9/5.
  */
 @Service
-public class TbBusinessUserServiceImpl implements TbBusinessUserService{
+public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Autowired
     private TbBusinessUserMapper tbBusinessUserMapper;
 
@@ -29,6 +29,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService{
 
     /**
      * 添加商户基本信息
+     *
      * @param businessUser
      * @param business
      * @param bankcardInfo
@@ -41,34 +42,39 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService{
         insertBankcardInfo(bankcardInfo);
         insertBusiness(business);
     }
+
     /**
      * 添加商户开通线下支付信息
      */
-    private void insertBusiness(TbBusiness business){
+    private void insertBusiness(TbBusiness business) {
         TbBusiness tb = new TbBusiness();
-        if(business.getWechatPay() == 0){
+        if (business.getWechatPay() == 0) {
             tb.setWechatPay(business.getWechatPay());
             tbBusinessMapper.insertTbBusiness(tb);
         }
-        if(business.getAlipay() == 0){
+        if (business.getAlipay() == 0) {
             tb.setAlipay(business.getAlipay());
             tbBusinessMapper.insertTbBusiness(tb);
         }
     }
+
     /**
      * 添加商户银行信息
      */
-    private void insertBankcardInfo(TbBankcardInfo bankcardInfo){
+    private void insertBankcardInfo(TbBankcardInfo bankcardInfo) {
         tbBankcardInfoMapper.insertTbBankcardInfo(bankcardInfo);
+    }
 
     @Override
 
     public List<TbBusinessUser> query(TbBusinessUser businessUser) {
         return tbBusinessUserMapper.query(businessUser);
     }
+
     public void updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
 
 
     }
 }
+
