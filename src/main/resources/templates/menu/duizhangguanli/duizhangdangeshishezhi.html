@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html style="overflow-x:auto;overflow-y:auto;">
+<head>
+    <title>对账记录查询 - Powered By JeeSite</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
+    <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
+    <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
+    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
+    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
+    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
+    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
+    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
+    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"></script>
+    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
+    <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
+    <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
+
+
+    <meta name="decorator" content="default" />
+
+    <script>
+        $( function() {
+
+            $( "#sortable1, #sortable2" ).sortable({
+                connectWith: ".connectedSortable"
+            }).disableSelection();
+
+            $("#sortable3, #sortable4").sortable({
+                connectWith : ".connectedSortable2"
+            }).disableSelection();
+
+            $("input").checkboxradio();
+
+            //加载对账单格式
+            $.ajax({
+                type : "post",
+                url : "/a/operater/agent/brcbAgentExportLayout/getLayout",
+                dataType : "json",
+                success : function(data) {
+                    //设置页面 显示
+                    // 1.设置是否生成对账文件
+                    var $is_export = $("input[name='isExport'][value='"
+                        + data.isExport + "']");
+                    $is_export.click();
+                    // 2.设置导出文件格式
+                    var $fileType = $("input[name='fileType'][value='"
+                        + data.fileType + "']");
+                    $fileType.click();
+                    // 3.设置统计字段
+                    $.each(data.exportTotal.split(","), function(index, value) {
+                        var $totalExport = $("input[name='totalExport'][value='"
+                            + value + "']");
+                        $totalExport.click();
+                        //3.1 设置统计字段顺序
+                        var totalExport_index = 'totalExport' + index;
+                        $("select[name='" + totalExport_index + "']").val(value);
+                    });
+                    // 4.设置统计字段位置
+                    $("select[name='totalPosition']").val(data.totalPosition);
+
+                    // 4.设置是否导出T0结算记录
+                    $("select[name='isExportSettle']").val(data.isExportSettle);
+
+                    // 5.设置导出字段及排序 sortable1 exportTitle nonExportTitle
+                    $.each(data.nonExportTitle.split(","), function(index, value) {
+                        if (value.length == 0) {
+                            return true;
+                        }
+                        $("#sortable1").append(
+                            "<li class='ui-state-default' data-name='"+value+"'>"
+                            + data.nonExportWord.split(",")[index]
+                            + "</li>");
+                    });
+                    $.each(data.exportTitle.split(","), function(index, value) {
+                        if (value.length == 0) {
+                            return true;
+                        }
+                        $("#sortable2").append(
+                            "<li class='ui-state-highlight' data-name='"+value+"'>"
+                            + data.exportWord.split(",")[index]
+                            + "</li>");
+                    });
+                    $.each(data.exportSettle.split(","), function(index, value) {
+                        if (value.length == 0) {
+                            return true;
+                        }
+                        $("#sortable4").append(
+                            "<li class='ui-state-highlight' data-name='"+value+"'>"
+                            + data.exportSettleWord.split(",")[index]
+                            + "</li>");
+                    });
+                    $.each(data.nonExportSettle.split(","), function(index, value) {
+                        if (value.length == 0) {
+                            return true;
+                        }
+                        $("#sortable3").append(
+                            "<li class='ui-state-highlight' data-name='"+value+"'>"
+                            + data.nonExportSettleWord.split(",")[index]
+                            + "</li>");
+                    });
+                    // 6.设置layout id
+                    $("#layoutId").val(data.id);
+                }
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            //form 提交
+            $("#to_submit").click(function(){
+                var exportTitle= '';
+                var exportWord= '';
+                var nonExportTitle='';
+                var nonExportWord='';
+                var exportSettle ='';
+                var nonExportSettle ='';
+                var exportSettleWord ='';
+                var nonExportSettleWord ='';
+                //遍历已选择的字段
+                $("#sortable2 li").each(function(){
+                    exportTitle =  exportTitle+ $(this).data('name')+",";
+                    exportWord =  exportWord+ $(this).html()+",";
+                });
+                //遍历已选择的字段
+                $("#sortable1 li").each(function(){
+                    nonExportTitle =  nonExportTitle+ $(this).data('name')+",";
+                    nonExportWord =  nonExportWord+ $(this).html()+",";
+                });
+                //遍历已选择的字段
+                $("#sortable3 li").each(function(){
+                    nonExportSettle =  nonExportSettle+ $(this).data('name')+",";
+                    nonExportSettleWord =  nonExportSettleWord+ $(this).html()+",";
+                });
+                //遍历已选择的字段
+                $("#sortable4 li").each(function(){
+                    exportSettle =  exportSettle+ $(this).data('name')+",";
+                    exportSettleWord =  exportSettleWord+ $(this).html()+",";
+                });
+                var isExport = $("input:radio:checked").val(); //是否导出文件
+                var fileType= $("input[name='fileType']:checked").val();//导出文件格式fileType
+                var totalPosition = $("select[name='totalPosition']").val();// 统计数据 所处文件位置
+                var isExportSettle = $("select[name='isExportSettle']").val();// 是否导出T0结算记录
+                // 获取 统计字段及顺序
+                var exportTotal= '';
+                var is_continue = true;
+                $("#total_seq_div select").each(function (index,domEle){
+                    var display_value = $(domEle).css('display');
+                    if(display_value == 'block'){
+                        console.log(exportTotal + ":" + $(domEle).val());
+                        if(exportTotal.indexOf($(domEle).val()) != -1){
+                            if($(domEle).val() == ""){
+                                window.top.openDialog('请选择统计列的显示字样！');
+                                is_continue = false;
+                            }else{
+                                window.top.openDialog('请勿选择重复的统计列！');
+                                is_continue = false;
+                            }
+                        }
+                        exportTotal = exportTotal+$(domEle).val()+',';
+                    }
+                });
+
+                if(is_continue == false){
+                    return;
+                }
+
+                //表单提交
+                $.ajax({
+                    type:"post",
+                    url:"/a/operater/agent/brcbAgentExportLayout/save",
+                    dataType : "json",
+                    data: {
+                        isExport:isExport,
+                        fileType:fileType,
+                        totalPosition:totalPosition,
+                        isExportSettle:isExportSettle,
+                        exportTotal:exportTotal.substring(0,exportTotal.length-1),
+                        exportTitle:exportTitle.substring(0,exportTitle.length-1),
+                        exportWord:exportWord.substring(0,exportWord.length-1),
+                        nonExportWord:nonExportWord.substring(0,nonExportWord.length-1),
+                        nonExportTitle:nonExportTitle.substring(0,nonExportTitle.length-1),
+                        exportSettle:exportSettle.substring(0,exportSettle.length-1),
+                        nonExportSettle:nonExportSettle.substring(0,nonExportSettle.length-1),
+                        exportSettleWord:exportSettleWord.substring(0,exportSettleWord.length-1),
+                        nonExportSettleWord:nonExportSettleWord.substring(0,nonExportSettleWord.length-1)
+                    },
+                    success:function(data){
+                        window.top.openDialog('保存对账单格式成功！');
+                    }
+                });
+
+            });
+
+            //checkbox 点击事件
+            $("#total_div input:checkbox").click(function(){
+                var $checkBox = $(this);
+                var $id = $checkBox.attr("id");
+                var is_checked = $checkBox.is(':checked');
+                var hidden_size=$("#total_seq_div").find("select:hidden").size();
+                var total=$("#total_seq_div").find("select").size();
+                if(is_checked == true){
+                    $("#total_seq_div").find("select").eq(total-hidden_size).css('display','block');
+                    var label_value =$("label[for='"+$id+"']").text();
+                    $("#total_seq_div").find("select").append("<option value='"+$checkBox.val()+"'>"+label_value+"</option>");
+                }else{
+                    $("#total_seq_div").find("select").find("option[value='"+$checkBox.val()+"']").remove();
+                    $("#total_seq_div").find("select").eq(total-hidden_size-1).css('display','none');
+                }
+            });
+
+        });
+    </script>
+
+    <style>
+        #sortable1, #sortable2 ,#sortable3,#sortable4{
+            border: 1px solid #eee;
+            width: 142px;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            float: left;
+            margin-right: 10px;
+        }
+        #sortable1 li, #sortable2 li, #sortable3 li,#sortable4 li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 1.2em;
+            width: 120px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a
+            href="/a/operater/agent/brcbAgentExportLayout/form?">对账单格式设置</a></li>
+</ul>
+
+<br />
+<h4 style="margin-top: 30px;"><font color="#0088CC"> 是否生成对账文件：</font></h4>
+<fieldset style="margin-top: 30px;">
+    <label for="isExport1" >生成对账文件</label>
+    <input type="radio" name="isExport" id="isExport1" value="Y" >
+    <label for="isExport2">不生成对账文件</label>
+    <input type="radio" name="isExport" id="isExport2" value="N">
+</fieldset>
+
+<h4 style="margin-top: 30px;"><font color="#0088CC"> 导出文件格式：</font></h4>
+<fieldset style="margin-top: 30px;">
+    <label for="fileType1" >CSV格式</label>
+    <input type="radio" name="fileType" id="fileType1" value="CSV"  >
+    <label for="fileType2">ZIP格式</label>
+    <input type="radio" name="fileType" id="fileType2" value="ZIP">
+</fieldset>
+
+<h4 style="margin-top: 30px;"><font color="#0088CC"> 统计字段：</font></h4>
+<div class="widget" id="total_div" style="margin-top: 30px;">
+    <fieldset>
+        <label for="totalExport1">总交易单数</label>
+        <input type="checkbox" name="totalExport" id="totalExport1" value="totalTradeCount" >
+        <label for="totalExport2">总交易额</label>
+        <input type="checkbox" name="totalExport" id="totalExport2" value="totalTradeAmount">
+        <label for="totalExport3">总退款金额</label>
+        <input type="checkbox" name="totalExport" id="totalExport3" value="totalRefundAmount">
+        <label for="totalExport4">手续费分润总金额</label>
+        <input type="checkbox" name="totalExport" id="totalExport4" value="totalCharge">
+        <br/>
+        <br/>
+        <label for="totalExport5">微信T0分润总额</label>
+        <input type="checkbox" name="totalExport" id="totalExport5" value="wechatT0TotalCharge">
+        <label for="totalExport6">微信T1分润总额</label>
+        <input type="checkbox" name="totalExport" id="totalExport6" value="wechatT1TotalCharge">
+        <label for="totalExport7">支付宝T0分润总额</label>
+        <input type="checkbox" name="totalExport" id="totalExport7" value="alipayT0TotalCharge" >
+        <label for="totalExport8">支付宝T1分润总额</label>
+        <input type="checkbox" name="totalExport" id="totalExport8" value="alipayT1TotalCharge" >
+    </fieldset>
+</div>
+
+<div style="margin-top: 30px;">
+    <span>统计字段在excel中的位置：</span>
+    <select name="totalPosition" class="input-medium" >
+        <option value="TOP" label="EXCEL顶部"/>
+        <option value="BOTTOM" label="EXCEL底部"/>
+    </select>
+
+    <span style="margin-left: 50px;">是否导出T0结算记录：</span>
+    <select name="isExportSettle" class="input-medium" >
+        <option value="N" label="不导出"/>
+        <option value="Y" label="导出"/>
+    </select>
+</div>
+
+<div style="margin-top: 30px;" id="total_seq_div">
+
+    统计字段排列顺序：
+
+    <select name="totalExport0" class="input-medium" style="display: none;">
+        <option value="" label="--第一列--"/>
+    </select>
+
+    <select name="totalExport1" class="input-medium" style="display: none;">
+        <option value="" label="--第二列--"/>
+    </select>
+
+    <select name="totalExport2" class="input-medium" style="display: none;" >
+        <option value="" label="--第三列--"/>
+    </select>
+
+    <select name="totalExport3" class="input-medium" style="display: none;">
+        <option value="" label="--第四列--"/>
+    </select>
+    <select name="totalExport4" class="input-medium" style="display: none;">
+        <option value="" label="--第五列--"/>
+    </select>
+    <select name="totalExport5" class="input-medium" style="display: none;">
+        <option value="" label="--第六列--"/>
+    </select>
+    <select name="totalExport6" class="input-medium" style="display: none;">
+        <option value="" label="--第七列--"/>
+    </select>
+    <select name="totalExport7" class="input-medium" style="display: none;">
+        <option value="" label="--第八列--"/>
+    </select>
+</div>
+
+<h4 style="margin-top: 30px;"><font color="#0088CC"> 交易明细导出字段设置集排序：<b style="margin-left: 270px;">DO结算明细导出字段设置集排序：</b></font></h4>
+<div style="margin-top: 10px;"><span><font color="red">*提示：灰色为不导出字段，黄色为导出字段，字段间可进行拖动 *</font></span></div>
+
+<ul id="sortable1" class="connectedSortable"></ul>
+<ul id="sortable2" class="connectedSortable"></ul>
+<ul id="sortable3" class="connectedSortable2" style="margin-left: 200px;"></ul>
+<ul id="sortable4" class="connectedSortable2"></ul>
+
+<div class="form-actions" style="clear:both;margin-left: 200px;" id="to_submit">
+    <a id="to_submit" class="ui-button ui-widget ui-corner-all" href="#">保存对账单格式</a>
+</div>
+
+<script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
+if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
+    $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
+    $("#btnMenu").click(function(){
+        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=5820d85e952a431e9732ce111db7d1f8', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+        //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
+    });
+}//-->
+</script>
+</body>
+</html>
