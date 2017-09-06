@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.brcd.mapper.TbOrderMapper" >
+    <select id="select" resultMap="com.brcd.bean.TbOrder" parameterType="com.brcd.bean.TbOrder">
+         SELECT * FROM tb_order where 1 = 1
+     <!-- 判断订单编号 -->
+         <if test="order_num != null"> and order_num = #{order_num}</if>
+     <!-- 判断商户编号 -->
+         <if test="business_num != null"> and business_num = #{business_num}</if>
+     <!-- 判断渠道商（代理商）编号 -->
+         <if test="proxy_num != null"> and proxy_num = #{proxy_num}</if>
+      <!-- 判断订单类型 -->
+         <if test="order_type != null"> and order_type = #{order_type}</if>
+      <!-- 判断订单状态 -->
+         <if test="order_state != null"> and order_state = #{order_state}</if>
+      <!-- 判断渠道商单号-->
+         <if test="proxy_no != null"> and proxy_no = #{proxy_no}</if>
+      <!-- 判断结算状态-->
+         <if test="settle_state != null"> and settle_state = #{settle_state}</if>
+      <!-- 判断结算方式-->
+         <if test="settle_mode != null"> and settle_mode = #{settle_mode}</if>
+      <!-- 判断查询开始时间-->
+          and create_time between #{stateTime} and #{endTime}
+    </select>
+ </mapper>
