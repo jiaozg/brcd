@@ -21,10 +21,17 @@ public class PersonageMessageController {
     @RequestMapping("toPersonageMessage")
     public String PersonageMessage(Model model, HttpSession session) {
         TbAgent agent = (TbAgent) session.getAttribute("agentLogin");
-        System.err.println("登陆成功的用户：" + agent);
         TbAgent queryAgentMsg = personageMessageService.queryAgentMsg(agent);
         System.out.println(queryAgentMsg);
         model.addAttribute("agentMsg", queryAgentMsg);
         return "user/gerenxinxi";
     }
+
+    @RequestMapping("save")
+    public String save(TbAgent tbAgent) {
+        System.out.println("修改的对象：" + tbAgent);
+        personageMessageService.updatePersonageMsg(tbAgent);
+        return "login";
+    }
+
 }
