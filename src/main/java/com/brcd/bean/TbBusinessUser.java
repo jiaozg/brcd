@@ -1,7 +1,9 @@
 package com.brcd.bean;
 
+import java.util.Date;
+
 public class TbBusinessUser {
-    private Long businessUid;
+    private String businessUid;
 
     private String affiliationAgent;
 
@@ -52,12 +54,39 @@ public class TbBusinessUser {
     private Integer businessId;
 
     private Integer bankId;
+    private Integer businessUserStatus;
+    private Date startTime;
+    private Date endTime;
 
-    public Long getBusinessUid() {
+    public Integer getBusinessUserStatus() {
+        return businessUserStatus;
+    }
+
+    public void setBusinessUserStatus(Integer businessUserStatus) {
+        this.businessUserStatus = businessUserStatus;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getBusinessUid() {
         return businessUid;
     }
 
-    public void setBusinessUid(Long businessUid) {
+    public void setBusinessUid(String businessUid) {
         this.businessUid = businessUid;
     }
 
