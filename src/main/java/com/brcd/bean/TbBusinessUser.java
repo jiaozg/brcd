@@ -57,4 +57,5 @@ public class TbBusinessUser {
     private Integer bankId;
 
 
+
 }
