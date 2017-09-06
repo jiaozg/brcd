@@ -22,6 +22,8 @@ public class TbBankcardInfo {
 
     private String bandContact;
 
+    private String businessUid;
+
 
 
 
