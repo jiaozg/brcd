@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component;
 public interface PersonageMessageMapper {
 
     TbAgent queryAgentMsg(TbAgent tbAgent);//查看个人信息并修改
+
+    void updatePersonageMsg(TbAgent tbAgent);//修改个人信息
 }
