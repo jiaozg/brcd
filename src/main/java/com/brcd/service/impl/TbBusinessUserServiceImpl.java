@@ -21,7 +21,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService{
 
     public List<TbBusinessUser> query(TbBusinessUser businessUser) {
         return tbBusinessUserMapper.query(businessUser);
-
+    }
     public void updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
 
