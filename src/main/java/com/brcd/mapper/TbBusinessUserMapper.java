@@ -13,6 +13,12 @@ import java.util.List;
 @Mapper
 @Repository
 public interface TbBusinessUserMapper {
+    /**
+     * 修改商户信息
+     * @param tbBusinessUser
+     */
+    void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
+
 
     List<TbBusinessUser> query(TbBusinessUser businessUser);
 }

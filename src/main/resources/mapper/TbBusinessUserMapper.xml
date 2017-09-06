@@ -3,6 +3,87 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
+    <!--
+     private Long businessUid;
+
+    private String affiliationAgent; 所属代理商
+
+    private String businessUserType; 商户类型
+
+    private String manageName; 经营名称
+
+    private String businessUsername; 商户名称
+
+    private String legalPeopleName; 法人姓名
+
+    private String legalPeopleIdentityCard; 法人省份证
+
+    private String contactPeople; 联系人
+
+    private String contactPhone; 联系电话
+
+    private String contactMail; 联系邮箱
+
+    private String servicePhone; 客服电话
+
+    private String manageAddress; 经营地址
+
+    private String manageProvince; 经营省
+
+    private String manageCity; 经营市
+
+    private String manageDistrict; 经营区
+
+    private String businessLicenseNo; 营业执照编号
+
+    private String registerAddress; 注册地址
+
+    private String identityCardFront; 身份证正面
+
+    private String identityCardReverse; 身份证反面
+
+    private String identityCardHand; 手持身份证
+
+    private String bankCardFront; 银行卡正面
+
+    private String businessLicensePicture; 营业执照照片
+
+    private String doorPicture; 门头照
+
+    private String registerLicensePicture; 开户许可证照片
+
+    private TbBankcardInfo tbBankcardInfo;
+
+    private  TbAgent tbAgent;
+    -->
+<!--修改商户信息-->
+<update id="updateTbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+    UPDATE  tb_business_user SET
+    business_user_type=#{businessUserType} ,
+    manage_name=#{manageName},
+    business_username=#{businessUsername},
+    legal_people_name=#{legalPeopleName},
+    legal_people_identity_card=#{legalPeopleIdentityCard},
+    contact_people=#{contactPeople},
+    contact_phone=#{contactPhone},
+    contact_mail=#{contactMail},
+    service_phone=#{servicePhone},
+    manage_address=#{manageAddress},
+    manage_province=#{manageProvince},
+    manage_city=#{manageCity},
+    manage_district=#{manageDistrict},
+    register_address=#{registerAddress},
+    identity_card_front=#{identityCardFront},
+    identity_card_reverse=#{identityCardReverse},
+    identity_card_hand=#{identityCardHand},
+    bank_card_front=#{bankCardFront},
+    business_license_picture=#{businessLicensePicture},
+    door_picture=#{doorPicture},
+    register_license_picture=#{registerLicensePicture}
+    WHERE business_uid=#{businessUid}
+
+</update>
+
 
     <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
         <id column="business_uid" property="businessUid"></id>
