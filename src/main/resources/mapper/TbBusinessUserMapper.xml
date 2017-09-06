@@ -85,4 +85,36 @@
 </update>
 
 
+    <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
+        <id column="business_uid" property="businessUid"></id>
+        <result column="manage_name" property="manageName"></result>
+    </resultMap>
+
+    <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user b where 1=1
+        <if test="businessUid != null">
+            and b.business_uid = #{businessUid}
+        </if>
+        <if test="businessUserType != null">
+            and b.business_user_type = #{businessUserType}
+        </if>
+        <if test="manageName != null">
+            and b.manage_name LIKE '%${manageName}%'
+        </if>
+        <if test="businessUserStatus != null">
+            and business_user_status = #{businessUserStatus}
+        </if>
+        <if test="startTime != null">
+            and b.start_time > #{startTime}
+        </if>
+        <if test="endTime != null">
+            and b.end_time &lt; #{endTime}
+        </if>
+        <if test="legalPeopleName != null">
+            and legal_people_name like '%${legalPeopleName}%'
+        </if>
+        <if test="contactPhone != null">
+            and contact_phone = #{contactPhone}
+        </if>
+    </select>
 </mapper>
