@@ -17,4 +17,8 @@ public interface TbBusinessMapper {
      */
     void updateTbBusiness(TbBusiness tbBusiness);
 
+    /*
+     * 添加开通业务数据信息
+     */
+    void insertTbBusiness(TbBusiness business);
 }

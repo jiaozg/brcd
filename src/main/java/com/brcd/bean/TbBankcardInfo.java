@@ -26,4 +26,9 @@ public class TbBankcardInfo {
 
 
 
+    public void setBandContact(String bandContact) {
+        this.bandContact = bandContact == null ? null : bandContact.trim();
+    }
+
+
 }

@@ -3,59 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
-    <!--
-     private Long businessUid;
 
-    private String affiliationAgent; 所属代理商
-
-    private String businessUserType; 商户类型
-
-    private String manageName; 经营名称
-
-    private String businessUsername; 商户名称
-
-    private String legalPeopleName; 法人姓名
-
-    private String legalPeopleIdentityCard; 法人省份证
-
-    private String contactPeople; 联系人
-
-    private String contactPhone; 联系电话
-
-    private String contactMail; 联系邮箱
-
-    private String servicePhone; 客服电话
-
-    private String manageAddress; 经营地址
-
-    private String manageProvince; 经营省
-
-    private String manageCity; 经营市
-
-    private String manageDistrict; 经营区
-
-    private String businessLicenseNo; 营业执照编号
-
-    private String registerAddress; 注册地址
-
-    private String identityCardFront; 身份证正面
-
-    private String identityCardReverse; 身份证反面
-
-    private String identityCardHand; 手持身份证
-
-    private String bankCardFront; 银行卡正面
-
-    private String businessLicensePicture; 营业执照照片
-
-    private String doorPicture; 门头照
-
-    private String registerLicensePicture; 开户许可证照片
-
-    private TbBankcardInfo tbBankcardInfo;
-
-    private  TbAgent tbAgent;
-    -->
 <!--修改商户信息-->
 <update id="updateTbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
     UPDATE  tb_business_user SET
@@ -84,6 +32,29 @@
 
 </update>
 
+    <!--添加商户信息-->
+    <insert id="insertBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+        INSERT INTO tb_business_user(business_uid, affiliation_agent, business_user_type,
+        manage_name, business_username, legal_people_name,
+        legal_people_identity_card, contact_people,
+        contact_phone, contact_mail, service_phone,
+        manage_address, manage_province, manage_city,
+        manage_district, business_license_no, register_address,
+        identity_card_front, identity_card_reverse,
+        identity_card_hand, bank_card_front, business_license_picture,
+        door_picture, register_license_picture, business_user_status,
+        start_time, end_time, business_user_key)
+        VALUES (#{businessUid}, #{affiliationAgent}, #{businessUserType},
+        #{manageName}, #{businessUsername}, #{legalPeopleName},
+        #{legalPeopleIdentityCard}, #{contactPeople},
+        #{contactPhone}, #{contactMail}, #{servicePhone},
+        #{manageAddress}, #{manageProvince}, #{manageCity},
+        #{manageDistrict}, #{businessLicenseNo}, #{registerAddress},
+        #{identityCardFront}, #{identityCardReverse},
+        #{identityCardHand}, #{bankCardFront}, #{businessLicensePicture},
+        #{doorPicture}, #{registerLicensePicture}, #{businessUserStatus},
+        #{startTime}, #{endTime}, #{businessUserKey})
+    </insert>
 
     <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
         <id column="business_uid" property="businessUid"></id>
