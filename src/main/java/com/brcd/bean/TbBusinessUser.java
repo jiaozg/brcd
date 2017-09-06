@@ -6,7 +6,6 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-
 public class TbBusinessUser {
     private String businessUid;
 
