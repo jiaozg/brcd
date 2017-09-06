@@ -33,7 +33,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService{
      */
     @Override
     public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+
+
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        insertBankcardInfo(bankcardInfo);
+        insertBusiness(business);
     }
     /**
      * 添加商户开通线下支付信息

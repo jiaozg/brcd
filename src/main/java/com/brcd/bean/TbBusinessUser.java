@@ -7,47 +7,48 @@ public class TbBusinessUser {
 
     private String businessUserType;
 
-    private String manageName;
+    private String manageName;//经营名称
 
-    private String businessUsername;
+    private String businessUsername;//商户名称
 
-    private String legalPeopleName;
+    private String legalPeopleName;//法人名称
 
-    private String legalPeopleIdentityCard;
+    private String legalPeopleIdentityCard;//法人身份证
 
-    private String contactPeople;
+    private String contactPeople;//联系人
 
-    private String contactPhone;
+    private String contactPhone;//联系电话
 
-    private String contactMail;
+    private String contactMail;//联系邮箱
 
-    private String servicePhone;
+    private String servicePhone;//客服电话
 
-    private String manageAddress;
+    private String manageAddress;//经营地址
 
-    private String manageProvince;
+    private String manageProvince;//经营省
 
-    private String manageCity;
+    private String manageCity;//经营市
 
-    private String manageDistrict;
+    private String manageDistrict;//经营区
 
-    private String businessLicenseNo;
+    private String businessLicenseNo;//营业执照编号
 
-    private String registerAddress;
+    private String registerAddress;//注册地址
 
-    private String identityCardFront;
+    private String identityCardFront;//身份证正面
 
-    private String identityCardReverse;
+    private String identityCardReverse;//身份证反面
 
-    private String identityCardHand;
+    private String identityCardHand;//手持身份证
 
-    private String bankCardFront;
+    private String bankCardFront;//银行卡正面
 
-    private String businessLicensePicture;
+    private String businessLicensePicture;//营业执照照片
 
-    private String doorPicture;
+    private String doorPicture;//门头照
 
-    private String registerLicensePicture;
+    private String registerLicensePicture;//开户许可证照片
+
 
 
     private TbBankcardInfo tbBankcardInfo;
@@ -262,4 +263,35 @@ public class TbBusinessUser {
         this.registerLicensePicture = registerLicensePicture == null ? null : registerLicensePicture.trim();
     }
 
+    @Override
+    public String toString() {
+        return "TbBusinessUser{" +
+                "businessUid='" + businessUid + '\'' +
+                ", affiliationAgent='" + affiliationAgent + '\'' +
+                ", businessUserType='" + businessUserType + '\'' +
+                ", manageName='" + manageName + '\'' +
+                ", businessUsername='" + businessUsername + '\'' +
+                ", legalPeopleName='" + legalPeopleName + '\'' +
+                ", legalPeopleIdentityCard='" + legalPeopleIdentityCard + '\'' +
+                ", contactPeople='" + contactPeople + '\'' +
+                ", contactPhone='" + contactPhone + '\'' +
+                ", contactMail='" + contactMail + '\'' +
+                ", servicePhone='" + servicePhone + '\'' +
+                ", manageAddress='" + manageAddress + '\'' +
+                ", manageProvince='" + manageProvince + '\'' +
+                ", manageCity='" + manageCity + '\'' +
+                ", manageDistrict='" + manageDistrict + '\'' +
+                ", businessLicenseNo='" + businessLicenseNo + '\'' +
+                ", registerAddress='" + registerAddress + '\'' +
+                ", identityCardFront='" + identityCardFront + '\'' +
+                ", identityCardReverse='" + identityCardReverse + '\'' +
+                ", identityCardHand='" + identityCardHand + '\'' +
+                ", bankCardFront='" + bankCardFront + '\'' +
+                ", businessLicensePicture='" + businessLicensePicture + '\'' +
+                ", doorPicture='" + doorPicture + '\'' +
+                ", registerLicensePicture='" + registerLicensePicture + '\'' +
+                ", tbBankcardInfo=" + tbBankcardInfo +
+                ", tbAgent=" + tbAgent +
+                '}';
+    }
 }
