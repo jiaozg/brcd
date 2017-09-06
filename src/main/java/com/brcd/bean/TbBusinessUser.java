@@ -1,7 +1,7 @@
 package com.brcd.bean;
 
 public class TbBusinessUser {
-    private Long businessUid;
+    private String businessUid;
 
     private String affiliationAgent;
 
@@ -49,15 +49,32 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
-    private Integer businessId;
 
-    private Integer bankId;
+    private TbBankcardInfo tbBankcardInfo;
 
-    public Long getBusinessUid() {
+    private  TbAgent tbAgent;
+
+    public TbBankcardInfo getTbBankcardInfo() {
+        return tbBankcardInfo;
+    }
+
+    public void setTbBankcardInfo(TbBankcardInfo tbBankcardInfo) {
+        this.tbBankcardInfo = tbBankcardInfo;
+    }
+
+    public TbAgent getTbAgent() {
+        return tbAgent;
+    }
+
+    public void setTbAgent(TbAgent tbAgent) {
+        this.tbAgent = tbAgent;
+    }
+
+    public String getBusinessUid() {
         return businessUid;
     }
 
-    public void setBusinessUid(Long businessUid) {
+    public void setBusinessUid(String businessUid) {
         this.businessUid = businessUid;
     }
 
@@ -245,19 +262,4 @@ public class TbBusinessUser {
         this.registerLicensePicture = registerLicensePicture == null ? null : registerLicensePicture.trim();
     }
 
-    public Integer getBusinessId() {
-        return businessId;
-    }
-
-    public void setBusinessId(Integer businessId) {
-        this.businessId = businessId;
-    }
-
-    public Integer getBankId() {
-        return bankId;
-    }
-
-    public void setBankId(Integer bankId) {
-        this.bankId = bankId;
-    }
 }

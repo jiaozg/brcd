@@ -27,6 +27,16 @@ public class TbBusiness {
 
     private String alipayNum;
 
+    private String businessUid;
+
+    public String getBusinessUid() {
+        return businessUid;
+    }
+
+    public void setBusinessUid(String businessUid) {
+        this.businessUid = businessUid;
+    }
+
     public Integer getBusinessId() {
         return businessId;
     }
