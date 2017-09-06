@@ -1,7 +1,10 @@
 package com.brcd.bean;
 
+import lombok.Data;
+
+@Data
 public class TbBusinessUser {
-    private String businessUid;
+    private Long businessUid;
 
     private String affiliationAgent;
 
@@ -48,6 +51,8 @@ public class TbBusinessUser {
     private String doorPicture;
 
     private String registerLicensePicture;
+
+    private Integer businessId;
 
 
     private TbBankcardInfo tbBankcardInfo;
@@ -254,12 +259,9 @@ public class TbBusinessUser {
         this.doorPicture = doorPicture == null ? null : doorPicture.trim();
     }
 
-    public String getRegisterLicensePicture() {
-        return registerLicensePicture;
-    }
 
-    public void setRegisterLicensePicture(String registerLicensePicture) {
-        this.registerLicensePicture = registerLicensePicture == null ? null : registerLicensePicture.trim();
-    }
+
+
+
 
 }
