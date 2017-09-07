@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.AgentMapper">
+     <select id="findAll" resultType="com.brcd.bean.TbAgent">
+         SELECT * FROM tb_agent
+     </select>
+    <sql id="selectSql">
+      id,agent_number,short_name,agent_grade,agent_contact_phone,audit_status,business_Area,into_permissions,share_benefit,
+      rate
+    </sql>
+     <select id="getAgent" resultType="com.brcd.bean.TbAgent" parameterType="com.brcd.bean.TbAgent">
+         SELECT  <include refid="selectSql"/> FROM tb_agent
+         <where>
+               <if test="agentNumber!=null and agentNumber!=''">
+                   AND agent_number=#{agentNumber}
+               </if>
+               <if test="null!=agentGrade and ''!=agentGrade">
+                   AND agent_grade=#{agentGrade}
+               </if>
+             <if test="agentContactPhone!=null and agentContactPhone!=''">
+                 AND agent_contact_phone=#{agentContactPhone}
+             </if>
+             <if test="shortName!=null and shortName!=''">
+                 <bind name="pattern" value="'%' + shortName + '%'" />
+                 AND short_name LIKE #{pattern}
+             </if>
+             <if test="auditStatus!=null and auditStatus!=''">
+                 AND audit_status=#{auditStatus}
+             </if>
+
+         </where>
+     </select>
+    <select id="findAgentById" resultType="com.brcd.bean.TbAgent" parameterType="java.lang.Long">
+        SELECT * FROM tb_agent
+        <where>
+            id=#{id}
+        </where>
+    </select>
+</mapper>
