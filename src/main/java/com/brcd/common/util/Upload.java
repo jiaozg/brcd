@@ -17,7 +17,7 @@ public class Upload {
 	/**
 	 * 单文件上传
 	 * @param request
-	 * @param file （文件集合）
+	 * @param file （文件）
 	 * @param url （上传地址）
 	 * @return
 	 * @throws Exception
