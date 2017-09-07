@@ -2,9 +2,7 @@ package com.brcd.service.impl;
 
 import com.brcd.bean.TbAgent;
 import com.brcd.mapper.AgentMapper;
-import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.AgentService;
-import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +37,10 @@ public class AgentServiceImpl implements AgentService{
     @Override
     public TbAgent findAgentById(Long id) {
         return agentMapper.findAgentById(id);
+    }
+
+    @Override
+    public void addAgent(TbAgent agent) {
+       agentMapper.addAgent(agent);
     }
 }
