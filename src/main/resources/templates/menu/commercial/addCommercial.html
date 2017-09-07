@@ -21,7 +21,14 @@
     <script src="../../../static/static/common/jeesite.js" type="text/javascript" th:src="@{/static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
     <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
-
+    <!--三级联动插件-->
+    <!--  <script src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/area.js"></script>
+    <script type="text/javascript" src="../js/location.js"></script>
+    <script src="../js/select2.js"></script>
+    <script src="../js/select2_locale_zh-CN.js"></script>
+   <link href="../css/common.css" rel="stylesheet"/>
+     <link href="../css/select2.css" rel="stylesheet"/>-->
 
     <meta name="decorator" content="default"/>
     <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css" th:href="@{/static/jquery-ui/ui.css}">
@@ -761,19 +768,23 @@
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
-
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">--请选择省份--</option>
+                    <select id="loc_province" >
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                    </select>
+                   <!-- <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>-->
                     </select>
                 </div>
             </div></td>
             <td><div class="control-group">
                 <label class="control-label">经营市名称：</label>
                 <div class="controls">
-
-                    <select id="citySel" name="manageCity" class="input-xlarge">
-                        <option value="" selected="selected">--请选择市--</option>
+                    <select id="loc_city" >
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                     </select>
+                    <!--<select id="citySel" name="manageCity" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                    </select>-->
                 </div>
             </div></td>
         </tr>
@@ -781,9 +792,13 @@
             <td><div class="control-group">
                 <label class="control-label">经营区名称：</label>
                 <div class="controls">
-                    <select id="areaSel" name="manageDistrict" class="input-xlarge">
-                        <option value="" selected="selected">--请选择区--</option>
+
+                    <select id="loc_town" >
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                     </select>
+                   <!-- <select id="areaSel" name="manageDistrict" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                    </select>-->
                 </div>
             </div></td>
         </tr>
@@ -829,8 +844,8 @@
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
                         <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
-                            <option value="1">开通</option>
-                            <option selected="selected" value="0">不开通</option>
+                            <option value="Y">开通</option>
+                            <option selected="selected" value="N">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
