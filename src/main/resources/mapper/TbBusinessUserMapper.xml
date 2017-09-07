@@ -20,14 +20,14 @@
     manage_province=#{manageProvince},
     manage_city=#{manageCity},
     manage_district=#{manageDistrict},
-    register_address=#{registerAddress},
+
     identity_card_front=#{identityCardFront},
     identity_card_reverse=#{identityCardReverse},
     identity_card_hand=#{identityCardHand},
     bank_card_front=#{bankCardFront},
-    business_license_picture=#{businessLicensePicture},
-    door_picture=#{doorPicture},
-    register_license_picture=#{registerLicensePicture}
+
+
+
     WHERE business_uid=#{businessUid}
 
 </update>
