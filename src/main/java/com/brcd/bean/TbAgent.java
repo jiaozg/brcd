@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class TbAgent {
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 

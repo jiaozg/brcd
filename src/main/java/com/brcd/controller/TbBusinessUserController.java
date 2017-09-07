@@ -35,9 +35,6 @@ public class TbBusinessUserController {
     @Autowired
     private TbBusinessService tbBusinessService;
 
-
-
-
     /*
     * 时间格式的转换
     */
@@ -87,10 +84,14 @@ public class TbBusinessUserController {
         mv.addObject("shangHu",query);
         return mv;
     }
-    @RequestMapping("shanghu")
+    @RequestMapping("toQuery")
     public String shanghu(){
         System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";}
+        @RequestMapping("toUpdate")
+        public String toUpdate(){
+            return "menu/commercial/businessUserUpdate.html";
+        }
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -105,4 +106,5 @@ public class TbBusinessUserController {
 
 
     }
+
 }
