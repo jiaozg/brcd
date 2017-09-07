@@ -24,7 +24,7 @@ public class TbAgent {
 
     private String accountType;
 
-    private Long registerCardNumber;
+    private String registerCardNumber;
 
     private String registerCardProvinces;
 
