@@ -62,27 +62,27 @@ public class TbAgent {
 
     private String password;
 
-    private String lastIp;
+    private String lastIp;//登陆的IP
 
-    private Long lastLoginTime;
+    private Long lastLoginTime;//登陆的时间
 
-    private String role;
+    private String role;//用户角色
 
-    private String userType;
+    private String userType;//用户类型
 
     private String headSculpture;
 
-    private String companyAffiliation;
+    private String companyAffiliation;//归属公司
 
-    private String attributionDepartment;
+    private String attributionDepartment;//归属部门
 
     private String name;
 
     private String email;
 
-    private String phone;
+    private String phone;//电话
 
-    private String mobilePhone;
+    private String mobilePhone;//手机号
 
     private String remark;
 

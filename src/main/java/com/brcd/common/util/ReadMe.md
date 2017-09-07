@@ -27,3 +27,9 @@
 
     }
 //
+@Test
+	public void testFtpClient2()throws Exception{
+		FileInputStream inputStream = new FileInputStream(new File("G:\\0.jpg"));
+		FtpUtil.uploadFile("169.254.105.60", 21, "ftpuser", "ftpuser", "D:\\apps\\img", "/", "hello1.png", inputStream);
+	}
+	

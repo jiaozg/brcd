@@ -3,27 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBankcardInfoMapper">
-    <!--
-     private Integer bankId;
 
-    private String bankcardType;
+    <!--添加银行卡信息-->
+    <insert id="insertTbBankcardInfo" parameterType="com.brcd.bean.TbBankcardInfo" >
+        INSERT INTO tb_bankcard_info (bank_id, bankcard_type, bankcard_name,
+        bankcard_num, bank_name, bank_province,
+        bank_city, bank_detailed, band_contact,
+        business_uid)
+        VALUES (#{bankId}, #{bankcardType}, #{bankcardName},
+        #{bankcardNum}, #{bankName}, #{bankProvince},
+        #{bankCity}, #{bankDetailed}, #{bandContact},
+        #{businessUid})
+    </insert>
 
-    private String bankcardName;
-
-    private String bankcardNum;
-
-    private String bankName;
-
-    private String bankProvince;
-
-    private String bankCity;
-
-    private String bankDetailed;
-
-    private String bandContact;
-
-    private String businessUid;
-    -->
 <update id="updateTbBankcardInfo" parameterType="com.brcd.bean.TbBankcardInfo">
     UPDATE tb_bankcard_info SET
     bankcard_type=#{bankcardType},
@@ -38,5 +30,6 @@
 
 
 </update>
+
 
 </mapper>
