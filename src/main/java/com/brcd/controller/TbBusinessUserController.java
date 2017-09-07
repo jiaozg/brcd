@@ -27,7 +27,6 @@ public class TbBusinessUserController {
     @Autowired
     private TbBusinessService tbBusinessService;
 
-    private TbBusinessUserService businessManagementService;
 
 
     /**
@@ -45,7 +44,7 @@ public class TbBusinessUserController {
     @ResponseBody
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         businessUser.setBusinessUid("11233");
-        businessManagementService.insertBusinessUser(businessUser, business, bankcardInfo);
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
         System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
 
         String s = businessUser.toString();
@@ -64,10 +63,14 @@ public class TbBusinessUserController {
         List<TbBusinessUser> query = tbBusinessUserService.query(businessUser);
         return query;
     }
-    @RequestMapping("shanghu")
+    @RequestMapping("toQuery")
     public String shanghu(){
         System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";}
+        @RequestMapping("toUpdate")
+        public String toUpdate(){
+            return "menu/commercial/businessUserUpdate.html";
+        }
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -82,4 +85,5 @@ public class TbBusinessUserController {
 
 
     }
+
 }

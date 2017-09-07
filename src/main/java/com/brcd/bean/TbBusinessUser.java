@@ -55,22 +55,12 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
-    private Integer businessId;
-
-
-
 
     private  TbAgent tbAgent;
 
-
-    private Integer bankId;
     private Integer businessUserStatus;
     private Date startTime;
     private Date endTime;
-
-  
-
-
 
     private TbBankcardInfo tbBankcardInfo;
 
