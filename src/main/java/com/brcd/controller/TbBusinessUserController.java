@@ -9,9 +9,17 @@ import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 /**
  * 商户管理控制层
@@ -28,6 +36,15 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
 
     private TbBusinessUserService businessManagementService;
+
+
+    /*
+    * 时间格式的转换
+    */
+    @InitBinder
+    public void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
+    }
 
 
     /**
@@ -57,12 +74,18 @@ public class TbBusinessUserController {
         String sss = s + "      " + s1 + "         " + s2;
         return sss;
     }
-    @RequestMapping("/query")
-    @ResponseBody
-    public List<TbBusinessUser> query(TbBusinessUser businessUser) {
 
-        List<TbBusinessUser> query = tbBusinessUserService.query(businessUser);
-        return query;
+    @RequestMapping("/shangHuChaXun")
+    public ModelAndView shangHuChaXun() {
+        System.out.println(111111111);
+        return new ModelAndView("menu/commercial/shanghuchaxun.html");
+    }
+    @RequestMapping("/query")
+    public ModelAndView query(TbBusinessUser tbBusinessUser) {
+        List<TbBusinessUser> query = tbBusinessUserService.query(tbBusinessUser);
+        ModelAndView mv = new ModelAndView("menu/commercial/shanghuchaxun.html");
+        mv.addObject("shangHu",query);
+        return mv;
     }
     @RequestMapping("shanghu")
     public String shanghu(){
