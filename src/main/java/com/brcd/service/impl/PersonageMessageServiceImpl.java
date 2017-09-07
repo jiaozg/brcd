@@ -20,4 +20,9 @@ public class PersonageMessageServiceImpl implements PersonageMessageService {
         TbAgent queryAgentMsg = personageMessageMapper.queryAgentMsg(tbAgent);
         return queryAgentMsg;
     }
+
+    @Override
+    public void updatePersonageMsg(TbAgent tbAgent) {
+        personageMessageMapper.updatePersonageMsg(tbAgent);
+    }
 }
