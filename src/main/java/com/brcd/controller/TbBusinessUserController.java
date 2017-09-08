@@ -107,13 +107,9 @@ public class TbBusinessUserController {
         return mv;
     }
     @RequestMapping("toQuery")
-    public String shanghu(){
-        System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";}
-        @RequestMapping("toUpdate")
-        public String toUpdate(){
-            return "menu/commercial/businessUserUpdate.html";
-        }
+    public String shanghu(){return "menu/commercial/shanghuxinxifguanli.html";}
+    @RequestMapping("toUpdate")
+    public String toUpdate(){return "menu/commercial/businessUserUpdate.html";}
     /**
      *商户修改的方法
      *@param tbBusinessUser
