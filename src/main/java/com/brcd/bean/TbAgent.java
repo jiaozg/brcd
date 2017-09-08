@@ -97,5 +97,7 @@ public class TbAgent {
 
     private String remark;
 
-    private Integer wOrAlipay;
+
+   private Integer wOrAilpay;
+
 }
