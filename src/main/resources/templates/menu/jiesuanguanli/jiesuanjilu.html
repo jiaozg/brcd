@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="overflow-x:auto;overflow-y:auto;">
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>结算记录查询管理 - Powered By JeeSite</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
@@ -136,7 +136,22 @@
     </tr>
     </thead>
     <tbody>
-
+          <tr th:each="Settle:${selectTbSettleList}">
+              <td th:text="${Settle.payoffNum}"></td>
+              <td th:text="${Settle.settleNum}"></td>
+              <td th:text="${#calendars.format(Settle.settleTime,'yyyy-MM-dd')}">2017-07-07</td>
+              <td th:text="${Settle.customerNum}"></td>
+              <td th:text="${Settle.customerType}"></td>
+              <td th:text="${Settle.settleType}"></td>
+              <td th:text="${Settle.settleMode}"></td>
+              <td th:text="${Settle.orderAmount}"></td>
+              <td th:text="${Settle.orderCount}"></td>
+              <td th:text="${Settle.settleFee}"></td>
+              <td th:text="${Settle.settleAmount}"></td>
+              <td th:text="${Settle.settleStatus}"></td>
+              <td th:text="${Settle.remark}"></td>
+              <td>查看</td>
+          </tr>
     </tbody>
 </table>
 <div class="pagination"><ul>
