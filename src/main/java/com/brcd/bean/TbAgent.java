@@ -1,6 +1,9 @@
 package com.brcd.bean;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /*
 使用lombok
@@ -8,7 +11,7 @@ import lombok.Data;
 @Data
 public class TbAgent {
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 
@@ -62,6 +65,9 @@ public class TbAgent {
 
     private String password;
 
+    private String newPassWord;//修改的新密码
+
+
     private String lastIp;//登陆的IP
 
     private Long lastLoginTime;//登陆的时间
@@ -71,6 +77,8 @@ public class TbAgent {
     private String userType;//用户类型
 
     private String headSculpture;
+
+//    private File headSculptureFile;
 
     private String companyAffiliation;//归属公司
 

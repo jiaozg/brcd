@@ -20,14 +20,14 @@
     manage_province=#{manageProvince},
     manage_city=#{manageCity},
     manage_district=#{manageDistrict},
-    register_address=#{registerAddress},
+
     identity_card_front=#{identityCardFront},
     identity_card_reverse=#{identityCardReverse},
     identity_card_hand=#{identityCardHand},
     bank_card_front=#{bankCardFront},
-    business_license_picture=#{businessLicensePicture},
-    door_picture=#{doorPicture},
-    register_license_picture=#{registerLicensePicture}
+
+
+
     WHERE business_uid=#{businessUid}
 
 </update>
@@ -62,14 +62,14 @@
     </resultMap>
 
     <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
-        SELECT * FROM tb_business_user b where 1=1
-        <if test="businessUid != null">
+        SELECT * FROM tb_business_user b,tb_agent a where b.affiliation_agent = a.agent_number and a.agent_number = #{affiliationAgent}
+        <if test="businessUid != null and businessUid != ''">
             and b.business_uid = #{businessUid}
         </if>
-        <if test="businessUserType != null">
+        <if test="businessUserType != null and businessUserType != ''">
             and b.business_user_type = #{businessUserType}
         </if>
-        <if test="manageName != null">
+        <if test="manageName != null and manageName != ''">
             and b.manage_name LIKE '%${manageName}%'
         </if>
         <if test="businessUserStatus != null">
@@ -81,10 +81,10 @@
         <if test="endTime != null">
             and b.end_time &lt; #{endTime}
         </if>
-        <if test="legalPeopleName != null">
+        <if test="legalPeopleName != null and legalPeopleName != ''">
             and legal_people_name like '%${legalPeopleName}%'
         </if>
-        <if test="contactPhone != null">
+        <if test="contactPhone != null and contactPhone != ''">
             and contact_phone = #{contactPhone}
         </if>
     </select>
