@@ -215,13 +215,13 @@
                         <div class="box-sm">
                             <ul class="reset-ul mrg5B">
                                 <li>
-                                    <a href="toPersonageMessage" target="mainFrame">
+                                    <a href="toPersonageMessage" th:href="@{'toPersonageMessage'}" target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
                                         个人信息
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../user/xiugaimima.html" th:href="@{'/toUpdatePassword'}" target="mainFrame">
+                                    <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}" target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
                                         修改密码
                                     </a>
@@ -229,7 +229,7 @@
 
                             </ul>
                             <div class="pad5A button-pane button-pane-alt text-center">
-                                <a href="/a/logout" class="btn display-block font-normal btn-danger"
+                                <a href="/a/logout" th:href="@{AgentExit}" class="btn display-block font-normal btn-danger"
                                    style="width: 161px;">
                                     <i class="glyph-icon icon-power-off"></i>
                                     退出登录

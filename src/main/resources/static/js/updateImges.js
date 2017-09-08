@@ -19,4 +19,3 @@ function showXY(source) {
     var img = document.getElementById("loc_img");
     img.src = source;
 }
-
