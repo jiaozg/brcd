@@ -1,3 +1,4 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
+
 /**
  * Created by 任彩雨 on 2017/9/5.
  * 代理商登录模块
  */
+
 @Controller
 public class AgentLoginController {
     @Autowired
@@ -44,3 +47,4 @@ public class AgentLoginController {
     }
 
 }
+

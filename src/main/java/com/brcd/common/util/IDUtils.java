@@ -41,7 +41,9 @@ public class IDUtils {
     /**
 	 * 商户id生成为String类型
 	 */
+
 	public static String genItemId() {
+
 		//取当前时间的长整形值包含毫秒
 		long millis = System.currentTimeMillis();
 		//long millis = System.nanoTime();
