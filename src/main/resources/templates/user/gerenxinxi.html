@@ -38,6 +38,9 @@
     <script src="../../static/static/common/jeesite.js" th:src="@{/static/common/jeesite.js}"
             type="text/javascript"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic = '/static';</script>
+    <link href="../../static/css/fileCSS.css" th:href="@{/css/fileCSS.css}" type="text/css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/updateImges.js" th:src="@{/js/updateImges.js}"></script>
     <!-- Baidu tongji analytics -->
     <script>var _hmt = _hmt || [];
     (function () {
@@ -73,27 +76,29 @@
 <body>
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="/a/sys/user/info">个人信息</a></li>
-    <li><a href="xiugaimima.html">修改密码</a></li>
+    <li class="active"><a href="toPersonageMessage" th:href="@{'/toPersonageMessage'}">个人信息</a></li>
+    <li><a href="xiugaimima.html" th:href="@{'/toUpdatePassword'}">修改密码</a></li>
 </ul>
 <br/>
-<form id="inputForm" class="form-horizontal" action="save" method="post">
+<form id="inputForm" class="form-horizontal" action="save" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" th:value="${agentMsg.id}"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
     <div class="control-group">
         <label class="control-label">头像:</label>
+        <img src="" id="loc_img"  width="150" height="150"/>
         <div class="controls">
-            <input id="nameImage" name="photo" maxlength="255" class="input-xlarge" type="hidden" value=""/>
+            <input id="nameImage" name="headSculpture" maxlength="255" class="input-xlarge" type="hidden"
+                   th:value="${agentMsg.headSculpture}"/>
             <ol id="nameImagePreview"></ol>
-            <a href="javascript:" onclick="nameImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:"
-                                                                                              onclick="nameImageDelAll();"
-                                                                                              class="btn">清除</a>
+            <a class="file">选择
+                <input type="file" name="headSculptureFile" id="headSculptureFile" class="file"/>
+            </a>
+            <!--<a href="javascript:" onclick="nameImageDelAll();" class="file">清除</a>-->
             <script type="text/javascript">
                 function nameImageFinderOpen() {//
                     var date = new Date(), year = date.getFullYear(),
                         month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
-                    var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/photo/" + year + "/" + month +
-                        "/&action=js&func=nameImageSelectAction&thumbFunc=nameImageThumbSelectAction&cb=nameImageCallback&dts=0&sm=0";
+                    var url = "user/xiugaimima";
                     windowOpen(url, "文件管理", 1000, 700);
                     //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                 }
@@ -162,7 +167,7 @@
     <div class="control-group">
         <label class="control-label">姓名:</label>
         <div class="controls">
-            <input id="name"  class="required" readonly="readonly" type="text" th:value="${agentMsg.name}"
+            <input id="name" class="required" readonly="readonly" type="text" th:value="${agentMsg.name}"
                    maxlength="50"/>
         </div>
     </div>
