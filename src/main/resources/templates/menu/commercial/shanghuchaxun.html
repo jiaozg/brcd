@@ -24,47 +24,53 @@
 
 
     <meta name="decorator" content="default"/>
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function(){
+                $("#pageNo").val(1);
+                $("#searchForm").submit();
+            })
 
-
+        })
+    </script>
 </head>
 <body>
-
 <ul class="nav nav-tabs">
     <li class="active"><a href="javascript:void(0)">商户信息列表</a></li>
 </ul>
 <form id="searchForm" class="breadcrumb form-search" th:action="@{/businessUser/query}" action="#" method="get">
-  <!--  <input id="pageNo" name="pageNo" type="hidden" value="1"/>
-    <input id="pageSize" name="pageSize" type="hidden" value="15"/>
-    <input id="operate" name="operate" type="hidden" value="detail"/>-->
+    <input id="pageNo" type="hidden" name="currentPage" th:value="${#request.getAttribute('currentPage')}"/>
+
+     <!--   <input id="operate" name="operate" type="hidden" value="detail"/>-->
     <input id="agentId" name="affiliationAgent" type="hidden" value="21564546514"/>
     <ul class="ul-form">
         <li><label>商户编号：</label>
-            <input id="customerNum" name="businessUid" class="input-medium" type="text" value="" maxlength="32"/>
+            <input id="customerNum" name="businessUid" th:value="${history.businessUid}" class="input-medium" type="text" value="" maxlength="32"/>
         </li>
         <li style="margin-left: 60px;"><label>商户类型：</label>
-            <select id="customerType" name="businessUserType" style="width:155px;" class="input-medium">
-                <option value="" selected="selected">--请选择商户类型--</option>
-                <option value="企业商户">企业商户</option>
-                <option value="个人商户">个人商户</option>
+            <select id="customerType" name="businessUserType"  style="width:155px;" class="input-medium">
+                <option value="" >--请选择商户类型--</option>
+                <option value="企业商户" th:selected="${history.businessUserType=='企业商户'}">企业商户</option>
+                <option value="个人商户" th:selected="${history.businessUserType=='个人商户'}">个人商户</option>
             </select>
         </li>
         <li style="margin-left: 60px;"><label>法人姓名：</label>
-            <input id="legalName" name="legalPeopleName" class="input-medium" type="text" value="" maxlength="32"/>
+            <input id="legalName" name="legalPeopleName" th:value="${history.legalPeopleName}" class="input-medium" type="text" value="" maxlength="32"/>
         </li>
         <li><label>商户手机号：</label>
-            <input id="contactPhone" name="contactPhone" class="input-medium" type="text" value="" maxlength="255"/>
+            <input id="contactPhone" th:value="${history.contactPhone}" name="contactPhone" class="input-medium" type="text" value="" maxlength="255"/>
         </li>
     </ul>
     <ul class="ul-form">
         <li><label>经营名称：</label>
-            <input id="businessName" name="manageName" class="input-medium" type="text" value="" maxlength="255"/>
+            <input id="businessName" th:value="${history.manageName}" name="manageName" class="input-medium" type="text" value="" maxlength="255"/>
         </li>
         <li style="margin-left: 60px;"><label>商户状态：</label>
             <select id="customerStatus" name="businessUserStatus" style="width:155px;" class="input-medium">
                 <option value="" selected="selected">--请选择商户状态--</option>
-                <option value="0">待审核</option>
-                <option value="1">审核通过</option>
-                <option value="2">审核拒绝</option>
+                <option value="0" th:selected="${history.businessUserStatus==0}">待审核</option>
+                <option value="1" th:selected="${history.businessUserStatus==1}">审核通过</option>
+                <option value="2" th:selected="${history.businessUserStatus==2}">审核拒绝</option>
             </select>
         </li>
 
@@ -74,17 +80,17 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-                <input name="startTime" class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+                <input name="startTime"th:value="${#dates.format(history.startTime, 'yyyy-MM-dd')}"  class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
         </li>
         <li style="margin-left: 60px;">
             <label>结束时间：</label>
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input name="endTime" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input name="endTime" th:value="${#dates.format(history.endTime, 'yyyy-MM-dd')}" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
         </li>
 
-        <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="submit" value="查询"/></li>
+        <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
         <li class="btns"><input class="btn btn-primary" type="button" value="导出excel" onclick="exportExcel()"/></li>
         <li class="clearfix"></li>
     </ul>
@@ -131,7 +137,9 @@
         <td th:text="${shang.businessUserType}">个体商户</td>
         <td th:text="${shang.legalPeopleName}">张明盟</td>
         <td th:text="${shang.manageName}">张明盟小卖部</td>
-        <td th:text="${shang.businessUserStatus}">审核通过</td>
+        <td th:if="${shang.businessUserStatus==0}">待审核</td>
+        <td th:if="${shang.businessUserStatus==1}">审核通过</td>
+        <td th:if="${shang.businessUserStatus==2}">审核拒绝</td>
         <td>
             <a href="javascript:void(0);" onclick="showApikey(this)">查看密钥</a>
             <span style="display:none;" th:text="${shang.businessUserKey}">
@@ -149,12 +157,11 @@
     </tbody>
 </table>
 
-
 <div class="pagination"><ul>
-    <li class="disabled"><a href="javascript:">&#171; 上一页</a></li>
-    <li class="active"><a href="javascript:">1</a></li>
-    <li class="disabled"><a href="javascript:">下一页 &#187;</a></li>
-    <li class="disabled controls"><a href="javascript:">每页 <input type="text" value="15" onkeypress="var e=window.event||event;var c=e.keyCode||e.which;if(c==13)page(1,this.value,'');" onclick="this.select();"/> 条，共 1 条， 共 1 页</a></li>
+    <li><a href="#" onclick="page('p')" disabled="true">&#171; 上一页</a></li>
+    <li class="active"><a href="javascript:" th:text="${#request.getAttribute('currentPage')}">1</a></li>
+    <li ><a href="#" onclick="page('n')">下一页 &#187;</a></li>
+    <li class="disabled controls"><a href="javascript:">每页 <input type="text" value="5" onkeypress="var e=window.event||event;var c=e.keyCode||e.which;if(c==13)page(1,this.value,'');" onclick="this.select();"/> 条，共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页</a></li>
 </ul>
     <div style="clear:both;"></div></div>
 
@@ -169,6 +176,22 @@
         laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
         laydate({elem: '#demo2'});//绑定元素
     }();
+    function showApikey(ele){
+        $(ele).css("display","none");
+        $(ele).next().css("display","block");
+    }
+    function page(s){
+       var pageCount =  $("#pageCount").text();
+
+        if(s == "n" && parseInt($("#pageNo").val()) < pageCount ){
+            $("#pageNo").val(parseInt($("#pageNo").val())+1);
+        }
+        if(s == "p" && parseInt($("#pageNo").val()) > 1){
+            $("#pageNo").val(parseInt($("#pageNo").val())-1);
+        }
+        $("#searchForm").submit();
+        return false;
+    }
 </script>
 
 
