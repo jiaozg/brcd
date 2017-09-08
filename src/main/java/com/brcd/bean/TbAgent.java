@@ -11,7 +11,7 @@ import java.io.File;
 @Data
 public class TbAgent {
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 

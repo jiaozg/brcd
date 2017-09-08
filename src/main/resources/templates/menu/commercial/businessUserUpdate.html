@@ -5,27 +5,44 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
     <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
     <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
-    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
-    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
-    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
+    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"
+    th:src="@{../static/jquery/jquery-1.8.3.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet"
+    th:href="@{../static/bootstr    ap/2.3.1/css_cerulean/bootstrap.min.css}"/>
+    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"
+    th:src="@{../static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet"
+    th:href="@{../static/bootstrap/2.3.1/awesome/font-awesome.min.css}"/>
+    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet"
+    th:href="@{../static/jquery-select2/3.4/select2.min.css}"/>
+    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"
+    th:src="@{../static/jquery-select2/3.4/select2.min.js}"></script>
+    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"
+    th:href="@{../static/jquery-validation/1.11.0/jquery.validate.min.css}"/>
+    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"
+    th:src="@{../static/jquery-validation/1.11.0/jquery.validate.min.js}"></script>
+    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet"
+    th:href="@{../static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}"/>
+    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"
+    th:src="@{../static/jquery-jbox/2.3/jquery.jBox-2.3.min.js}"></script>
+    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"
+    th:src="@{../static/My97DatePicker/WdatePicker.js}"></script>
+    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"
+    th:src="@{../static/common/mustache.min.js}"></script>
+    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet"
+    th:href="@{../static/common/jeesite.css}"/>
+    <script src="../../../static/static/common/jeesite.js" type="text/javascript"
+    th:src="@{../static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
 
 
     <meta name="decorator" content="default"/>
-    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css">
-    <script src="../../../static/static/jquery-ui/ui.js"></script>
-    <script type="text/javascript" src="../../../static/static/jquery-tmpl/template.js"></script>
+    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css"
+    th:href="@{../static/jquery-ui/ui.css}">
+    <script src="../../../static/static/jquery-ui/ui.js"
+    th:src="@{../static/jquery-ui/ui.js}"></script>
+    <script type="text/javascript" src="../../../static/static/jquery-tmpl/template.js"
+    th:src="@{../static/jquery-tmpl/template.js}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             //判断当前商户是否有信息变更在审核中
@@ -459,7 +476,7 @@
 
 
 
-            //点击选择省份
+           /* //点击选择省份
             $('#provinceSel').change(function(){
 
                 //清空 市区 option 内容
@@ -528,7 +545,7 @@
                     $('#citySel').attr('city_id',cityCode);
                     $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
                 },100);
-            });
+            });*/
 
             //点击 选择开卡省份
             $('#cardProvinceSel').change(function(){
@@ -808,38 +825,9 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="/a/operate/customer/brcbCustomer/editForm?id=534709">商户信息修改</a></li>
 </ul><br/>
-<form id="inputForm" class="form-horizontal" action="/a/operate/customer/brcbCustomer/edit" method="post">
+<form id="inputForm" class="form-horizontal" action="/a/operate/customer/brcbCustomer/edit" method="post" enctype="multipart/form-data">
 
     <input id="id" name="id" type="hidden" value="534709"/>
-    <input id="customerNum" name="customerNum" type="hidden" value="C149549272476110416"/>
-    <input type="hidden" value="兴业银行" id="bankNameHidden" />
-    <input type="hidden" value="北京市" id="provinceHidden" />
-    <input type="hidden" value="市辖区" id="cityHidden" />
-    <input type="hidden" value="兴业银行北京分行上地支行" id="bankAddressHidden" />
-
-    <input type="hidden" value="" id="provinceNameHidden" />
-    <input type="hidden" value="" id="cityNameHidden" />
-    <input type="hidden" value="" id="districtNameHidden" />
-
-
-    <input type="hidden" value="" id="businessTypeHidden" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
     <h6>商户基本信息</h6>
@@ -850,7 +838,6 @@
                 <div class="control-group">
                     <label class="control-label">所属代理商：</label>
                     <div class="controls">
-                        <input type="hidden" id="agentNo" value="A149549246147410970">
                         <span id="agentNum" style="display:none;">A149549246147410970</span>
                         <span id="agentName"></span>
                     </div>
@@ -862,7 +849,7 @@
             <td><div class="control-group">
                 <label class="control-label">商户类型：</label>
                 <div class="controls">
-                    <select id="customerTypeSel" name="customerType" class="input-xlarge required">
+                    <select id="customerTypeSel" name="businessUserType" class="input-xlarge required">
                         <option value="ENTERPRISE">企业商户</option>
                         <option value="PERSONAL" selected="selected">个体户</option>
                     </select>
@@ -872,7 +859,7 @@
             <td><div class="control-group">
                 <label class="control-label">经营名称：</label>
                 <div class="controls">
-                    <input id="businessName" name="businessName" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="255"/>
+                    <input id="businessName" name="manageName" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="255"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -882,14 +869,14 @@
             <td><div class="control-group">
                 <label class="control-label">商户名称：</label>
                 <div class="controls">
-                    <input id="customerName" name="customerName" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="50"/>
+                    <input id="customerName" name="businessUsername" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
             <td><div class="control-group">
                 <label class="control-label">法人姓名：</label>
                 <div class="controls">
-                    <input id="legalName" name="legalName" class="input-xlarge required" type="text" value="张明盟" maxlength="32"/>
+                    <input id="legalName" name="legalPeopleName" class="input-xlarge required" type="text" value="张明盟" maxlength="32"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -899,7 +886,7 @@
                 <div class="control-group">
                     <label class="control-label">法人身份证：</label>
                     <div class="controls">
-                        <input id="legalId" name="legalId" class="input-xlarge required isIdCardNo" type="text" value="130826199106117918" maxlength="32"/>
+                        <input id="legalId" name="legalPeopleIdentityCard" class="input-xlarge required isIdCardNo" type="text" value="130826199106117918" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -907,7 +894,7 @@
             <td><div class="control-group">
                 <label class="control-label">联系人：</label>
                 <div class="controls">
-                    <input id="contact" name="contact" class="input-xlarge required" type="text" value="张明盟" maxlength="50"/>
+                    <input id="contact" name="contactPeople" class="input-xlarge required" type="text" value="张明盟" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -924,7 +911,7 @@
                 <div class="control-group">
                     <label class="control-label">联系邮箱：</label>
                     <div class="controls">
-                        <input id="contactEmail" name="contactEmail" class="input-xlarge email" type="text" value="" maxlength="50"/>
+                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" value="" maxlength="50"/>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -937,23 +924,26 @@
                     <input id="servicePhone" name="servicePhone" class="input-xlarge telephone required " type="text" value="18410178782" maxlength="20"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
+
+            <td>
+                <div class="control-group">
+                    <label class="control-label">经营地址：</label>
+                    <div class="controls">
+                        <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
+                    </div>
+                </div>
+            </td>
             </div>
             </td>
         </tr>
-        <tr>
+       <!-- <tr>
 
-            <td><div class="control-group">
-                <label class="control-label">经营地址：</label>
-                <div class="controls">
-                    <input id="businessAddressSel" name="businessAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
-                </div>
-            </div></td>
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
 
-                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择省份--</option>
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -964,8 +954,8 @@
                 <label class="control-label">经营市名称：</label>
                 <div class="controls">
 
-                    <select id="citySel" name="cityCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择市--</option>
+                    <select id="citySel" name="manageCity" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -973,15 +963,45 @@
                 <label class="control-label">经营区名称：</label>
                 <div class="controls">
 
-                    <select id="areaSel" name="districtCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择区--</option>
+                    <select id="areaSel" name="manageDistrict" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
+        </tr>-->
+
+        <tr data-toggle="distpicker">
+            <td><div class="control-group">
+                <label class="control-label">经营省名称：</label>
+                <div class="controls">
+                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                    </select>
+                </div>
+            </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label" >经营市名称：</label>
+                    <div class="controls">
+                        <select id="city1" name="cityCode" class="input-xlarge">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" >经营区名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="districtCode" class="input-xlarge">
+                        </select>
+                    </div>
+
+
+                </div>
+            </td>
         </tr>
     </table>
 
-    <table id="enterpriseTable">
+
+    <!--<table id="enterpriseTable">
         <tr>
 
             <td><div class="control-group">
@@ -1000,7 +1020,7 @@
                 </div>
             </div></td>
         </tr>
-    </table>
+    </table>-->
 
     <h6>业务信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
@@ -1011,7 +1031,7 @@
 
                 <li><a href="#tabs-1">微信线下支付</a></li>
 
-                <li><a href="#tabs-2">微信APP支付</a></li>
+              <!--  <li><a href="#tabs-2">微信APP支付</a></li>-->
 
                 <li><a href="#tabs-3">支付宝</a></li>
 
@@ -1024,12 +1044,13 @@
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.id" value="">
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.transFee.customerFeeNum" value="">
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.customerFeeNum" value="">
+
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
                         <select id="channelStatus-1" name="brcbChannelFeeList[0].isOpenChannel" data-index="1" class="input-xlarge channelStatus">
-                            <option value="Y">开通</option>
-                            <option value="N" selected="selected">不开通</option>
+                            <option value="Y" >开通</option>
+                            <option value="N" >不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1124,9 +1145,9 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                       <!-- <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>
+                                        <span class="help-inline"><font color="red">*</font> </span>-->
                                     </div>
                                 </div>
                             </td>
@@ -1155,143 +1176,6 @@
                 </div>
             </div>
 
-            <div id="tabs-2" >
-                <input type="hidden" name="brcbChannelFeeList[1].channelNum" value="WECHAT_APP" id="channelNum-2">
-                <input type="hidden" name="brcbChannelFeeList[1].channelName" value="微信APP支付" >
-                <input type="hidden" name="brcbChannelFeeList[1].customerFee.transFee.id" value="">
-                <input type="hidden" name="brcbChannelFeeList[1].customerFee.settleFee.id" value="">
-                <input type="hidden" name="brcbChannelFeeList[1].customerFee.transFee.customerFeeNum" value="">
-                <input type="hidden" name="brcbChannelFeeList[1].customerFee.settleFee.customerFeeNum" value="">
-                <div class="control-group">
-                    <label class="control-label">是否开通：</label>
-                    <div class="controls">
-                        <select id="channelStatus-2" name="brcbChannelFeeList[1].isOpenChannel" data-index="2" class="input-xlarge channelStatus">
-                            <option value="Y">开通</option>
-                            <option value="N" selected="selected">不开通</option>
-                        </select>
-                        <span class="help-inline"><font color="red">*</font> </span>
-                    </div>
-                </div>
-                <div id="channelSetting-2">
-                    <table>
-                        <tr>
-                            <td><div class="control-group">
-                                <label class="control-label">收款费率%：</label>
-                                <div class="controls">
-                                    <input name="brcbChannelFeeList[1].customerFee.transFee.rate" data-index = "2" value="" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-2">
-
-                                    <span id="tradeFee_label_2" style="color:red;"></span>
-                                    <span class="help-inline"><font color="red">*</font> </span>
-                                </div>
-                            </div></td>
-                            <td>
-                                <div class="control-group">
-                                    <label class="control-label">T+0状态：</label>
-                                    <div class="controls">
-                                        <select id="t0StatusSel-2" name="brcbChannelFeeList[1].t0Status" data-index="2" class="input-xlarge t0StatusSel">
-                                            <option value="N" selected="selected">不开通</option>
-                                            <option value="Y">开通</option>
-                                        </select>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="control-group">
-                                    <label class="control-label">经营行业：</label>
-                                    <div class="controls">
-                                        <select id="channelBusinessType-2" name="brcbChannelFeeList[1].businessType" data-index="2" class="input-xlarge required">
-                                            <option value="" selected="selected">--请选择经营行业--</option>
-                                        </select>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </div>
-                                </div>
-                                <input type="hidden" data-index = "2" id="businessTypeHidden-2" value=""  >
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <div class="control-group">
-                                    <label class="control-label">联系人微信账号类型：</label>
-                                    <div class="controls">
-                                        <select id="brcbChannelFeeList1.contactType" name="brcbChannelFeeList[1].contactType" data-index="2" class="input-xlarge">
-                                            <option value="" selected="selected">--请选择账号类型--</option>
-                                            <option value="type_wechatid">收款人微信号</option>
-                                            <option value="type_openid">收款人openId</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="control-group">
-                                    <label class="control-label">联系人微信账号：</label>
-                                    <div class="controls">
-                                        <input id="brcbChannelFeeList1.contactId" name="brcbChannelFeeList[1].contactId" data-index="2" class="input-xlarge" type="text" value=""/>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <table id="settleModeSel-2" class="settleModeSel">
-                        <tr>
-                            <td><div class="control-group">
-                                <label class="control-label">T+0费率%:</label>
-                                <div class="controls">
-                                    <input type="text" class="input-xlarge required number settleFee" id="settleFee-2" data-index = "2"   placeholder="请输入T+0费率 " maxLength="5"  name="brcbChannelFeeList[1].customerFee.settleFee.rate" value=""  />
-                                    <span id="settleFee_label_2" style="color:red;"></span>
-                                    <span class="help-inline"><font color="red">*</font> </span>
-                                </div>
-                            </div>
-                            </td>
-                            <td><div class="control-group">
-                                <label class="control-label">加收单笔（元）:</label>
-                                <div class="controls">
-                                    <input type="text" class="input-xlarge required number money fixedFee" id="fixedFee-2" data-index = "2"   placeholder="请输入单笔费用 " maxLength=7  name="brcbChannelFeeList[1].customerFee.settleFee.fixedFee" value=""  />
-                                    <span id="settleFee_label_2" style="color:red;"></span>
-                                    <span class="help-inline"><font color="red">*</font> </span>
-                                </div>
-                            </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="control-group">
-                                    <label class="control-label">是否封顶:</label>
-                                    <div class="controls">
-                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="control-group">
-                                    <!-- <label class="control-label">结算方式:</label> -->
-                                    <div class="controls">
-
-                                        <input type="hidden" name="brcbChannelFeeList[1].customerFee.settleFee.settleMode" value="T0_HANDING">
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td id="capValue">
-                                <div class="control-group">
-                                    <label class="control-label">封顶值（元）:</label>
-                                    <div class="controls">
-                                        <input type="text" class="input-xlarge required  number money"  placeholder="请输入封顶值 " maxLength=7  name="brcbChannelFeeList[1].customerFee.settleFee.upperFee" value=""  />
-                                        <span class="help-inline"><font color="red">*</font> </span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
 
             <div id="tabs-3" >
                 <input type="hidden" name="brcbChannelFeeList[2].channelNum" value="ALIPAY" id="channelNum-3">
@@ -1366,7 +1250,7 @@
                                 <label class="control-label">加收单笔（元）:</label>
                                 <div class="controls">
                                     <input type="text" class="input-xlarge required number money fixedFee" id="fixedFee-3" data-index = "3"   placeholder="请输入单笔费用 " maxLength=7  name="brcbChannelFeeList[2].customerFee.settleFee.fixedFee" value=""  />
-                                    <span id="settleFee_label_3" style="color:red;"></span>
+                                    <span id="settleFee_label_4" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
                                 </div>
                             </div>
@@ -1377,9 +1261,9 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <!--<input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>
+                                        <span class="help-inline"><font color="red">*</font> </span>-->
                                     </div>
                                 </div>
                             </td>
@@ -1513,85 +1397,10 @@
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <input id="rightID" name="brcbCustomerMaterial.rightID" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="rightID" name="identityCardFrontImg" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
 
                         <ol id="rightIDPreview"></ol><a href="javascript:" onclick="rightIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function rightIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightIDSelectAction&thumbFunc=rightIDThumbSelectAction&cb=rightIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function rightIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightIDCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function rightIDDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#rightID").val($("#rightID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightIDPreview();
-                            }
-                            function rightIDDelAll(){
-                                $("#rightID").val("");
-                                rightIDPreview();
-                            }
-                            function rightIDPreview(){
-                                var li, urls = $("#rightID").val().split("|");
-                                $("#rightIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightIDDel(this);\">×</a></li>";
-                                        $("#rightIDPreview").append(li);
-                                    }
-                                }
-                                if ($("#rightIDPreview").text() == ""){
-                                    $("#rightIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            rightIDPreview();
-                        </script>
+
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1600,85 +1409,10 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <input id="reservedID" name="brcbCustomerMaterial.reservedID" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="reservedID" name="identityCardReverseImg" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
 
                         <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="reservedIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function reservedIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=reservedIDSelectAction&thumbFunc=reservedIDThumbSelectAction&cb=reservedIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function reservedIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function reservedIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function reservedIDCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function reservedIDDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#reservedID").val($("#reservedID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                reservedIDPreview();
-                            }
-                            function reservedIDDelAll(){
-                                $("#reservedID").val("");
-                                reservedIDPreview();
-                            }
-                            function reservedIDPreview(){
-                                var li, urls = $("#reservedID").val().split("|");
-                                $("#reservedIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"reservedIDDel(this);\">×</a></li>";
-                                        $("#reservedIDPreview").append(li);
-                                    }
-                                }
-                                if ($("#reservedIDPreview").text() == ""){
-                                    $("#reservedIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            reservedIDPreview();
-                        </script>
+
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1689,85 +1423,10 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <input id="IDWithHand" name="brcbCustomerMaterial.IDWithHand" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="IDWithHand" name="identityCardHandImg" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
 
                         <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="IDWithHandFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function IDWithHandFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=IDWithHandSelectAction&thumbFunc=IDWithHandThumbSelectAction&cb=IDWithHandCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function IDWithHandSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
-                                //top.$.jBox.close();
-                            }
-                            function IDWithHandThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
-                                //top.$.jBox.close();
-                            }
-                            function IDWithHandCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function IDWithHandDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#IDWithHand").val($("#IDWithHand").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                IDWithHandPreview();
-                            }
-                            function IDWithHandDelAll(){
-                                $("#IDWithHand").val("");
-                                IDWithHandPreview();
-                            }
-                            function IDWithHandPreview(){
-                                var li, urls = $("#IDWithHand").val().split("|");
-                                $("#IDWithHandPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"IDWithHandDel(this);\">×</a></li>";
-                                        $("#IDWithHandPreview").append(li);
-                                    }
-                                }
-                                if ($("#IDWithHandPreview").text() == ""){
-                                    $("#IDWithHandPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            IDWithHandPreview();
-                        </script>
+
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -1776,85 +1435,10 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" name="brcbCustomerMaterial.rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="rightBankCard" name="bankCardFrontimg" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
 
                         <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="rightBankCardFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function rightBankCardFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightBankCardSelectAction&thumbFunc=rightBankCardThumbSelectAction&cb=rightBankCardCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function rightBankCardSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightBankCardThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightBankCardCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function rightBankCardDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#rightBankCard").val($("#rightBankCard").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightBankCardPreview();
-                            }
-                            function rightBankCardDelAll(){
-                                $("#rightBankCard").val("");
-                                rightBankCardPreview();
-                            }
-                            function rightBankCardPreview(){
-                                var li, urls = $("#rightBankCard").val().split("|");
-                                $("#rightBankCardPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightBankCardDel(this);\">×</a></li>";
-                                        $("#rightBankCardPreview").append(li);
-                                    }
-                                }
-                                if ($("#rightBankCardPreview").text() == ""){
-                                    $("#rightBankCardPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            rightBankCardPreview();
-                        </script>
+
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1865,85 +1449,10 @@
                 <div class="control-group">
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
-                        <input id="licenseImage" name="brcbCustomerMaterial.licenseImage" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="licenseImage" name="businessLicensePictureImg" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
 
                         <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="licenseImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function licenseImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=licenseImageSelectAction&thumbFunc=licenseImageThumbSelectAction&cb=licenseImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function licenseImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function licenseImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function licenseImageCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function licenseImageDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#licenseImage").val($("#licenseImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                licenseImagePreview();
-                            }
-                            function licenseImageDelAll(){
-                                $("#licenseImage").val("");
-                                licenseImagePreview();
-                            }
-                            function licenseImagePreview(){
-                                var li, urls = $("#licenseImage").val().split("|");
-                                $("#licenseImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"licenseImageDel(this);\">×</a></li>";
-                                        $("#licenseImagePreview").append(li);
-                                    }
-                                }
-                                if ($("#licenseImagePreview").text() == ""){
-                                    $("#licenseImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            licenseImagePreview();
-                        </script>
+
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1952,85 +1461,10 @@
                 <div class="control-group">
                     <label class="control-label">门头照：</label>
                     <div class="controls">
-                        <input id="doorHeadImage" name="brcbCustomerMaterial.doorHeadImage" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="doorHeadImage" name="doorPictureImg" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
 
                         <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="doorHeadImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function doorHeadImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=doorHeadImageSelectAction&thumbFunc=doorHeadImageThumbSelectAction&cb=doorHeadImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function doorHeadImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function doorHeadImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function doorHeadImageCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function doorHeadImageDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#doorHeadImage").val($("#doorHeadImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                doorHeadImagePreview();
-                            }
-                            function doorHeadImageDelAll(){
-                                $("#doorHeadImage").val("");
-                                doorHeadImagePreview();
-                            }
-                            function doorHeadImagePreview(){
-                                var li, urls = $("#doorHeadImage").val().split("|");
-                                $("#doorHeadImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"doorHeadImageDel(this);\">×</a></li>";
-                                        $("#doorHeadImagePreview").append(li);
-                                    }
-                                }
-                                if ($("#doorHeadImagePreview").text() == ""){
-                                    $("#doorHeadImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            doorHeadImagePreview();
-                        </script>
+
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -2039,85 +1473,10 @@
                 <div class="control-group">
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
-                        <input id="accountLicence" name="brcbCustomerMaterial.accountLicence" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        <input id="accountLicence" name="registerLicensePictureImg" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
 
                         <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="accountLicenceFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function accountLicenceFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=accountLicenceSelectAction&thumbFunc=accountLicenceThumbSelectAction&cb=accountLicenceCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function accountLicenceSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
-                                //top.$.jBox.close();
-                            }
-                            function accountLicenceThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
-                                //top.$.jBox.close();
-                            }
-                            function accountLicenceCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function accountLicenceDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#accountLicence").val($("#accountLicence").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                accountLicencePreview();
-                            }
-                            function accountLicenceDelAll(){
-                                $("#accountLicence").val("");
-                                accountLicencePreview();
-                            }
-                            function accountLicencePreview(){
-                                var li, urls = $("#accountLicence").val().split("|");
-                                $("#accountLicencePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"accountLicenceDel(this);\">×</a></li>";
-                                        $("#accountLicencePreview").append(li);
-                                    }
-                                }
-                                if ($("#accountLicencePreview").text() == ""){
-                                    $("#accountLicencePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            accountLicencePreview();
-                        </script>
+
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -2468,6 +1827,9 @@
         return flag;
     }
 </script>
+<script src="../../../static/address/distpicker.data.js"></script>
+<script src="../../../static/address/distpicker.js"></script>
+<script src="../../../static/address/main.js"></script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
 if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
@@ -2477,6 +1839,23 @@ if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
         //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
     });
 }//-->
+</script>
+
+<script>
+    $("#channelStatus-1").click(function () {
+        if($(this).children('option:selected').val()=='Y'  ){
+            $("#channelSetting-1").show();
+        }else {
+            $("#channelSetting-1").hide();
+        }
+    })
+    $("#channelStatus-3").click(function () {
+        if($(this).children('option:selected').val()=='Y'  ){
+            $("#channelSetting-3").show();
+        }else {
+            $("#channelSetting-3").hide();
+        }
+    })
 </script>
 </body>
 </html>
