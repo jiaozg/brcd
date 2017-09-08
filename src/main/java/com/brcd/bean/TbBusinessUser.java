@@ -61,6 +61,7 @@ public class TbBusinessUser {
     private Integer businessUserStatus;
     private Date startTime;
     private Date endTime;
+    private String businessUserKey;
 
     private TbBankcardInfo tbBankcardInfo;
 

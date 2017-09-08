@@ -3,6 +3,7 @@ package com.brcd.service.impl;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.common.util.IDUtils;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
@@ -36,10 +37,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     @Override
     public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-
+        //设置主键ID
+        businessUser.setBusinessUid(IDUtils.genItemId());
 
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        //设置外键的值
+        bankcardInfo.setBusinessUid(IDUtils.genItemId());
         insertBankcardInfo(bankcardInfo);
+        //设置外键的值
+        business.setBusinessUid(IDUtils.genItemId());
         insertBusiness(business);
     }
 
