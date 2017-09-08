@@ -55,6 +55,13 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
+
+    private Integer businessUserStatus;
+    private Date startTime;
+    private Date endTime;
+    private String businessUserKey;
+
+
     private Integer businessId;
 
 
@@ -64,13 +71,6 @@ public class TbBusinessUser {
 
 
     private Integer bankId;
-    private Integer businessUserStatus;
-    private Date startTime;
-    private Date endTime;
-    private String businessUserKey;
-
-  
-
 
 
     private TbBankcardInfo tbBankcardInfo;
