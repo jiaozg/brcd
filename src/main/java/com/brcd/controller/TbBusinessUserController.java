@@ -11,6 +11,7 @@ import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -33,6 +34,22 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
+
+    @Value("${FTP_ADDRESS}")
+    private String FTP_ADDRESS;//IP地址
+    @Value("${FTP_PORT}")
+    private Integer FTP_PORT;//端口号
+    @Value("${FTP_USERNAME}")
+    private String FTP_USERNAME;//用户名
+    @Value("${FTP_PASSWORD}")
+    private String FTP_PASSWORD;//密码
+    @Value("${FTP_BASE_PATH}")
+    private String FTP_BASE_PATH;//ftp的图片服务器根路径
+    @Value("${IMAGE_BASE_URL}")
+    private String IMAGE_BASE_URL;//#ftp图片服务器的url
+    @Value("${IMAGEPATH}")
+    private String IMAGEPATH;//#ftp图片服务器的url
+
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
@@ -61,7 +78,6 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
 
