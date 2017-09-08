@@ -8,14 +8,17 @@ target/
 .project
 .settings
 .springBeans
+.DS_Store
 
 ### IntelliJ IDEA ###
+target
 .idea
 .mvn
 *.iws
 *.iml
 *.ipr
 mvnw
+.mvn
 mvnw.cmd
 .mvn/wrapper/maven-wrapper.properties
 .mvn/wrapper/maven-wrapper.jar

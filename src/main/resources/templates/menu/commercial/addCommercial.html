@@ -20,7 +20,6 @@
     <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
     <script src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-    <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
 
 
     <meta name="decorator" content="default"/>
@@ -281,86 +280,86 @@
             });
 
 
-            //点击选择省份
-            $('#provinceSel').change(function(){
+            /*  //点击选择省份
+             $('#provinceSel').change(function(){
 
-                //清空 市区 option 内容
-                $("#s2id_citySel .select2-chosen").html('--请选择市--');
-                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+             //清空 市区 option 内容
+             $("#s2id_citySel .select2-chosen").html('--请选择市--');
+             $("#s2id_areaSel .select2-chosen").html('--请选择区--');
 
-                var _this=$(this);
-                // 清空和显示错误信息
-                if(_this.val()){
-                    $("label[for='provinceSel']").css('display','none');
-                }else{
-                    $("label[for='provinceSel']").css('display','block');
-                }
+             var _this=$(this);
+             // 清空和显示错误信息
+             if(_this.val()){
+             $("label[for='provinceSel']").css('display','none');
+             }else{
+             $("label[for='provinceSel']").css('display','block');
+             }
 
-                $("#citySel,#areaSel").empty();
+             $("#citySel,#areaSel").empty();
 
-                var $cityOption = "<option code=''  value='' >--请选择市--</option>";
-                var $areaOption = "<option code=''  value='' >--请选择区--</option>";
+             var $cityOption = "<option code=''  value='' >--请选择市--</option>";
+             var $areaOption = "<option code=''  value='' >--请选择区--</option>";
 
-                $("#citySel").append($cityOption);
-                $("#areaSel").append($areaOption);
+             $("#citySel").append($cityOption);
+             $("#areaSel").append($areaOption);
 
-                //遍历添加区
-                var provinceCode = _this.find('option:selected').attr('code');
-                var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
-                masterAddrC(cityUrl,'#citySel');
+             //遍历添加区
+             var provinceCode = _this.find('option:selected').attr('code');
+             var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
+             masterAddrC(cityUrl,'#citySel');
 
-                setTimeout(function(){
-                    var cityCode = $('#citySel').find('option').eq(0).attr('code');
-                    var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
-                    masterAddrA(areaUrl,'areaSel');
-                    setTimeout(function(){
-                        $('#provinceSel').attr('province_id',provinceCode);
-                        $('#citySel').attr('city_id',$('#citySel').find('option').eq(0).attr('code'));
-                        $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
-                    },300);
-                },300);
-            });
+             setTimeout(function(){
+             var cityCode = $('#citySel').find('option').eq(0).attr('code');
+             var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+             masterAddrA(areaUrl,'areaSel');
+             setTimeout(function(){
+             $('#provinceSel').attr('province_id',provinceCode);
+             $('#citySel').attr('city_id',$('#citySel').find('option').eq(0).attr('code'));
+             $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+             },300);
+             },300);
+             });
 
 
-            //点击选择城市
-            $('#citySel').change(function(){
-                var _this=$(this);
-                // 清空和显示错误信息
-                if(_this.val()){
-                    $("label[for='citySel']").css('display','none');
-                }else{
-                    $("label[for='citySel']").css('display','block');
-                }
+             //点击选择城市
+             $('#citySel').change(function(){
+             var _this=$(this);
+             // 清空和显示错误信息
+             if(_this.val()){
+             $("label[for='citySel']").css('display','none');
+             }else{
+             $("label[for='citySel']").css('display','block');
+             }
 
-                //清空 市区 option 内容
-                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+             //清空 市区 option 内容
+             $("#s2id_areaSel .select2-chosen").html('--请选择区--');
 
-                $("#areaSel").empty();
+             $("#areaSel").empty();
 
-                var $option = "<option code=''  value='' >--请选择区--</option>";
-                $("#areaSel").append($option);
+             var $option = "<option code=''  value='' >--请选择区--</option>";
+             $("#areaSel").append($option);
 
-                var cityCode = _this.find('option:selected').attr('code');
-                var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
-                masterAddrA(areaUrl,'#areaSel');
-                setTimeout(function(){
-                    $('#citySel').attr('city_id',cityCode);
-                    $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
-                },100);
-            });
+             var cityCode = _this.find('option:selected').attr('code');
+             var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+             masterAddrA(areaUrl,'#areaSel');
+             setTimeout(function(){
+             $('#citySel').attr('city_id',cityCode);
+             $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+             },100);
+             });
 
-            //点击选择区
-            $('#areaSel').change(function(){
-                var _this=$(this);
-                // 清空和显示错误信息
-                if(_this.val()){
-                    $("label[for='areaSel']").css('display','none');
-                }else{
-                    $("label[for='areaSel']").css('display','block');
-                }
+             //点击选择区
+             $('#areaSel').change(function(){
+             var _this=$(this);
+             // 清空和显示错误信息
+             if(_this.val()){
+             $("label[for='areaSel']").css('display','none');
+             }else{
+             $("label[for='areaSel']").css('display','block');
+             }
 
-            });
-
+             });
+             */
             //点击经营行业
             $('#businessSel').change(function(){
                 var _this=$(this);
@@ -636,23 +635,7 @@
 </ul><br/>
 <form id="inputForm" class="form-horizontal" action="/a/operate/customer/brcbCustomer/save" method="post">
     <input id="id" name="id" type="hidden" value=""/>
-    <input id="agentNum" name="agentNum" type="hidden" value="A148110054952010852"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <input id="agentNum" name="agentNum" type="hidden" value="A149549246147410970"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
     <h6>商户基本信息</h6>
@@ -662,11 +645,10 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <span>北京艺之彩广告有限公司</span>
+                    <span>张明盟代理商</span>
                 </div>
             </div>
             </td>
-
         </tr>
         <tr>
             <td><div class="control-group">
@@ -757,35 +739,34 @@
                 </div>
             </div></td>
         </tr>
-        <tr>
+
+        <tr data-toggle="distpicker">
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
+                <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                    </select>
+                </div>
+            </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">经营市名称：</label>
+                    <div class="controls">
+                        <select id="city1" name="cityCode" class="input-xlarge">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">经营区名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="districtCode" class="input-xlarge">
+                        </select>
+                    </div>
+                </div>
+            </td>
 
-                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择省份--</option>
-                    </select>
-                </div>
-            </div></td>
-            <td><div class="control-group">
-                <label class="control-label">经营市名称：</label>
-                <div class="controls">
 
-                    <select id="citySel" name="cityCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择市--</option>
-                    </select>
-                </div>
-            </div></td>
-        </tr>
-        <tr>
-            <td><div class="control-group">
-                <label class="control-label">经营区名称：</label>
-                <div class="controls">
-                    <select id="areaSel" name="districtCode" class="input-xlarge">
-                        <option value="" selected="selected">--请选择区--</option>
-                    </select>
-                </div>
-            </div></td>
         </tr>
     </table>
 
@@ -828,7 +809,11 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-1" name="brcbChannelFeeList[0].isOpenChannel" data-index="1" class="input-xlarge channelStatus">
+
+
+
+                        <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
+
                             <option value="Y">开通</option>
                             <option selected="selected" value="N">不开通</option>
                         </select>
@@ -2179,12 +2164,16 @@
         return flag;
     }
 </script>
+<script src="../../../static/address/distpicker.data.js"></script>
+<script src="../../../static/address/distpicker.js"></script>
+<script src="../../../static/address/main.js"></script>
+
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
 if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
     $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
     $("#btnMenu").click(function(){
-        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=5820d85e952a431e9732ce111db7d1f8', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=24d792f720d44afd8ea89a82661beda7', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
         //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
     });
 }//-->

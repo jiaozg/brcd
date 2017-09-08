@@ -22,8 +22,13 @@ public class TbBankcardInfo {
 
     private String bandContact;
 
+    private String businessUid;
 
 
+
+    public void setBandContact(String bandContact) {
+        this.bandContact = bandContact == null ? null : bandContact.trim();
+    }
 
 
 }
