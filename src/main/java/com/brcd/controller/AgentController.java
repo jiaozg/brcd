@@ -116,7 +116,7 @@ public class AgentController {
               if(loginAgent!=null){
                   agent.setAgentGrade(loginAgent.getAgentGrade()+1);//设置代理商级别
                   agent.setSuperiorAgencyId(loginAgent.getSuperiorAgencyId()); //设置上级代理商id
-                  agent.setOriginalAgencyId(IDUtils.genItemId());//设置本代理id
+                  agent.setOriginalAgencyId(IDUtils.getLongAgencyId());//设置本代理id
                   agent.setAgentNumber(IDUtils.genItemId()+"");  //设置代理商编号
               }
               else{
