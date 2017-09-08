@@ -2,20 +2,22 @@
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
-import com.brcd.service.AgentService;
+import com.brcd.common.pojo.AgentGrade;
 
+import com.brcd.common.util.IDUtils;
+import com.brcd.common.util.Uid;
+import com.brcd.service.AgentService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +73,17 @@ public class AgentController {
         model.addAttribute("total",total);
         model.addAttribute("pages",pages);
         model.addAttribute("pageNo",pageNo);
+        List<AgentGrade> agentGrades=new ArrayList<>();
+        agentGrades.add(new AgentGrade(1,"一级代理"));
+        agentGrades.add(new AgentGrade(2,"二级代理"));
+        agentGrades.add(new AgentGrade(3,"三级代理"));
+        agentGrades.add(new AgentGrade(4,"四级代理"));
+        model.addAttribute("grade",agentGrades);
+        List<AgentGrade> agentStatus=new ArrayList<>();
+        agentStatus.add(new AgentGrade(0,"未审核"));
+        agentStatus.add(new AgentGrade(1,"审核通过"));
+        agentStatus.add(new AgentGrade(2,"审核未通过"));
+        model.addAttribute("status",agentStatus);
         return "menu/agent/dailishangxinxiguanli";
     }
 
@@ -83,10 +96,66 @@ public class AgentController {
      */
 
     @RequestMapping("/findAgentById")
-    public String findAgentById(Long id,Model model){
+    public String findAgentById(Long id,Model model,HttpSession session){
         TbAgent agent = agentService.findAgentById(id);
          model.addAttribute("agent",agent);
+        session.setAttribute("agentLogin",agent);
          return "menu/agent/agentInfo";
+    }
+
+    /**
+     * 添加代理商
+     * @param agent
+     * @return
+     */
+    @RequestMapping("/addAgent")
+    @ResponseBody
+    public String addAgent(@Valid TbAgent agent, String token, HttpSession session, Model model){
+      //获取token信息
+       String addToken = (String) session.getAttribute("token");
+      //判断是否重复提交
+        if(null!=addToken&&token.equals(addToken)){
+            //获取代理商登陆后的信息
+            TbAgent loginAgent=(TbAgent) session.getAttribute("agentLogin");
+            //校验费率添加是否合理
+            if(agent.getRate()>loginAgent.getRate()){
+                 return "redirect:menu/agent/addAgent";
+            }
+            //必须在代理商登陆的情况下进行的操作
+              if(loginAgent!=null){
+                  agent.setAgentGrade(loginAgent.getAgentGrade()+1);//设置代理商级别
+                  agent.setSuperiorAgencyId(loginAgent.getSuperiorAgencyId()); //设置上级代理商id
+                  agent.setOriginalAgencyId(IDUtils.genItemId());//设置本代理id
+                  agent.setAgentNumber(IDUtils.genItemId()+"");  //设置代理商编号
+              }
+              else{
+                  return null;
+              }
+
+            agentService.addAgent(agent);
+            session.removeAttribute("token");
+            return null;
+        }
+            model.addAttribute("resubmit","您已经提交过了信息了请勿重复提交");
+            return "redirect:menu/agent/addAgent";
+    }
+    /**
+     * 生成防重复提交令牌
+     * @return
+     */
+    @RequestMapping("/initToken")
+    public String initToken(HttpSession session){
+       session.setAttribute("token", Uid.getUuid());
+        return "menu/agent/addAgent";
+    }
+
+    /**
+     * 查询一个代理商
+     * @param id
+     * @return
+     */
+    private TbAgent findOneAgent(Long id){
+         return agentService.findAgentById(id);
     }
 }
 
