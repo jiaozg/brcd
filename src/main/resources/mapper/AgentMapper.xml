@@ -3,13 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.AgentMapper">
+    <!--测试-->
      <select id="findAll" resultType="com.brcd.bean.TbAgent">
          SELECT * FROM tb_agent
      </select>
+    <!--查询的sql-->
     <sql id="selectSql">
       id,agent_number,short_name,agent_grade,agent_contact_phone,audit_status,business_Area,into_permissions,share_benefit,
       rate
     </sql>
+    <!--条件查询代理商信息-->
      <select id="getAgent" resultType="com.brcd.bean.TbAgent" parameterType="com.brcd.bean.TbAgent">
          SELECT  <include refid="selectSql"/> FROM tb_agent
          <where>
@@ -26,16 +29,93 @@
                  <bind name="pattern" value="'%' + shortName + '%'" />
                  AND short_name LIKE #{pattern}
              </if>
-             <if test="auditStatus!=null and auditStatus!=''">
+             <if test='auditStatus!=null'>
                  AND audit_status=#{auditStatus}
              </if>
 
          </where>
      </select>
+    <!--根据id查询代理商详细信息-->
     <select id="findAgentById" resultType="com.brcd.bean.TbAgent" parameterType="java.lang.Long">
         SELECT * FROM tb_agent
         <where>
             id=#{id}
         </where>
     </select>
+    <!--添加sql-->
+    <sql id="insertSql">
+         agent_number,agent_grade,agent_full_name,agent_contact_phone,officially_Accounts,business_Area,
+         account_type,register_card_number,register_card_provinces,sub_branch_bank,secret_key,short_name,
+         audit_status,register_bank_name,register_account_name,register_card_city,union_bank_number,into_permissions,
+         share_benefit,whether_dredge,rate,t_and_o_status,superior_agency_id,original_agency_id,account,password,
+         last_ip,last_login_time,role,user_type,head_sculpture,company_affiliation,attribution_department,`name`,
+         email,phone,mobile_phone,remark,w_or_alipay
+    </sql>
+    <sql id="valueSql">
+            #{agentNumber},
+            #{agentGrade},
+            #{agentFullName},
+            #{agentContactPhone},
+            #{officiallyAccounts},
+            #{businessArea},
+            #{accountType},
+            #{registerCardNumber},
+            #{registerCardProvinces},
+            #{subBranchBank},
+            #{secretKey},
+            #{shortName},
+            #{auditStatus},
+            #{registerBankName},
+            #{registerAccountName},
+            #{registerCardCity},
+            #{unionBankNumber},
+            #{intoPermissions},
+            #{shareBenefit},
+            #{whetherDredge},
+            #{rate},
+            #{tAndOstatus},
+            #{superiorAgencyId},
+            #{originalAgencyId},
+            #{account},
+            #{password},
+            #{lastIp},
+            #{lastLoginTime},
+            #{role},
+            #{userType},
+            #{headSculpture},
+            #{companyAffiliation},
+            #{attributionDepartment},
+            #{name},
+            #{email},
+            #{phone},
+            #{mobilePhone},
+            #{remark},
+            #{wOrAlipay}
+    </sql>
+
+    <!--添加代理商-->
+    <insert id="addAgent" parameterType="com.brcd.bean.TbAgent">
+     INSERT INTO tb_agent <include refid="insertSql"/> VALUE (<include refid="valueSql"/>)
+    </insert>
+    <!--修改代理商信息-->
+    <update id="updateAgent" parameterType="com.brcd.bean.TbAgent">
+     UPDATE tb_agent
+        <set>
+            <if test="agentFullName!=null and agentFullName!=''">agent_full_name=#{agentFullName}</if>
+            <if test="agentContactPhone!=null and agentContactPhone!=''">agent_contact_phone=#{agentContactPhone}</if>
+            <if test="officiallyAccounts!=null and officiallyAccounts!=''">officially_Accounts=#{officiallyAccounts}</if>
+            <if test="businessArea!=null and businessArea!=''">business_Area=#{businessArea}</if>
+            <if test="accountType!=null and accountType!=''">account_type=#{accountType}</if>
+            <if test="registerCardNumber!=null and registerCardNumber!=''">register_card_number=#{registerCardNumber}</if>
+            <if test="registerCardProvinces!=null and registerCardProvinces=!''">register_card_provinces=#{registerCardProvinces}</if>
+            <if test="subBranchBank">sub_branch_bank=#{subBranchBank}</if>
+      <!--      <if test=""></if>
+            <if test=""></if>
+            <if test=""></if>
+            <if test=""></if>
+            <if test=""></if>
+            <if test=""></if>
+            <if test=""></if>-->
+        </set>
+    </update>
 </mapper>

@@ -34,4 +34,7 @@ public class TbBusiness {
     private String businessUid;
 
 
+    private volatile String wechatPayYN;
+    private volatile String alipayYN;
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
  * Created by 朱梦光 on 2017/9/7.查询结算交易Controller
  */
 @Controller
+@RequestMapping("settle")
 public class TbSettleController {
 
     @Autowired
