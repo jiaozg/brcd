@@ -30,7 +30,7 @@ public class IDUtils {
 	/**
 	 * id生成
 	 */
-	public static String genItemId() {
+	public static Long genItemId() {
 
 		//取当前时间的长整形值包含毫秒
 		long millis = System.currentTimeMillis();
