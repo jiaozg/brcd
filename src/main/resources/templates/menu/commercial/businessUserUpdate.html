@@ -292,7 +292,7 @@
             }, "请输入正确的数值，最大长度7位");
 
             /*初始化经营行业*/
-            $.ajax({
+           /* $.ajax({
                 type:"get",
                 url:"/a/operate/business/brcbBusinessType/getByType",
                 dataType : "json",
@@ -313,7 +313,7 @@
             });
 
 
-            /*初始化银行大行列表*/
+            /!*初始化银行大行列表*!/
             $.ajax({
                 type:"get",
                 url:"/a/operate/branch/brcbBankNo/getAllBank",
@@ -359,8 +359,8 @@
                 }
             });
 
-            /*初始化省份*/
-            $.ajax({
+            /!*初始化省份*!/
+           $.ajax({
                 type:"get",
                 url:"/a/operate/province/brcbProvince/getProvince?",
                 dataType : "json",
@@ -477,7 +477,7 @@
 
 
             //点击选择省份
-            $('#provinceSel').change(function(){
+           $('#provinceSel').change(function(){
 
                 //清空 市区 option 内容
                 $("#s2id_citySel .select2-chosen").html('--请选择市--');
@@ -517,9 +517,8 @@
                 },300);
             });
 
-
             //点击选择城市
-            $('#citySel').change(function(){
+           $('#citySel').change(function(){
 
                 //清空 市区 option 内容
                 $("#s2id_areaSel .select2-chosen").html('--请选择区--');
@@ -548,7 +547,7 @@
             });
 
             //点击 选择开卡省份
-            $('#cardProvinceSel').change(function(){
+        $('#cardProvinceSel').change(function(){
 
                 //清空市区  连行号
                 $("#s2id_cardCitySel .select2-chosen").html('--请选择市--');
@@ -665,7 +664,7 @@
                 }
             });
         });
-
+*/
 
         // 遍历添加city
         function masterAddrC(url,appendId){
@@ -825,9 +824,9 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="/a/operate/customer/brcbCustomer/editForm?id=534709">商户信息修改</a></li>
 </ul><br/>
-<form id="inputForm" class="form-horizontal" action="/a/operate/customer/brcbCustomer/edit" method="post" enctype="multipart/form-data">
+<form id="inputForm" class="form-horizontal" action="updateTbBusinessUser" method="post" enctype="multipart/form-data">
 
-    <input id="id" name="id" type="hidden" value="534709"/>
+    <input id="id" name="businessUid" type="hidden" value="10"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
     <h6>商户基本信息</h6>
@@ -941,6 +940,7 @@
 
                     <select id="provinceSel" name="manageProvince" class="input-xlarge">
                         <option value="" selected="selected">--请选择省份--</option>
+                        <option value="北京" >北京</option>
                     </select>
                 </div>
             </div></td>
@@ -953,6 +953,7 @@
 
                     <select id="citySel" name="manageCity" class="input-xlarge">
                         <option value="" selected="selected">--请选择市--</option>
+                        <option value="房山区" >海淀区</option>
                     </select>
                 </div>
             </div></td>
@@ -962,19 +963,20 @@
 
                     <select id="areaSel" name="manageDistrict" class="input-xlarge">
                         <option value="" selected="selected">--请选择区--</option>
+                        <option value="上地七街" >上地七街</option>
                     </select>
                 </div>
             </div></td>
         </tr>
     </table>
 
-    <!--<table id="enterpriseTable">
+    <table id="enterpriseTable">
         <tr>
 
             <td><div class="control-group">
                 <label class="control-label">注册地址：</label>
                 <div class="controls">
-                    <input id="address" name="address" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="address" name="registerAddress" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -982,12 +984,12 @@
             <td><div class="control-group">
                 <label class="control-label">营业执照编号：</label>
                 <div class="controls">
-                    <input id="licenseNo" name="licenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
         </tr>
-    </table>-->
+    </table>
 
     <h6>业务信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
@@ -1304,6 +1306,7 @@
                     <div class="controls">
                         <select id="bankNameSel" name="bankCardInfo.bankName" class="input-xlarge required">
                             <option value="">--请选择银行--</option>
+                            <option value="农业银行">农业银行</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1317,6 +1320,7 @@
                     <div class="controls">
                         <select id="cardProvinceSel" name="bankCardInfo.province" class="input-xlarge required">
                             <option value="">--请选择省--</option>
+                            <option value="河北省">河北省</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1329,7 +1333,8 @@
                     <div class="controls">
 
                         <select id="cardCitySel" name="bankCardInfo.city" class="input-xlarge required">
-                            <option value="">--请选择市--</option>
+                            <option value="">--请选择城市--</option>
+                            <option value="石家庄">石家庄</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1343,6 +1348,7 @@
 
                     <select id="cardBranchSel" name="bankCardInfo.bankAddress" class="input-xlarge required">
                         <option value="">--请选择支行--</option>
+                        <option value="石家庄交西路农业银行">石家庄交西路农业银行</option>
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
@@ -1351,7 +1357,7 @@
                 <div class="control-group">
                     <label class="control-label">联行号：</label>
                     <div class="controls">
-                        <input id="bankNo" name="bankCardInfo.alliedBankNo" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
+                        <input id="bankNo"  name="bankCardInfo.alliedBankNo" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>

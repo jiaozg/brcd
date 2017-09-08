@@ -96,9 +96,9 @@ public class TbBusinessUserController {
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-        tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
-        return null;
+      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
+        return "menu/commercial/shanghuxinxifguanli.html";
 
 
     }
