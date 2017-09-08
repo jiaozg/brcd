@@ -140,8 +140,7 @@ public class TbBusinessUserController {
         System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";}
 
-    @RequestMapping("toQuery")
-    public String shanghu(){return "menu/commercial/shanghuxinxifguanli.html";}
+
     @RequestMapping("toUpdate")
     public String toUpdate(){return "menu/commercial/businessUserUpdate.html";}
 
