@@ -1,6 +1,7 @@
 package com.brcd.service.impl;
 
 import com.brcd.bean.TbAgent;
+import com.brcd.common.util.MD5Util;
 import com.brcd.mapper.PersonageMessageMapper;
 import com.brcd.service.PersonageMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,20 @@ public class PersonageMessageServiceImpl implements PersonageMessageService {
     @Override
     public void updatePersonageMsg(TbAgent tbAgent) {
         personageMessageMapper.updatePersonageMsg(tbAgent);
+    }
+
+    @Override
+    public TbAgent checkPassword(TbAgent tbAgent) {
+        String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
+        tbAgent.setPassword(md5Encode);
+        TbAgent checkPassword = personageMessageMapper.checkPassword(tbAgent);
+        return checkPassword;
+    }
+
+    @Override
+    public void updatePassword(TbAgent tbAgent) {
+        String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
+        tbAgent.setPassword(md5Encode);
+        personageMessageMapper.updatePassword(tbAgent);
     }
 }

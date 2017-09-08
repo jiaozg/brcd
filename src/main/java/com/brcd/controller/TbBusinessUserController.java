@@ -61,20 +61,12 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    @ResponseBody
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        businessUser.setBusinessUid("11233");
-        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-        System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
 
-        String s = businessUser.toString();
-        String s1 = business.toString();
-        String s2 = bankcardInfo.toString();
-        System.out.printf(s);
-        System.out.printf(s1);
-        System.out.printf(s2);
-        String sss = s + "      " + s1 + "         " + s2;
-        return sss;
+    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
+
+
+        return "redirect:/businessUser/query";
     }
 
     /**
@@ -90,7 +82,7 @@ public class TbBusinessUserController {
        if(tbBusinessUser == null){
            tbBusinessUser = new TbBusinessUser();
        }
-        tbBusinessUser.setAffiliationAgent("21564546514");
+        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -147,10 +139,7 @@ public class TbBusinessUserController {
         return "menu/commercial/shanghuxinxifguanli.html";
     }
 
-   /* @RequestMapping("toQuery")
-    public String shanghu(){
-        return "menu/commercial/shanghuxinxifguanli.html";
-    }*/
+
     @RequestMapping("toUpdate")
     public String toUpdate(){
         return "menu/commercial/businessUserUpdate.html";
