@@ -40,7 +40,6 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置主键ID'
         String sid = IDUtils.genItemId();
         businessUser.setBusinessUid(sid);
-
         tbBusinessUserMapper.insertBusinessUser(businessUser);
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
@@ -54,14 +53,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户开通线下支付信息
      */
     private void insertBusiness(TbBusiness business) {
-        TbBusiness tb = new TbBusiness();
-        if (business.getWechatPay() == 0) {
-            tb.setWechatPay(business.getWechatPay());
-            tbBusinessMapper.insertTbBusiness(tb);
-        }
-        if (business.getAlipay() == 0) {
-            tb.setAlipay(business.getAlipay());
-            tbBusinessMapper.insertTbBusiness(tb);
+
+        if (business.getWechatPayYN() == "Y") {
+            business.setWechatPay(1);
+            business.setAlipay(0);
+            tbBusinessMapper.insertTbBusiness(business);
+        }else if (business.getAlipayYN() == "Y") {
+            business.setWechatPay(0);
+            business.setAlipay(1);
+            tbBusinessMapper.insertTbBusiness(business);
         }
     }
 
