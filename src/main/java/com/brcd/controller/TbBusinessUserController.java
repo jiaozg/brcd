@@ -4,14 +4,14 @@ package com.brcd.controller;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-
+import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
+import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -59,40 +61,35 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    @ResponseBody
+
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        businessUser.setBusinessUid("11233");
         tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-        System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
 
-        String s = businessUser.toString();
-        String s1 = business.toString();
-        String s2 = bankcardInfo.toString();
-        System.out.printf(s);
-        System.out.printf(s1);
-        System.out.printf(s2);
-        String sss = s + "      " + s1 + "         " + s2;
-        return sss;
+
+        return "redirect:/businessUser/query";
     }
 
-    @RequestMapping("/shangHuChaXun")
-    public ModelAndView shangHuChaXun(HttpServletRequest request,HttpSession session) {
-        System.out.println(111111111);
-        return query(request,session,null,null,null);
-    }
+    /**
+     * 多条件查询商户,以及分页,跳转
+     * @param request
+     * @param session
+     * @param tbBusinessUser
+     * @param currentPage
+     * @return
+     */
     @RequestMapping("/query")
-    public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage,String detail) {
+    public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
        if(tbBusinessUser == null){
            tbBusinessUser = new TbBusinessUser();
        }
-        tbBusinessUser.setAffiliationAgent("21564546514");
+        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
         if(currentPage == null){
             currentPage = 1;
         }
-        Integer pageSize =5;
+        Integer pageSize =10;
 
         int pageCount =  listCount / pageSize + (listCount % pageSize != 0 ? 1 : 0);
 
@@ -106,10 +103,48 @@ public class TbBusinessUserController {
         request.setAttribute("listCount",listCount);
         return mv;
     }
-    @RequestMapping("toQuery")
-    public String shanghu(){return "menu/commercial/shanghuxinxifguanli.html";}
+
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(TbBusinessUser tbBusinessUser, HttpServletRequest request, HttpServletResponse response)throws Exception{
+
+        String[] headers = {"商户编号","所属代理商","商户类型","经营名称","商户名称","法人姓名","法人身份证","联系人","联系电话","联系邮箱","客服电话","经营地址","经营省","经营市"
+                ,"经营区","营业执照编号","注册地址","身份证正面","身份证反面","身份证手持","银行卡正面","营业执照照片","门头照","开户许可证照片","商户状态","起始时间","结束时间","商户秘钥"};
+
+        String fileName="日志导出.xls";
+        String userAgent = request.getHeader("User-Agent");
+        //针对IE或者以IE为内核的浏览器：
+        if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
+            fileName = URLEncoder.encode(fileName, "GBK");
+        } else {//非IE浏览器的处理：
+            fileName = new String(fileName.getBytes("GBK"),"ISO-8859-1");
+        }
+
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+        response.setContentType("application/vnd.ms-excel;charset=GBK");
+        response.setCharacterEncoding("GBK");
+
+        ExportExcel<TbBusinessUser> ex = new ExportExcel<>();
+
+        List<TbBusinessUser> item = tbBusinessUserService.query(tbBusinessUser);
+
+        OutputStream out = response.getOutputStream();
+        ex.exportExcel(headers, item, out);
+        out.close();
+    }
+
+    @RequestMapping("shanghu")
+    public String shanghu(){
+        System.out.println("进入方法================");
+        return "menu/commercial/shanghuxinxifguanli.html";
+    }
+
+
     @RequestMapping("toUpdate")
-    public String toUpdate(){return "menu/commercial/businessUserUpdate.html";}
+    public String toUpdate(){
+        return "menu/commercial/businessUserUpdate.html";
+    }
+
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -118,9 +153,9 @@ public class TbBusinessUserController {
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-        tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
-        return null;
+      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
+        return "menu/commercial/shanghuxinxifguanli.html";
 
 
     }

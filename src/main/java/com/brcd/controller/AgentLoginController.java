@@ -1,3 +1,4 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
@@ -13,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
+
 /**
  * Created by 任彩雨 on 2017/9/5.
  * 代理商登录模块
  */
+
 @Controller
 public class AgentLoginController {
     @Autowired
@@ -55,3 +58,4 @@ public class AgentLoginController {
     }
 
 }
+

@@ -118,13 +118,17 @@
             <input id="customerNum" name="agentNumber" class="input-medium" type="text" value="" maxlength="32" th:value="${showBack.agentNumber}"/>
         </li>
         <li style="margin-left: 60px;"><label>代理商等级：</label>
-            <select id="customerType" name="agentGrade" style="width:155px;" class="input-medium"
-                    th:switch="${showBack.agentGrade}">
-                <option value="" selected="selected">--请选择等级--</option>
-                <option value="1" th:case="1">一级代理</option>
-                <option value="2" th:case="2">二级代理</option>
-                <option value="3" th:case="3">三级代理</option>
-                <option value="4" th:case="4">四级代理</option>
+          <!--  <select id="customerType" name="agentGrade" style="width:155px;" class="input-medium">
+                <option value="" selected="selected">&#45;&#45;请选择等级&#45;&#45;</option>
+                <option value="1"  name="agentGrade">一级代理</option>
+                <option value="2"  name="agentGrade">二级代理</option>
+                <option value="3"  name="agentGrade">三级代理</option>
+                <option value="4"  name="agentGrade">四级代理</option>
+            </select>-->
+           <select id="customerType" name="agentGrade" style="width:155px;" class="input-medium">
+               <option value="" selected="selected">&#45;&#45;请选择等级&#45;&#45;</option>
+               <option  th:each="x:${grade}" th:value="${x.dj}" th:text="${x.yi}"
+                         th:attr="selected=${x.dj==showBack.agentGrade}"></option>
             </select>
         </li>
         <li><label>商户电话：</label>
@@ -136,12 +140,16 @@
             <input id="businessName" name="shortName" class="input-medium" type="text" value="" maxlength="255" th:value="${showBack.shortName}"/>
         </li>
         <li style="margin-left: 60px;"><label>审核状态：</label>
-            <select id="customerStatus" name="auditStatus" style="width:155px;" class="input-medium"
-                    th:switch="${showBack.auditStatus}">
-                <option value="" selected="selected">--请选择代理商审核状态--</option>
-                <option value="0" th:case="0">待审核</option>
-                <option value="1" th:case="1">审核通过</option>
-                <option value="2" th:case="2">审核拒绝</option>
+            <!--<select id="customerStatus" name="auditStatus" style="width:155px;" class="input-medium">
+                <option value="" selected="selected">&#45;&#45;请选择代理商审核状态&#45;&#45;</option>
+                <option value="0" >待审核</option>
+                <option value="1" >审核通过</option>
+                <option value="2" >审核拒绝</option>
+            </select>-->
+           <select id="customerStatus" name="auditStatus" style="width:155px;" class="input-medium">
+               <option value="" selected="selected">&#45;&#45;审核状态&#45;&#45;</option>
+               <option  th:each="x:${status}" th:value="${x.dj}" th:text="${x.yi}"
+                         th:attr="selected=${x.dj == showBack.auditStatus}"></option>
             </select>
         </li>
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
@@ -170,7 +178,11 @@
         <td th:text="${agent.shortName}">景云传媒</td>
         <td th:text="${agent.agentContactPhone}">13875485621</td>
         <td th:text="${agent.agentGrade}">3</td>
-        <td th:text="${agent.auditStatus}">待审核</td>、
+        <td th:switch="${agent.auditStatus}">
+        <span th:case="0">待审核</span>
+        <span th:case="1">审核通过</span>
+        <span th:case="2">审核拒绝</span>
+        </td>
         <td th:text="${agent.businessArea}">北京</td>
         <td th:text="${agent.intoPermissions}">可进件</td>
         <td th:text="${agent.shareBenefit}">可分润</td>
@@ -194,8 +206,8 @@
 <input type="hidden" id="pageNo1" th:value="${pageNo}">
 <div class="pagination" style="float: right;right: 60px;"><ul>
     <li class="btns"><input class="btn btn-primary" type="button" value="首页" onclick="pageSplit('s')"/></li>
-    <li class="btns"><input class="btn btn-primary" type="button" value="&#171; 上一页" onclick="pageSplit(-1)"/></li>
-    <li class="btns"><input class="btn btn-primary" type="button" value="下一页 &#187;" onclick="pageSplit(1)"/></li>
+    <li class="btns"><input class="btn btn-primary" type="button" value="&#171; 上一页" onclick="pageSplit('u')"/></li>
+    <li class="btns"><input class="btn btn-primary" type="button" value="下一页 &#187;" onclick="pageSplit('d')"/></li>
     <li class="btns"><input class="btn btn-primary" type="button" value="末页" onclick="pageSplit('e')"/></li>
     <li class="btns">共<div th:text="${total}" style="display: inline-block"></div>条， 共<div th:text="${pages}"  style="display: inline-block"></div>页</li>
 </ul>
@@ -211,8 +223,27 @@
                 $("#searchForm").submit();
                 return;
             }
-            document.getElementById("pageNo").value = document.getElementById("pageNo1").value+a;
-            $("#searchForm").submit();
+            if(a == 'u'){
+                var n = document.getElementById("pageNo1").value;
+                if(n <= 1){
+                    return;
+                }
+                n=n-1;
+                document.getElementById("pageNo").value= n;
+                $("#searchForm").submit();
+                return;
+            }
+            if(a == 'd'){
+                var n = document.getElementById("pageNo1").value;
+                var t = document.getElementById("pageNum").value;
+                if(n >= t){
+                    return;
+                }
+                n=n-1+2;
+                document.getElementById("pageNo").value= n;
+                $("#searchForm").submit();
+                return;
+            }
         }
     </script>
 </div>

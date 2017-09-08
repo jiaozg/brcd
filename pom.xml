@@ -107,6 +107,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.3.1.Final</version>
+		</dependency>
+
 		<!-- gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -159,6 +165,7 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.20</version>
+
 		</dependency>
 	</dependencies>
 
@@ -170,6 +177,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>
