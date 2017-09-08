@@ -73,7 +73,7 @@ public class TbAgent {
 
     private String lastIp;//登陆的IP
 
-    private Long lastLoginTime;//登陆的时间
+    private String lastLoginTime;//登陆的时间
 
     private String role;//用户角色
 
