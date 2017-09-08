@@ -1,4 +1,4 @@
-<head xmlns:th="http://www.w3.org/1999/xhtml">
+<head xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <style>
         /* Loading Spinner */
         .spinner {
@@ -216,7 +216,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../user/xiugaimima.html" target="mainFrame">
+                                    <a href="../user/xiugaimima.html" th:href="@{'/toUpdatePassword'}" target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
                                         修改密码
                                     </a>
@@ -444,7 +444,7 @@
                             <ul>
 
                                 <li class="leaf " pid="6ab2ae156be04cfea17484c2f8647e91">
-                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html"
+                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html" th:href="@{/pageIndex}"
                                        title="结算记录" target="mainFrame">
                                         <i class="glyph-icon icon-align-justify" style="color:#cc0001;"></i>
                                         <span>结算记录</span></a>

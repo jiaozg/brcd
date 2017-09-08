@@ -32,5 +32,7 @@ public class TbSettle {
 
     private String remark;
 
+    private Date startTime;
 
+    private Date endTime;
 }

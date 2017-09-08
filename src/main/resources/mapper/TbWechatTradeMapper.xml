@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.TbWechatTradeMapper">
+
+ <!-- 查询所有行业类型信息-->
+    <select id="getWechatTrade" resultType="com.brcd.bean.TbWechatTrade">
+     select * from tb_wechat_trade
+    </select>
+</mapper>
