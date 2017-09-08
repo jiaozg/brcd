@@ -41,6 +41,7 @@ public class AgentServiceImpl implements AgentService{
 
     @Override
     public void addAgent(TbAgent agent) {
+
        agentMapper.addAgent(agent);
     }
 }
