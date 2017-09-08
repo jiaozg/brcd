@@ -1,9 +1,11 @@
 package com.brcd.controller;
 
 
+import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.service.BankService;
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +59,8 @@ public class TbBusinessUserController {
     private TbBankcardInfoService tbBankcardInfoService;
     @Autowired
     private TbBusinessService tbBusinessService;
+    @Autowired
+    private BankService bankService;
 
     /*
     * 时间格式的转换
@@ -157,10 +162,10 @@ public class TbBusinessUserController {
 
 
     @RequestMapping("toUpdate")
-    public String toUpdate(){
-        return "menu/commercial/businessUserUpdate.html";
-    }
-
+    public String toUpdate(Model model){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
+        return "menu/commercial/businessUserUpdate.html";}
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -174,6 +179,23 @@ public class TbBusinessUserController {
         return "menu/commercial/shanghuxinxifguanli.html";
 
 
+    }
+
+    /**
+     * 根据大行名称、省、市查询该条件下的支行
+     * @param bank
+     * @return
+     */
+    @RequestMapping("findByBankName")
+    @ResponseBody
+    public List<Bank> findByBankName(Bank bank){
+        System.out.println(bank.getProvince());
+        return bankService.findByBankName(bank);
+    }
+    @RequestMapping("findBankNo")
+    @ResponseBody
+    public String findBankNo(String bankSubName){
+        return bankService.findBankNo(bankSubName);
     }
 
 }

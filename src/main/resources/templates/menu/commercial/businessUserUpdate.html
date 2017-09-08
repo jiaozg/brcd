@@ -8,7 +8,7 @@
     <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"
     th:src="@{../static/jquery/jquery-1.8.3.min.js}"></script>
     <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet"
-    th:href="@{../static/bootstr    ap/2.3.1/css_cerulean/bootstrap.min.css}"/>
+    th:href="@{../static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"/>
     <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"
     th:src="@{../static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
     <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet"
@@ -644,7 +644,7 @@
             });
 
             //点击选择支行
-            $('#cardBranchSel').change(function(){
+          /*  $('#cardBranchSel').change(function(){
                 var _this=$(this);
                 var bankNo = _this.find('option:selected').attr('bankNo');
 
@@ -664,9 +664,9 @@
                     $("label[for='cardBranchSel']").css('display','block');
                     $("label[for='bankNo']").css('display','block');
                 }
-            });
+            });*/
         });
-*/
+
 
         // 遍历添加city
         function masterAddrC(url,appendId){
@@ -926,6 +926,9 @@
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
 
+
+            </div>
+            </td>
             <td>
                 <div class="control-group">
                     <label class="control-label">经营地址：</label>
@@ -934,10 +937,8 @@
                     </div>
                 </div>
             </td>
-            </div>
-            </td>
         </tr>
-       <!-- <tr>
+       <!--<tr>
 
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
@@ -945,7 +946,7 @@
 
                     <select id="provinceSel" name="manageProvince" class="input-xlarge">
 
-                        <option value="" selected="selected">--请选择省份--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                         <option value="北京" >北京</option>=======
                         <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
 
@@ -961,7 +962,7 @@
 
                     <select id="citySel" name="manageCity" class="input-xlarge">
 
-                        <option value="" selected="selected">--请选择市--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                         <option value="房山区" >海淀区</option>
 
                         <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
@@ -975,7 +976,7 @@
 
                     <select id="areaSel" name="manageDistrict" class="input-xlarge">
 
-                        <option value="" selected="selected">--请选择区--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                         <option value="上地七街" >上地七街</option>
 
                         <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
@@ -986,13 +987,22 @@
         </tr>-->
 
         <tr data-toggle="distpicker">
-            <td><div class="control-group">
+
+            <td>
+                <div class="control-group">
+                    <label class="control-label" ></label>
+                    <div class="controls">
+
+                    </div>
+                </div>
+                <div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
                     <select id="provinceSel" name="provinceCode" class="input-xlarge">
                     </select>
                 </div>
             </div>
+
             </td>
             <td>
                 <div class="control-group">
@@ -1014,9 +1024,6 @@
             </td>
         </tr>
     </table>
-
-
-    <table id="enterpriseTable">
 
 
    <table id="enterpriseTable">
@@ -1356,19 +1363,20 @@
                     <div class="controls">
                         <select id="bankNameSel" name="bankCardInfo.bankName" class="input-xlarge required">
                             <option value="">--请选择银行--</option>
-                            <option value="农业银行">农业银行</option>
+
+                            <option th:value="${bank}" th:text="${bank}" value="农业银行" th:each="bank:${bankNameList}">农业银行</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr data-toggle="distpicker">
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
-                        <select id="cardProvinceSel" name="bankCardInfo.province" class="input-xlarge required">
+                        <select id="cardProvinceSel" name="province" class="input-xlarge required">
                             <option value="">--请选择省--</option>
                             <option value="河北省">河北省</option>
                         </select>
@@ -1382,7 +1390,7 @@
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
 
-                        <select id="cardCitySel" name="bankCardInfo.city" class="input-xlarge required">
+                        <select id="cardCitySel" name="city" class="input-xlarge required">
                             <option value="">--请选择城市--</option>
                             <option value="石家庄">石家庄</option>
                         </select>
@@ -1398,7 +1406,6 @@
 
                     <select id="cardBranchSel" name="bankCardInfo.bankAddress" class="input-xlarge required">
                         <option value="">--请选择支行--</option>
-                        <option value="石家庄交西路农业银行">石家庄交西路农业银行</option>
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
@@ -1849,10 +1856,35 @@
         }) ;
         return flag;
     }
+
+    $("#cardCitySel").change(function(){
+        var bankName = $("#bankNameSel").val();
+        var City=$("#cardCitySel").val();
+        var Province = $("#cardProvinceSel").val();
+        $.post("findByBankName",{bankName:bankName,city:City,province:Province},function(data){
+                    $.each(data,function (i,bank) {
+                        var $option="<option  value='"+bank.bankSubName+"'>"+bank.bankSubName+"</option>";
+                        $("#cardBranchSel").append($option);
+                    })
+        })
+    });
+
+   $("#cardBranchSel").change(function () {
+        var bankNo=$("#cardBranchSel").val();
+        $("#bankNo").removeAttr('readonly');
+        $.post("findBankNo",{bankSubName:bankNo},function (data) {
+            $("#bankNo").val(data);
+        })
+       $("#bankNo").attr('readonly',"readonly");
+
+    });
 </script>
-<script src="../../../static/address/distpicker.data.js"></script>
-<script src="../../../static/address/distpicker.js"></script>
-<script src="../../../static/address/main.js"></script>
+<script src="../../../static/address/distpicker.data.js"
+th:src="@{../address/distpicker.data.js}"></script>
+<script src="../../../static/address/distpicker.js"
+th:src="@{../address/distpicker.js}"></script>
+<script src="../../../static/address/main.js"
+th:src="@{../address/main.js}"></script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
 if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){

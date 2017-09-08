@@ -2,6 +2,8 @@
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
+import com.brcd.common.util.DateUtil;
+import com.brcd.common.util.MD5Util;
 import com.brcd.service.AgentLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,15 +33,17 @@ public class AgentLoginController {
         return "login";
     }
 
+    //退出登录
     @RequestMapping("AgentExit")
     public String AgentExit(HttpSession session) {
         session.invalidate();
         return "login";
     }
 
+    //登录
     @RequestMapping("AgentLogin")
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
-        System.err.println("----实现登录----");
+
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
             if (agentLogin != null) {

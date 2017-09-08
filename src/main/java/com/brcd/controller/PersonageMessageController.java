@@ -3,6 +3,7 @@ package com.brcd.controller;
 import com.brcd.bean.TbAgent;
 import com.brcd.common.util.FtpUtil;
 import com.brcd.common.util.IDUtils;
+import com.brcd.common.util.MD5Util;
 import com.brcd.service.PersonageMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,6 +82,7 @@ public class PersonageMessageController {
 
     @RequestMapping("updatePassword")//实现修改
     public String updatePassword(TbAgent tbAgent, HttpSession session) {
+
         personageMessageService.updatePassword(tbAgent);
         System.out.println(tbAgent);
         session.removeAttribute("agentLogin");
@@ -92,8 +94,6 @@ public class PersonageMessageController {
     @RequestMapping("checkPwd")
     @ResponseBody
     public void checkUserName(TbAgent tbAgent, HttpServletResponse response) throws Exception {
-        System.err.println("ajax验证-");
-        System.err.println(tbAgent);
         PrintWriter writer = response.getWriter();
         TbAgent checkPassword = personageMessageService.checkPassword(tbAgent);
         if (checkPassword != null && checkPassword.getPassword() != null) {

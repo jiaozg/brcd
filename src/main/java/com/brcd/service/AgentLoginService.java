@@ -9,4 +9,6 @@ import com.brcd.bean.TbAgent;
 public interface AgentLoginService {
 
     TbAgent AgentLogin(TbAgent tbAgent);//代理商登录
+
+    void updateDateIp(TbAgent tbAgent);//修改登录Ip和时间
 }
