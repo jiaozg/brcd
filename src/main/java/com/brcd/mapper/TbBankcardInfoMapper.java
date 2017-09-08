@@ -2,17 +2,29 @@ package com.brcd.mapper;
 
 import com.brcd.bean.TbBankcardInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by admin on 2017/9/6.
+ * Created by lenovo on 2017/9/6.
  */
 @Mapper
-@Repository
+@Component
 public interface TbBankcardInfoMapper {
     /**
-     * 银行卡信息修改
-     * @param tbBankcardInfo
+     * 插入银行卡信息
      */
-    void updateTbBankcardInfo(TbBankcardInfo tbBankcardInfo);
-}
+    void insertTbBankcardInfo(TbBankcardInfo bankcardInfo);
+
+
+
+
+        /**
+         * 银行卡信息修改
+         *
+         * @param tbBankcardInfo
+         */
+        void updateTbBankcardInfo(TbBankcardInfo tbBankcardInfo);
+
+    }
+

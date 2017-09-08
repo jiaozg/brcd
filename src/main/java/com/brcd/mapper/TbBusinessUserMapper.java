@@ -19,6 +19,8 @@ public interface TbBusinessUserMapper {
      */
     void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
 
+    //添加商户信息
+    void insertBusinessUser(TbBusinessUser businessUser);
 
     List<TbBusinessUser> query(TbBusinessUser businessUser);
 }

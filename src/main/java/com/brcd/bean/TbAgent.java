@@ -1,6 +1,9 @@
 package com.brcd.bean;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 import javax.validation.constraints.Pattern;
 
@@ -11,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Data
 public class TbAgent {
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 
@@ -65,27 +68,32 @@ public class TbAgent {
 
     private String password;
 
-    private String lastIp;
+    private String newPassWord;//修改的新密码
 
-    private Long lastLoginTime;
 
-    private String role;
+    private String lastIp;//登陆的IP
 
-    private String userType;
+    private Long lastLoginTime;//登陆的时间
+
+    private String role;//用户角色
+
+    private String userType;//用户类型
 
     private String headSculpture;
 
-    private String companyAffiliation;
+//    private File headSculptureFile;
 
-    private String attributionDepartment;
+    private String companyAffiliation;//归属公司
+
+    private String attributionDepartment;//归属部门
 
     private String name;
     @Pattern(regexp = "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/",message = "邮箱格式不符")
     private String email;
 
-    private String phone;
+    private String phone;//电话
 
-    private String mobilePhone;
+    private String mobilePhone;//手机号
 
     private String remark;
 

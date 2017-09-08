@@ -5,7 +5,7 @@
 <mapper namespace="com.brcd.mapper.AgentLoginMapper">
 
     <select id="AgentLogin" parameterType="TbAgent" resultType="TbAgent">
-      SELECT * FROM tb_agent WHERE account=#{account} AND password=#{password}
+      SELECT id,name,head_sculpture FROM tb_agent WHERE account=#{account} AND password=#{password}
     </select>
 
 </mapper>

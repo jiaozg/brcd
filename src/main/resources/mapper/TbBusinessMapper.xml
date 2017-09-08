@@ -3,35 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessMapper">
-<!--
-     private Integer businessId;
 
-    private Integer wechatPay;是否开通线下支付(0/1)-1代表开通
+    <!--添加开通业务信息-->
+    <insert id="insertTbBusiness" parameterType="com.brcd.bean.TbBusiness" >
+        INSERT INTO tb_business (business_id, wechat_pay, wechat_rate,
+        wechat_t_0, wechat_industry, wechat_type,
+        wechat_num, alipay, ali_rate,
+        ali_t_0, ali_industry, ali_type,
+        alipay_num, business_uid)
+        VALUES (#{businessId}, #{wechatPay}, #{wechatRate},
+        #{wechatT0}, #{wechatIndustry}, #{wechatType},
+        #{wechatNum}, #{alipay}, #{aliRate},
+        #{aliT0}, #{aliIndustry}, #{aliType},
+        #{alipayNum}, #{businessUid})
+    </insert>
 
-    private Integer wechatRate;费率(代表万分之几)例如78 代表:百分之0.78
 
-    private Integer wechatT0;是否开通t+0(0/1)-1代表开通
-
-    private String wechatIndustry;所属行业
-
-    private String wechatType;微信账号类型
-
-    private String wechatNum;微信账号
-
-    private Integer alipay;支付宝是否开通(0/1)-1代表开通
-
-    private Integer aliRate;支付宝费率
-
-    private Integer aliT0;支付宝t+0状态(0/1)-1代表开通
-
-    private String aliIndustry;支付宝账号所属行业
-
-    private String aliType;支付宝账号类型
-
-    private String alipayNum;支付宝账号
-
-    private String businessUid;
-    -->
 <!--修改商户信息-->
 <update id="updateTbBusiness" parameterType="com.brcd.bean.TbBusiness">
 UPDATE tb_business SET
@@ -49,6 +36,5 @@ ali_type=#{aliType},
 alipay_num=#{alipayNum},
 WHERE business_id=#{businessId}
 </update>
-
 
 </mapper>
