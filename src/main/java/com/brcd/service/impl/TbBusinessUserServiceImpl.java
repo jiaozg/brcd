@@ -37,15 +37,16 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     @Override
     public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        //设置主键ID
-        businessUser.setBusinessUid(IDUtils.genItemId());
+        //设置主键ID'
+        String sid = IDUtils.genItemId();
+        businessUser.setBusinessUid(sid);
 
         tbBusinessUserMapper.insertBusinessUser(businessUser);
         //设置外键的值
-        bankcardInfo.setBusinessUid(IDUtils.genItemId());
+        bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
         //设置外键的值
-        business.setBusinessUid(IDUtils.genItemId());
+        business.setBusinessUid(sid);
         insertBusiness(business);
     }
 
