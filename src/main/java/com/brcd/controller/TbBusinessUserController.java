@@ -4,7 +4,6 @@ package com.brcd.controller;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
@@ -13,7 +12,6 @@ import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -146,12 +144,17 @@ public class TbBusinessUserController {
     @RequestMapping("shanghu")
     public String shanghu(){
         System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";}
+        return "menu/commercial/shanghuxinxifguanli.html";
+    }
 
-    @RequestMapping("toQuery")
-    public String shanghu(){return "menu/commercial/shanghuxinxifguanli.html";}
+   /* @RequestMapping("toQuery")
+    public String shanghu(){
+        return "menu/commercial/shanghuxinxifguanli.html";
+    }*/
     @RequestMapping("toUpdate")
-    public String toUpdate(){return "menu/commercial/businessUserUpdate.html";}
+    public String toUpdate(){
+        return "menu/commercial/businessUserUpdate.html";
+    }
 
     /**
      *商户修改的方法
