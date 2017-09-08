@@ -1,3 +1,4 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
@@ -20,27 +21,32 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 代理商管理控制层(controller)
  * Created by 韩明泽 on 2017/9/5.
  */
+
 @Controller
 @RequestMapping("/agent")
 public class AgentController {
     @Autowired
     private AgentService agentService;
 
-    /**
+
+/**
      * 测试
      * @return
      */
+
     @RequestMapping("/find")
     public List<TbAgent> findAll(){
 
         return agentService.findAll();
     }
 
-    /**
+
+/**
      * 显示所有代理商列表
      * 按条件查询
      * 分页
@@ -48,6 +54,7 @@ public class AgentController {
      * @param model
      * @return List<TbAgent>
      */
+
     @RequestMapping(value="/getAgent",method = RequestMethod.GET)
     public String getAgent(TbAgent agent, Model model, Integer pageNo){
         //分页查询
@@ -80,12 +87,14 @@ public class AgentController {
         return "menu/agent/dailishangxinxiguanli";
     }
 
-    /**
+
+/**
      * 根据id查询代理商详细信息
      * @param id
      * @param model
      * @return
      */
+
     @RequestMapping("/findAgentById")
     public String findAgentById(Long id,Model model,HttpSession session){
         TbAgent agent = agentService.findAgentById(id);
@@ -116,7 +125,7 @@ public class AgentController {
               if(loginAgent!=null){
                   agent.setAgentGrade(loginAgent.getAgentGrade()+1);//设置代理商级别
                   agent.setSuperiorAgencyId(loginAgent.getSuperiorAgencyId()); //设置上级代理商id
-                  agent.setOriginalAgencyId(IDUtils.genItemId());//设置本代理id
+                  agent.setOriginalAgencyId(IDUtils.getLongAgencyId());//设置本代理id
                   agent.setAgentNumber(IDUtils.genItemId()+"");  //设置代理商编号
               }
               else{
@@ -149,3 +158,4 @@ public class AgentController {
          return agentService.findAgentById(id);
     }
 }
+
