@@ -154,9 +154,8 @@ public class TbBusinessUserController {
         out.close();
     }
 
-    @RequestMapping("shanghu")
+    @RequestMapping("toManage")
     public String shanghu(){
-        System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";
     }
 
