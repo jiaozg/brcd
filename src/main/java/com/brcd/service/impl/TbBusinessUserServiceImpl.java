@@ -11,6 +11,7 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,13 +41,16 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置主键ID'
         String sid = IDUtils.genItemId();
         businessUser.setBusinessUid(sid);
-        tbBusinessUserMapper.insertBusinessUser(businessUser);
-        //设置外键的值
-        bankcardInfo.setBusinessUid(sid);
-        insertBankcardInfo(bankcardInfo);
+
         //设置外键的值
         business.setBusinessUid(sid);
         insertBusiness(business);
+        //设置外键的值
+        bankcardInfo.setBusinessUid(sid);
+        insertBankcardInfo(bankcardInfo);
+        businessUser.setStartTime(new Date());
+        businessUser.setEndTime(new Date());
+        tbBusinessUserMapper.insertBusinessUser(businessUser);
     }
 
     /**
@@ -54,11 +58,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     private void insertBusiness(TbBusiness business) {
 
-        if (business.getWechatPayYN() == "Y") {
+        if (business.getWechatPayYN().equals("Y")) {
+            business.setWechatT0(0);
+            business.setAliT0(0);
             business.setWechatPay(1);
             business.setAlipay(0);
             tbBusinessMapper.insertTbBusiness(business);
-        }else if (business.getAlipayYN() == "Y") {
+        }else if (business.getAlipayYN() .equals("Y")) {
+            business.setWechatT0(0);
+            business.setAliT0(0);
             business.setWechatPay(0);
             business.setAlipay(1);
             tbBusinessMapper.insertTbBusiness(business);
