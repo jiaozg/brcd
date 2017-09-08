@@ -31,4 +31,10 @@ public interface AgentMapper {
    * @return
    */
   TbAgent findAgentById(Long id);
+
+  /**
+   * 添加新的代理商
+   * @param agent
+   */
+  void addAgent(TbAgent agent);
 }
