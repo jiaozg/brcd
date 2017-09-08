@@ -25,4 +25,15 @@ public class PersonageMessageServiceImpl implements PersonageMessageService {
     public void updatePersonageMsg(TbAgent tbAgent) {
         personageMessageMapper.updatePersonageMsg(tbAgent);
     }
+
+    @Override
+    public TbAgent checkPassword(TbAgent tbAgent) {
+        TbAgent checkPassword = personageMessageMapper.checkPassword(tbAgent);
+        return checkPassword;
+    }
+
+    @Override
+    public void updatePassword(TbAgent tbAgent) {
+        personageMessageMapper.updatePassword(tbAgent);
+    }
 }

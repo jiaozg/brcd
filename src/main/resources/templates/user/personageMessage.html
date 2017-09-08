@@ -41,6 +41,9 @@
     <link href="../../static/css/fileCSS.css" th:href="@{/css/fileCSS.css}" type="text/css" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../../static/js/updateImges.js" th:src="@{/js/updateImges.js}"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/check/checkMsg.js}"></script>
     <!-- Baidu tongji analytics -->
     <script>var _hmt = _hmt || [];
     (function () {
@@ -49,35 +52,13 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();</script>
-
-
     <meta name="decorator" content="default"/>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#inputForm").validate({
-                submitHandler: function (form) {
-                    loading('正在提交，请稍等...');
-                    form.submit();
-                },
-                errorContainer: "#messageBox",
-                errorPlacement: function (error, element) {
-                    $("#messageBox").text("输入有误，请先更正。");
-                    if (element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append")) {
-                        error.appendTo(element.parent().parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                }
-            });
-        });
-    </script>
-
 </head>
 <body>
 
 <ul class="nav nav-tabs">
     <li class="active"><a href="toPersonageMessage" th:href="@{'/toPersonageMessage'}">个人信息</a></li>
-    <li><a href="xiugaimima.html" th:href="@{'/toUpdatePassword'}">修改密码</a></li>
+    <li><a href="updatePwd.html" th:href="@{'/toUpdatePassword'}">修改密码</a></li>
 </ul>
 <br/>
 <form id="inputForm" class="form-horizontal" action="save" method="post" enctype="multipart/form-data">
@@ -85,7 +66,7 @@
     <script type="text/javascript">top.$.jBox.closeTip();</script>
     <div class="control-group">
         <label class="control-label">头像:</label>
-        <img src="" id="loc_img"  width="150" height="150"/>
+        <img src="" id="loc_img" width="150" height="150"/>
         <div class="controls">
             <input id="nameImage" name="headSculpture" maxlength="255" class="input-xlarge" type="hidden"
                    th:value="${agentMsg.headSculpture}"/>
