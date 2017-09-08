@@ -8,7 +8,7 @@
     <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"
     th:src="@{../static/jquery/jquery-1.8.3.min.js}"></script>
     <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet"
-    th:href="@{../static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"/>
+    th:href="@{../static/bootstr    ap/2.3.1/css_cerulean/bootstrap.min.css}"/>
     <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"
     th:src="@{../static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
     <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet"
@@ -476,7 +476,7 @@
 
 
 
-            //点击选择省份
+           /* //点击选择省份
             $('#provinceSel').change(function(){
 
                 //清空 市区 option 内容
@@ -545,7 +545,7 @@
                     $('#citySel').attr('city_id',cityCode);
                     $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
                 },100);
-            });
+            });*/
 
             //点击 选择开卡省份
             $('#cardProvinceSel').change(function(){
@@ -924,23 +924,26 @@
                     <input id="servicePhone" name="servicePhone" class="input-xlarge telephone required " type="text" value="18410178782" maxlength="20"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
+
+            <td>
+                <div class="control-group">
+                    <label class="control-label">经营地址：</label>
+                    <div class="controls">
+                        <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
+                    </div>
+                </div>
+            </td>
             </div>
             </td>
         </tr>
-        <tr>
+       <!-- <tr>
 
-            <td><div class="control-group">
-                <label class="control-label">经营地址：</label>
-                <div class="controls">
-                    <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
-                </div>
-            </div></td>
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
 
                     <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">--请选择省份--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -952,7 +955,7 @@
                 <div class="controls">
 
                     <select id="citySel" name="manageCity" class="input-xlarge">
-                        <option value="" selected="selected">--请选择市--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -961,12 +964,42 @@
                 <div class="controls">
 
                     <select id="areaSel" name="manageDistrict" class="input-xlarge">
-                        <option value="" selected="selected">--请选择区--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
+        </tr>-->
+
+        <tr data-toggle="distpicker">
+            <td><div class="control-group">
+                <label class="control-label">经营省名称：</label>
+                <div class="controls">
+                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                    </select>
+                </div>
+            </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label" >经营市名称：</label>
+                    <div class="controls">
+                        <select id="city1" name="cityCode" class="input-xlarge">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" >经营区名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="districtCode" class="input-xlarge">
+                        </select>
+                    </div>
+
+
+                </div>
+            </td>
         </tr>
     </table>
+
 
     <!--<table id="enterpriseTable">
         <tr>
@@ -1794,6 +1827,9 @@
         return flag;
     }
 </script>
+<script src="../../../static/address/distpicker.data.js"></script>
+<script src="../../../static/address/distpicker.js"></script>
+<script src="../../../static/address/main.js"></script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
 if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
