@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.brcd.mapper.TbSettleMapper">
+       <sql id="selectTbSettle">
+                 payoff_num ,
+                 settle_num,
+                 settle_time,
+                 customer_num,
+                 customer_type,
+                 settle_type,
+                 settle_mode,
+                 order_amount,
+                 order_count,
+                 settle_fee,
+                 settle_amount,
+                 settle_status,
+                 remark
+
+       </sql>
+      <!--查询结算记录-->
+      <select id="selectTbSettleList" resultType="com.brcd.bean.TbSettle" parameterType="com.brcd.bean.TbSettle">
+
+            select <include refid="selectTbSettle"/> from tb_settle
+            <where>
+                  <if test="payoffNum!=null">
+                        payoff_num=#{payoffNum}
+                  </if>
+                  <if test="settleNum!=null">
+                      AND  settle_num=#{settleNum}
+                  </if>
+                  <if test="customerNum!=null">
+                      AND  customer_num=#{customerNum}
+                  </if>
+                  <if test="settleType!=null">
+                      AND settle_type=#{settleType}
+                  </if>
+                  <if test="settleMode!=null">
+                      AND  settle_mode=#{settleMode}
+                  </if>
+                  <if test="settleStatus!=null">
+                      AND  settle_status=#{settleStatus}
+                  </if>
+                  <if test="startTime!=null">
+                      AND start_time &gt; #{startTime}
+                  </if>
+                  <if test="endTime!=null">
+                        AND end_time &lt; #{endTime}
+                  </if>
+
+            </where>
+      </select>
+
+
+
+
+</mapper>

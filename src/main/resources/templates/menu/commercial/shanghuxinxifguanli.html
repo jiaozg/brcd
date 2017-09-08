@@ -34,7 +34,8 @@
     <script src="../../../static/static/common/jeesite.js" type="text/javascript"
     th:src="@{../static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-    <script type="text/javascript" src="../../../static/js/laydate.js"></script>
+    <script type="text/javascript" src="../../../static/js/laydate.js"
+    th:src="@{../js/laydate.js}"></script>
 
     <meta name="decorator" content="default"/>
 
@@ -86,14 +87,14 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+            <input class="input-medium laydate-icon" type="text" id="demo" value="" >
         </li>
         <li style="margin-left: 60px;">
             <label>结束时间：</label>
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input class="input-medium laydate-icon" type="text" id="demo2" value="" >
         </li>
 
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
@@ -173,7 +174,7 @@
 
 
         <td>
-            <a href="shanghuxinxiguanlixiugai.html">修改</a>
+            <a href="toUpdate">修改</a>
 
         </td>
 

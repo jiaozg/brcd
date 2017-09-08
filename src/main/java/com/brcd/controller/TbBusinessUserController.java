@@ -42,9 +42,6 @@ public class TbBusinessUserController {
     @Autowired
     private TbBusinessService tbBusinessService;
 
-    private TbBusinessUserService businessManagementService;
-
-
     /*
     * 时间格式的转换
     */
@@ -69,7 +66,7 @@ public class TbBusinessUserController {
     @ResponseBody
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         businessUser.setBusinessUid("11233");
-        businessManagementService.insertBusinessUser(businessUser, business, bankcardInfo);
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
         System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
 
         String s = businessUser.toString();
@@ -117,6 +114,7 @@ public class TbBusinessUserController {
         return mv;
     }
 
+
     @RequestMapping("/exportExcel")
     public void exportExcel(TbBusinessUser tbBusinessUser, HttpServletRequest request, HttpServletResponse response)throws Exception{
 
@@ -149,6 +147,12 @@ public class TbBusinessUserController {
     public String shanghu(){
         System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";}
+
+    @RequestMapping("toQuery")
+    public String shanghu(){return "menu/commercial/shanghuxinxifguanli.html";}
+    @RequestMapping("toUpdate")
+    public String toUpdate(){return "menu/commercial/businessUserUpdate.html";}
+
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -163,4 +167,5 @@ public class TbBusinessUserController {
 
 
     }
+
 }

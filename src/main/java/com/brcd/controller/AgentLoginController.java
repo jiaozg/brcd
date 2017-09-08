@@ -28,6 +28,7 @@ public class AgentLoginController {
     @RequestMapping("AgentLogin")
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
         TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
+        System.out.println("登陆的用户：" + agentLogin);
         if (agentLogin != null) {
             session.setAttribute("agentLogin", agentLogin);
             return "home/home";
@@ -39,7 +40,7 @@ public class AgentLoginController {
     @RequestMapping("/{url}")//当请求找不到对应额Url的时候就会执行这个方法
     public String url(@PathVariable("url") String url) {
         System.out.print(url + "---");
-        return "home/"+url;
+        return "home/" + url;
     }
 
 }
