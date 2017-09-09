@@ -4,6 +4,8 @@ package com.brcd.service;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.bean.TbBusinessUserExtend;
+
 import java.util.List;
 /**
  * 商户管理业务层
@@ -17,7 +19,7 @@ public interface TbBusinessUserService {
      */
     public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo);
 
-
+    TbBusinessUserExtend getBusinessUserAndBank(int id);
 
     List<TbBusinessUser> query(TbBusinessUser businessUser);
 
