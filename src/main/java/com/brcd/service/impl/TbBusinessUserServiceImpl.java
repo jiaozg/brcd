@@ -54,7 +54,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     }
 
     /**
-     * 添加商户开通线下支付信息
+     * 添加商户开通线下支付信息更改
      */
     private void insertBusiness(TbBusiness business) {
 
