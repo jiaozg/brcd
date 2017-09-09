@@ -64,9 +64,6 @@ public class TbBusinessUser {
 
     private Integer businessId;
 
-
-
-
     private  TbAgent tbAgent;
 
 

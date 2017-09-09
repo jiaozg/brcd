@@ -33,11 +33,11 @@
 
         })
         function exportExcel() {
-            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v,h,f) {
+            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v) {
                 if(v=="ok"){
-                    alert(1111);
                     $("#searchForm").attr("action","/brcd/businessUser/exportExcel");
                     $("#searchForm").submit();
+                    $("#searchForm").attr("action","/brcd/businessUser/query");
                 }
             })
         }
@@ -184,7 +184,7 @@
         <td th:text="${#dates.format(shang.startTime, 'yyyy-MM-dd')}">2017-05-23 06:38:44</td>
 
         <td>
-            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709">详情</a>
+            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:href="@{/businessUser/detail(id=${shang.businessUid})}">详情</a>
         </td>
     </tr>
 

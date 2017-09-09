@@ -3,6 +3,7 @@ package com.brcd.service.impl;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
@@ -75,6 +76,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
 
 
+    }
+
+    @Override
+    public TbBusinessUserExtend getBusinessUserAndBank(int id) {
+        return tbBusinessUserMapper.getBusinessUserAndBank(id);
     }
 }
 
