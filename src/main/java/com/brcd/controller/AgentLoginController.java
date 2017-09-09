@@ -1,19 +1,27 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.TbAgent;
+import com.brcd.common.util.DateUtil;
+import com.brcd.common.util.MD5Util;
 import com.brcd.service.AgentLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
+
 
 /**
  * Created by 任彩雨 on 2017/9/5.
  * 代理商登录模块
  */
+
 @Controller
 public class AgentLoginController {
     @Autowired
@@ -25,12 +33,23 @@ public class AgentLoginController {
         return "login";
     }
 
+    //退出登录
+    @RequestMapping("AgentExit")
+    public String AgentExit(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+
+    //登录
     @RequestMapping("AgentLogin")
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
-        TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
-        if (agentLogin != null) {
-            session.setAttribute("agentLogin", agentLogin);
-            return "home/home";
+
+        if (tbAgent != null) {
+            TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
+            if (agentLogin != null) {
+                session.setAttribute("agentLogin", agentLogin);
+                return "home/home";
+            }
         }
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
@@ -39,7 +58,8 @@ public class AgentLoginController {
     @RequestMapping("/{url}")//当请求找不到对应额Url的时候就会执行这个方法
     public String url(@PathVariable("url") String url) {
         System.out.print(url + "---");
-        return "home/"+url;
+        return "home/" + url;
     }
 
 }
+

@@ -1,6 +1,4 @@
-
-<html  style="overflow-x:auto;overflow-y:auto;" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <style>
         /* Loading Spinner */
         .spinner {
@@ -186,10 +184,11 @@
                     <span></span></button>
                 <a href="/" class="logo-content-small" title="MonarchUI"></a>
             </div>
+
             <div id="header-logo" class="logo-bg">
                 <a href="home.html" class="logo-content-big" title="MonarchUI">
                     Monarch <i>UI</i>
-                    <img src="../../static/image-resources/logo-admin.png" th:src="@{/image-resources/logo-admin.png}"/>
+                    <img src="../../static/image-resources/logo-admin.png"/>
                     <span>The perfect solution for user interfaces</span>
                 </a>
                 <a href="home.html" class="logo-content-small" title="MonarchUI">
@@ -199,7 +198,9 @@
                 <a id="close-sidebar" href="javascript:void(0);" title="Close sidebar">
                     <i class="glyph-icon icon-angle-left"></i>
                 </a>
+                <img th:src="@{/image-resources/logo-admin.png}" style="margin-top: 20px">
             </div>
+
             <div id="" style="float:right;margin-right:10px;">
                 <div class="user-account-btn dropdown">
                     <a href="data-tables.html#" title="My Account" class="user-profile clearfix" data-toggle="dropdown">
@@ -218,7 +219,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../user/xiugaimima.html" target="mainFrame">
+                                    <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}"
+                                       target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
                                         修改密码
                                     </a>
@@ -226,7 +228,8 @@
 
                             </ul>
                             <div class="pad5A button-pane button-pane-alt text-center">
-                                <a href="/a/logout" class="btn display-block font-normal btn-danger"
+                                <a href="/a/logout" th:href="@{AgentExit}"
+                                   class="btn display-block font-normal btn-danger"
                                    style="width: 161px;">
                                     <i class="glyph-icon icon-power-off"></i>
                                     退出登录
@@ -324,8 +327,9 @@
                         <div class="sidebar-submenu" pid="144c98b73d0c4e15b0d764f3bcbdd889">
                             <ul>
 
-                                <li class="leaf " pid="81866a0e944446f0b150422645c2cdae" >
-                                    <a style="padding-left:30px;" href="../menu/commercial/goToInsertBusinessUser" title="添加商户" target="mainFrame">
+                                <li class="leaf " pid="81866a0e944446f0b150422645c2cdae">
+                                    <a style="padding-left:30px;" th:href="@{/businessUser/goToInsertBusinessUser}" href="../menu/commercial/goToInsertBusinessUser"
+                                       title="添加商户" target="mainFrame">
 
 
                                         <i class="glyph-icon icon-check" style="color:#cc0001;"></i>
@@ -372,7 +376,7 @@
                                         <span>商户查询</span></a>
                                 </li>
                                 <li class="leaf " pid="b968aea48b9e49a7aed21f16281a039f">
-                                    <a style="padding-left:30px;" href="../menu/commercial/shanghuxinxifguanli.html" th:href="@{businessUser/shanghu}"
+                                    <a style="padding-left:30px;"  href="../menu/commercial/shanghuxinxifguanli.html" th:href="@{/businessUser/toManage}"
                                        title="商户信息管理" target="mainFrame">
                                         <i class="glyph-icon icon-cog" style="color:#cc0001;"></i>
                                         <span>商户信息管理</span></a>
@@ -446,7 +450,7 @@
                             <ul>
 
                                 <li class="leaf " pid="6ab2ae156be04cfea17484c2f8647e91">
-                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html"
+                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html" th:href="@{/pageIndex}"
                                        title="结算记录" target="mainFrame">
                                         <i class="glyph-icon icon-align-justify" style="color:#cc0001;"></i>
                                         <span>结算记录</span></a>

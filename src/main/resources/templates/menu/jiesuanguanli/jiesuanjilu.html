@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html style="overflow-x:auto;overflow-y:auto;">
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>结算记录查询管理 - Powered By JeeSite</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
     <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
     <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
-    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<script src="../../../static/static/bootstrap/bsie/js/bootstrap-ie.min.js" type="text/javascript"></script><![endif]-->
-    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
-    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
+    <script th:src="@{/static/jquery/jquery-1.8.3.min.js}"  src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <link th:href="@{/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"  href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
+
+    <script th:src="@{/static/bootstrap/2.3.1/js/bootstrap.min.js}" src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <link th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome.min.css}" href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
+
+    <link th:href="@{/static/jquery-select2/3.4/select2.min.css}" href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
+    <script th:src="@{/static/jquery-select2/3.4/select2.min.js}" src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
+    <link th:href="@{/static/jquery-validation/1.11.0/jquery.validate.min.css}" href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
+    <script th:src="@{/static/jquery-validation/1.11.0/jquery.validate.min.js}" src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
+    <link th:href="@{/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}" href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
+    <script th:src="@{/static/jquery-jbox/jquery.jBox-2.3.min.js}" src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
+    <script th:src="@{/static/My97DatePicker/WdatePicker.js}" src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script th:src="@{/static/common/mustache.min.js}" src="../../../static/static/common/mustache.min.js" type="text/javascript"></script>
+    <link th:href="@{/static/common/jeesite.css}" href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
+    <script th:src="@{/static/common/jeesite.js}" src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-    <script type="text/javascript" src="../../../static/js/laydate.js"></script>
+    <script type="text/javascript" th:src="@{/js/laydate.js}" src="../../../static/js/laydate.js"></script>
 
 
     <meta name="decorator" content="default" />
@@ -35,16 +36,16 @@
             href="/a/operate/settle/brcbSettle/list">结算记录查询</a></li>
 
 </ul>
-<form id="searchForm" class="breadcrumb form-search" action="/a/operate/settle/brcbSettle/list" method="post">
+<form id="searchForm" class="breadcrumb form-search" th:action="@{settle/selectTbSettleList}" method="post">
 
     <input id="pageNo" name="pageNo" type="hidden" value="1" />
     <input id="pageSize" name="pageSize" type="hidden"
            value="15" />
 
     <ul class="ul-form">
-        <li><label>结算批次号：</label> <input id="settleBatchNum" name="settleBatchNum" style="width:155px" class="input-medium" type="text" value="" maxlength="32"/></li>
+        <li><label>结算批次号：</label> <input id="settleBatchNum" name="payoffNum" style="width:155px" class="input-medium" type="text" value="" maxlength="32"/></li>
         <li><label  style="margin-left: 80px;">结算流水号：</label> <input id="settleNum" name="settleNum" style="width:155px" class="input-medium" type="text" value="" maxlength="32"/></li>
-        <li><label style="margin-left: 80px;">商户编号：</label> <input id="ownerNum" name="ownerNum" style="width:155px" class="input-medium" type="text" value="" maxlength="32"/></li>
+        <li><label style="margin-left: 80px;">商户编号：</label> <input id="ownerNum" name="customerNum" style="width:155px" class="input-medium" type="text" value="" maxlength="32"/></li>
     </ul>
 
     <ul class="ul-form">
@@ -68,7 +69,7 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:163px;position: relative;"
                    value="2017-08-29"
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-        <input class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+        <input class="laydate-icon" id="demo" name="startTime"  style="width:143px;position: relative;">
 
     </li>
         <li style="margin-left: 44px;">　
@@ -76,7 +77,7 @@
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:159px;position: relative;"
                    value="2017-09-05"
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input class="laydate-icon" id="demo2" name="endTime"   style="width:143px;position: relative;">
 
         </li>
 
@@ -136,7 +137,22 @@
     </tr>
     </thead>
     <tbody>
-
+          <tr th:each="Settle:${selectTbSettleList}">
+              <td th:text="${Settle.payoffNum}"></td>
+              <td th:text="${Settle.settleNum}"></td>
+              <td th:text="${#calendars.format(Settle.settleTime,'yyyy-MM-dd')}">2017-07-07</td>
+              <td th:text="${Settle.customerNum}"></td>
+              <td th:text="${Settle.customerType}"></td>
+              <td th:text="${Settle.settleType}"></td>
+              <td th:text="${Settle.settleMode}"></td>
+              <td th:text="${Settle.orderAmount}"></td>
+              <td th:text="${Settle.orderCount}"></td>
+              <td th:text="${Settle.settleFee}"></td>
+              <td th:text="${Settle.settleAmount}"></td>
+              <td th:text="${Settle.settleStatus}"></td>
+              <td th:text="${Settle.remark}"></td>
+              <td>查看</td>
+          </tr>
     </tbody>
 </table>
 <div class="pagination"><ul>

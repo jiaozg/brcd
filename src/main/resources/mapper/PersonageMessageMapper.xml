@@ -4,10 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.PersonageMessageMapper">
     <select id="queryAgentMsg" parameterType="TbAgent" resultType="TbAgent">
-		SELECT id,company_affiliation,attribution_department,name,email,phone,mobile_phone,remark,account_type,user_type,role,last_ip,last_login_time FROM tb_agent
+		SELECT id,head_sculpture,company_affiliation,attribution_department,name,email,phone,mobile_phone,remark,account_type,user_type,role,last_ip,last_login_time FROM tb_agent
 		        WHERE id=#{id};
     </select>
     <update id="updatePersonageMsg" parameterType="TbAgent">
-         UPDATE tb_agent SET email=#{email},phone=#{phone},mobile_phone=#{mobilePhone},remark=#{remark} WHERE id=#{id};
+         UPDATE tb_agent SET head_sculpture=#{headSculpture},email=#{email},phone=#{phone},mobile_phone=#{mobilePhone},remark=#{remark} WHERE id=#{id};
+    </update>
+    <select id="checkPassword" parameterType="TbAgent" resultType="TbAgent">
+        SELECT password FROM tb_agent WHERE id=#{id} AND password=#{password}
+    </select>
+    <update id="updatePassword" parameterType="TbAgent">
+          UPDATE tb_agent SET password=#{password} WHERE id=#{id}
     </update>
 </mapper>

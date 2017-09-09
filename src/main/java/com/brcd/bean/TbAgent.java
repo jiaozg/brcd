@@ -1,6 +1,12 @@
 package com.brcd.bean;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+
+import javax.validation.constraints.Pattern;
+
 
 /*
 使用lombok
@@ -8,7 +14,7 @@ import lombok.Data;
 @Data
 public class TbAgent {
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 
@@ -23,7 +29,7 @@ public class TbAgent {
     private String businessArea;
 
     private String accountType;
-
+    @Pattern(regexp = "/^([1-9]{1})(\\d{14}|\\d{18})$/",message = "卡号格式不符")
     private String registerCardNumber;
 
     private String registerCardProvinces;
@@ -62,9 +68,12 @@ public class TbAgent {
 
     private String password;
 
+    private String newPassWord;//修改的新密码
+
+
     private String lastIp;//登陆的IP
 
-    private Long lastLoginTime;//登陆的时间
+    private String lastLoginTime;//登陆的时间
 
     private String role;//用户角色
 
@@ -72,12 +81,14 @@ public class TbAgent {
 
     private String headSculpture;
 
+//    private File headSculptureFile;
+
     private String companyAffiliation;//归属公司
 
     private String attributionDepartment;//归属部门
 
     private String name;
-
+    @Pattern(regexp = "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/",message = "邮箱格式不符")
     private String email;
 
     private String phone;//电话
@@ -86,5 +97,7 @@ public class TbAgent {
 
     private String remark;
 
+
+   private Integer wOrAilpay;
 
 }

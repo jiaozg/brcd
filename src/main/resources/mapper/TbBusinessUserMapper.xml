@@ -19,19 +19,17 @@
     manage_address=#{manageAddress},
     manage_province=#{manageProvince},
     manage_city=#{manageCity},
-    manage_district=#{manageDistrict},
-    register_address=#{registerAddress},
-    identity_card_front=#{identityCardFront},
-    identity_card_reverse=#{identityCardReverse},
-    identity_card_hand=#{identityCardHand},
-    bank_card_front=#{bankCardFront},
-    business_license_picture=#{businessLicensePicture},
-    door_picture=#{doorPicture},
-    register_license_picture=#{registerLicensePicture}
+    manage_district=#{manageDistrict}
     WHERE business_uid=#{businessUid}
 
 </update>
-
+<!--
+,
+   /* identity_card_front=#{identityCardFront},
+    identity_card_reverse=#{identityCardReverse},
+    identity_card_hand=#{identityCardHand},
+    bank_card_front=#{bankCardFront},*/
+-->
     <!--添加商户信息-->
     <insert id="insertBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
         INSERT INTO tb_business_user(business_uid, affiliation_agent, business_user_type,

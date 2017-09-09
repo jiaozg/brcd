@@ -6,12 +6,12 @@
 
     <!--添加开通业务信息-->
     <insert id="insertTbBusiness" parameterType="com.brcd.bean.TbBusiness" >
-        INSERT INTO tb_business (business_id, wechat_pay, wechat_rate,
+        INSERT INTO tb_business (wechat_pay, wechat_rate,
         wechat_t_0, wechat_industry, wechat_type,
         wechat_num, alipay, ali_rate,
         ali_t_0, ali_industry, ali_type,
         alipay_num, business_uid)
-        VALUES (#{businessId}, #{wechatPay}, #{wechatRate},
+        VALUES (#{wechatPay}, #{wechatRate},
         #{wechatT0}, #{wechatIndustry}, #{wechatType},
         #{wechatNum}, #{alipay}, #{aliRate},
         #{aliT0}, #{aliIndustry}, #{aliType},

@@ -5,7 +5,6 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 
-import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
@@ -93,6 +92,10 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
+       if(tbBusinessUser == null){
+           tbBusinessUser = new TbBusinessUser();
+       }
+        tbBusinessUser.setAffiliationAgent("21564546514");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -140,14 +143,6 @@ public class TbBusinessUserController {
         OutputStream out = response.getOutputStream();
         ex.exportExcel(headers, item, out);
         out.close();
-    }
-    @RequestMapping("/detail")
-    public ModelAndView detail(Integer id){
-
-        ModelAndView mv = new ModelAndView("menu/commercial/shanghuxiangqing.html");
-        TbBusinessUserExtend BusinessUserExtend = tbBusinessUserService.getBusinessUserAndBank(id);
-        mv.addObject("businessUserExtend",BusinessUserExtend);
-        return mv;
     }
 
     @RequestMapping("shanghu")

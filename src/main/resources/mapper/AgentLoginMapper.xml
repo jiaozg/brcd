@@ -5,7 +5,9 @@
 <mapper namespace="com.brcd.mapper.AgentLoginMapper">
 
     <select id="AgentLogin" parameterType="TbAgent" resultType="TbAgent">
-      SELECT id,name FROM tb_agent WHERE account=#{account} AND password=#{password}
+      SELECT id,agent_number,name,head_sculpture FROM tb_agent WHERE account=#{account} AND password=#{password}
     </select>
-
+    <update id="updateDateIp" parameterType="TbAgent">
+        UPDATE tb_agent SET last_ip=#{lastIp},last_login_time=#{lastLoginTime} where id=#{id};
+    </update>
 </mapper>
