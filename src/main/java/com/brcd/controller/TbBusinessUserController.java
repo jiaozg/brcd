@@ -75,9 +75,7 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(Model model){
-        List<String> bankNameList = bankService.findBankName();
-        model.addAttribute("bankNameList",bankNameList);
+    public String goToIsert(){
         return "menu/commercial/addCommercial";
     }
 
