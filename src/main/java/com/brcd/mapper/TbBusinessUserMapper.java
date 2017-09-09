@@ -1,6 +1,7 @@
 package com.brcd.mapper;
 
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.bean.TbBusinessUserExtend;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,8 @@ public interface TbBusinessUserMapper {
     //添加商户信息
     void insertBusinessUser(TbBusinessUser businessUser);
 
+
     List<TbBusinessUser> query(TbBusinessUser businessUser);
+
+    TbBusinessUserExtend getBusinessUserAndBank(int id);
 }
