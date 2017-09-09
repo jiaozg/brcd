@@ -1458,13 +1458,12 @@
                     <div class="controls">
                         <input id="rightID" name="identityCardFrontImg" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file1"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+
                         <ol id="rightIDPreview">
-                            <li >
-                                <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <li>
+                                <img id="img" class="imgList" src="../image-resources/logo-admin.png" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                             </li>
-                        </ol>
-                        <a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;
-                        <a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+                        </ol><a href="javascript:" onclick="$('#file1').trigger('click'); " class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1476,9 +1475,7 @@
                     <div class="controls">
                         <input id="reservedID" name="identityCardReverseImg" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file2"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="reservedIDPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+                        <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="$('#file2').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1492,9 +1489,7 @@
                     <div class="controls">
                         <input id="IDWithHand" name="identityCardHandImg" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file3"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="IDWithHandPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+                        <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="$('#file3').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
@@ -1506,9 +1501,7 @@
                     <div class="controls">
                         <input id="rightBankCard" name="bankCardFrontImg" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file4"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="rightBankCardPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+                        <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="$('#file4').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1522,9 +1515,7 @@
                     <div class="controls">
                         <input id="licenseImage" name="businessLicensePictureImg" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
                         <input type="file" id="file5"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="licenseImagePreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+                        <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="$('#file5').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1536,9 +1527,7 @@
                     <div class="controls">
                         <input id="doorHeadImage" name="doorPictureImg" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
                         <input type="file" id="file6"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="doorHeadImagePreview"><li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
+                        <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="$('#file6').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
@@ -1550,9 +1539,7 @@
                     <div class="controls">
                         <input id="accountLicence" name="registerLicensePictureImg" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
                         <input type="file" id="file7"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
-                        <ol id="accountLicencePreview"><li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
-                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
+                        <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="$('#file7').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1585,13 +1572,13 @@
         var fileName = getFileName(file);
         $(this).prev().removeAttr("readonly");
         $(this).prev().val(fileName);
-       var image=$(this);
         if (window.FileReader) {
             var reader = new FileReader();
             reader.readAsDataURL(isFile);
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
-                image.next().children().children().attr('src',e.target.result);
+                alert(e.target.result);
+                $(this).next().children().children().attr('src',e.target.result);
             };
         }
 
@@ -1602,28 +1589,7 @@
         var pos=o.lastIndexOf("\\");
         return o.substring(pos+1);
     }
-    function addImg(o){
-        $(o).prevAll("input[type='file']").trigger('click');
-    }
-function clearImg(o){
-        $(o).prevAll("input[type='text']").removeAttr("readonly");
-        $(o).prevAll("input[type='text']").val("");
-        $(o).prevAll("input[type='text']").attr("readonly","readonly");
-        $(o).prevAll("input[type='file']").removeAttr("value");
-        $(o).prevAll("ol").children().children().attr("src","");
-       /* $(o).parent().html(" " +
-            "<input id='rightID' name='identityCardFrontImg' style='width:139px;' placeholder='请选择身份证正面照片' axlength='255' class='input-xlarge required' readonly='readonly' type='text' value=''/>"
-            +"<input type='file' id='file1'  style='filter:alpha(opacity=0);opacity:0;width: 0;height: 0;'/>"
-            +"<ol id='rightIDPreview'>"
-            +"<li >"
-            +"<img  class='imgList' src='' url='' style='max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;'>"
-            +"</li>"
-            +"</ol>"
-            +"<a href='javascript:'  class='btn' onclick='addImg(this)'>选择</a>&nbsp;"
-            +"<a href='javascript:' onclick='clearImg();' class='btn'>清除</a>"
-            +"<span class='help-inline'><font color='red'>*</font> </span>");*/
 
-}
     <!--显示照片-->
     /*$(function () {
         $("input [type='file']").change(function () {
