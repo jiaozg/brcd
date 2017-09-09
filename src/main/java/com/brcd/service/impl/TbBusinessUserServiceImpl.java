@@ -3,7 +3,7 @@ package com.brcd.service.impl;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-import com.brcd.common.util.IDUtils;
+import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
@@ -11,7 +11,6 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,19 +37,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     @Override
     public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        //设置主键ID'
-        String sid = IDUtils.genItemId();
-        businessUser.setBusinessUid(sid);
 
-        //设置外键的值
-        business.setBusinessUid(sid);
-        insertBusiness(business);
-        //设置外键的值
-        bankcardInfo.setBusinessUid(sid);
-        insertBankcardInfo(bankcardInfo);
-        businessUser.setStartTime(new Date());
-        businessUser.setEndTime(new Date());
+
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        insertBankcardInfo(bankcardInfo);
+        insertBusiness(business);
     }
 
 
@@ -58,19 +49,14 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户开通线下支付信息
      */
     private void insertBusiness(TbBusiness business) {
-
-        if (business.getWechatPayYN().equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(1);
-            business.setAlipay(0);
-            tbBusinessMapper.insertTbBusiness(business);
-        }else if (business.getAlipayYN() .equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(0);
-            business.setAlipay(1);
-            tbBusinessMapper.insertTbBusiness(business);
+        TbBusiness tb = new TbBusiness();
+        if (business.getWechatPay() == 0) {
+            tb.setWechatPay(business.getWechatPay());
+            tbBusinessMapper.insertTbBusiness(tb);
+        }
+        if (business.getAlipay() == 0) {
+            tb.setAlipay(business.getAlipay());
+            tbBusinessMapper.insertTbBusiness(tb);
         }
     }
 
@@ -91,6 +77,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
 
 
+    }
+
+    @Override
+    public TbBusinessUserExtend getBusinessUserAndBank(int id) {
+        return tbBusinessUserMapper.getBusinessUserAndBank(id);
     }
 }
 
