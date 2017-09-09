@@ -1,35 +1,77 @@
 <!DOCTYPE html>
-<html style="overflow-x:auto;overflow-y:auto;">
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>商户信息管理 - Powered By JeeSite</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
     <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
     <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
-    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet" />
-    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
-    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"></script>
-    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"></script>
-    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" />
-    <script src="../../../static/static/common/jeesite.js" type="text/javascript"></script>
+    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript" th:src="@{/static/jquery/jquery-1.8.3.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" th:href="@{/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript" th:src="@{/static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome.min.css}" type="text/css" rel="stylesheet" />
+    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" th:href="@{/static/jquery-select2/3.4/select2.min.css}" />
+    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript" th:src="@{/static/jquery-select2/3.4/select2.min.js}"></script>
+    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" th:href="@{/static/jquery-validation/1.11.0/jquery.validate.min.css}" type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript" th:src="@{/static/jquery-validation/1.11.0/jquery.validate.min.js}"></script>
+    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" th:href="@{/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}"/>
+    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript" th:src="@{/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js}"></script>
+    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/static/My97DatePicker/WdatePicker.js}"></script>
+    <script src="../../../static/static/common/mustache.min.js" type="text/javascript" th:src="@{/static/common/mustache.min.js}"></script>
+    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" th:href="@{/static/common/jeesite.css}"/>
+    <script src="../../../static/static/common/jeesite.js" type="text/javascript" th:src="@{/static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
 
-
+    <script src="../../../static/address/distpicker.data.js" th:src="@{/address/distpicker.data.js}"></script>
+    <script src="../../../static/address/distpicker.js" th:src="@{/address/distpicker.js}"></script>
+    <script src="../../../static/address/main.js" th:src="@{/address/main.js}"></script>
     <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
-  
+
 
     <meta name="decorator" content="default"/>
-    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css">
-    <script src="../../../static/static/jquery-ui/ui.js"></script>
+    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css" th:href="@{/static/jquery-ui/ui.css}">
+    <script src="../../../static/static/jquery-ui/ui.js" th:src="@{/static/jquery-ui/ui.js}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $("#channelStatus-1").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/wechatTrade/findWechatTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, wechatTrades) {
+                                var $option = '<option  value='+wechatTrades.tradeName+'>'+wechatTrades.tradeName+'</option>';
+                                $('#channelBusinessType-1').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-3').prop("disabled", true);
+                }else{
+                    $('#channelStatus-3').prop("disabled", false);
+                }
+            })
+            $("#channelStatus-3").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/AlipayTrade/findAlipayTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, alipayTrade) {
+                                var $option = '<option  value='+alipayTrade.firstType+'>'+alipayTrade.firstType+'</option>';
+                                $('#channelBusinessType-3').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-1').prop("disabled", true);
+                }else{
+                    $('#channelStatus-1').prop("disabled", false);
+                }
+            })
+
+
+
             $('#groupId').prop("disabled", true);
             $('#groupId2').prop("disabled", true);
             $('#groupId3').prop("disabled", true);
@@ -56,16 +98,17 @@
             /*初始化经营行业*/
             $.ajax({
                 type:"get",
-                url:"/a/operate/business/brcbBusinessType/getByType",
+                url:"/a/asd/asd/getasd",
                 dataType : "json",
-                data: {customerType:$("#customerTypeSel").val()},
+                data: {tradeType:$("#customerTypeSel").val()},
                 success:function(data){
-                    $.each(data.business, function(i, item) {
-                        var $option = '<option type='+item.customerType+' value='+item.businessId+'>'+item.businessName+'</option>';
+                    $.each(data.wechatTrades, function(i, item) {
+                        var $option = '<option type='+item.tradeType+' value='+item.tradeName+'>'+item.tradeName+'</option>';
                         $('#businessSel').append($option);
                     });
                 }
             });
+
 
             /*初始化银行大行列表*/
             $.ajax({
@@ -150,9 +193,10 @@
                 var province=$("#provinceSel").val();
                 var city=$("#citySel").val();
                 var area=$("#areaSel").val();
-                if(channelStatus == 'Y'){
+       /*         if(channelStatus == 'Y'){
                     if(businessAddress==null || businessAddress==''){
                         window.top.openDialog('提示：开通支付宝经营地址不能为空');
+
                         return;
                     }
                     if(province==null || province==''){
@@ -167,10 +211,11 @@
                         window.top.openDialog('提示：开通支付宝经营区县不能为空');
                         return;
                     }
-                }
+                }*/
                 if(customerTypeSel == 'ENTERPRISE' && accountType== 'PERSONAL'){
                     if(accountName != legalName){
                         window.top.openDialog('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
+                        alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
                         return;
                     }
                 }
@@ -286,86 +331,86 @@
             });
 
 
-            /*  //点击选择省份
-             $('#provinceSel').change(function(){
+            //点击选择省份
+            $('#provinceSel').change(function(){
 
-             //清空 市区 option 内容
-             $("#s2id_citySel .select2-chosen").html('--请选择市--');
-             $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+                //清空 市区 option 内容
+                $("#s2id_citySel .select2-chosen").html('--请选择市--');
+                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
 
-             var _this=$(this);
-             // 清空和显示错误信息
-             if(_this.val()){
-             $("label[for='provinceSel']").css('display','none');
-             }else{
-             $("label[for='provinceSel']").css('display','block');
-             }
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='provinceSel']").css('display','none');
+                }else{
+                    $("label[for='provinceSel']").css('display','block');
+                }
 
-             $("#citySel,#areaSel").empty();
+                $("#citySel,#areaSel").empty();
 
-             var $cityOption = "<option code=''  value='' >--请选择市--</option>";
-             var $areaOption = "<option code=''  value='' >--请选择区--</option>";
+                var $cityOption = "<option code=''  value='' >--请选择市--</option>";
+                var $areaOption = "<option code=''  value='' >--请选择区--</option>";
 
-             $("#citySel").append($cityOption);
-             $("#areaSel").append($areaOption);
+                $("#citySel").append($cityOption);
+                $("#areaSel").append($areaOption);
 
-             //遍历添加区
-             var provinceCode = _this.find('option:selected').attr('code');
-             var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
-             masterAddrC(cityUrl,'#citySel');
+                //遍历添加区
+                var provinceCode = _this.find('option:selected').attr('code');
+                var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
+                masterAddrC(cityUrl,'#citySel');
 
-             setTimeout(function(){
-             var cityCode = $('#citySel').find('option').eq(0).attr('code');
-             var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
-             masterAddrA(areaUrl,'areaSel');
-             setTimeout(function(){
-             $('#provinceSel').attr('province_id',provinceCode);
-             $('#citySel').attr('city_id',$('#citySel').find('option').eq(0).attr('code'));
-             $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
-             },300);
-             },300);
-             });
+                setTimeout(function(){
+                    var cityCode = $('#citySel').find('option').eq(0).attr('code');
+                    var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+                    masterAddrA(areaUrl,'areaSel');
+                    setTimeout(function(){
+                        $('#provinceSel').attr('province_id',provinceCode);
+                        $('#citySel').attr('city_id',$('#citySel').find('option').eq(0).attr('code'));
+                        $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+                    },300);
+                },300);
+            });
 
 
-             //点击选择城市
-             $('#citySel').change(function(){
-             var _this=$(this);
-             // 清空和显示错误信息
-             if(_this.val()){
-             $("label[for='citySel']").css('display','none');
-             }else{
-             $("label[for='citySel']").css('display','block');
-             }
+            //点击选择城市
+            $('#citySel').change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='citySel']").css('display','none');
+                }else{
+                    $("label[for='citySel']").css('display','block');
+                }
 
-             //清空 市区 option 内容
-             $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+                //清空 市区 option 内容
+                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
 
-             $("#areaSel").empty();
+                $("#areaSel").empty();
 
-             var $option = "<option code=''  value='' >--请选择区--</option>";
-             $("#areaSel").append($option);
+                var $option = "<option code=''  value='' >--请选择区--</option>";
+                $("#areaSel").append($option);
 
-             var cityCode = _this.find('option:selected').attr('code');
-             var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
-             masterAddrA(areaUrl,'#areaSel');
-             setTimeout(function(){
-             $('#citySel').attr('city_id',cityCode);
-             $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
-             },100);
-             });
+                var cityCode = _this.find('option:selected').attr('code');
+                var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+                masterAddrA(areaUrl,'#areaSel');
+                setTimeout(function(){
+                    $('#citySel').attr('city_id',cityCode);
+                    $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+                },100);
+            });
 
-             //点击选择区
-             $('#areaSel').change(function(){
-             var _this=$(this);
-             // 清空和显示错误信息
-             if(_this.val()){
-             $("label[for='areaSel']").css('display','none');
-             }else{
-             $("label[for='areaSel']").css('display','block');
-             }
+            //点击选择区
+            $('#areaSel').change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='areaSel']").css('display','none');
+                }else{
+                    $("label[for='areaSel']").css('display','block');
+                }
 
-             });
-             */
+            });
+
             //点击经营行业
             $('#businessSel').change(function(){
                 var _this=$(this);
@@ -453,34 +498,6 @@
                     $('#cardBranchSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
                 },100);
             });
-
-
-            //点击选择支行
-            $('#cardBranchSel').change(function(){
-                var _this=$(this);
-                var bankNo = _this.find('option:selected').attr('bankNo');
-
-                if(bankNo == 'other'){
-                    $("#bankNo").val('');
-                    $("#bankNo").removeAttr('readonly');
-                }else{
-                    $("#bankNo").val(bankNo);
-                    $("#bankNo").attr('readonly','readonly');
-                }
-
-                // 清空和显示错误信息
-                if(_this.val()){
-                    $("label[for='cardBranchSel']").css('display','none');
-                    $("label[for='bankNo']").css('display','none');
-                }else{
-                    $("label[for='cardBranchSel']").css('display','block');
-                    $("label[for='bankNo']").css('display','block');
-                }
-            });
-
-
-
-
         });
 
         // 遍历添加city
@@ -640,10 +657,25 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="/a/operate/customer/brcbCustomer/form?id=">商户信息添加</a></li>
 </ul><br/>
-
 <form id="inputForm" class="form-horizontal" action="/brcd/businessUser/insertBusinessUser" method="post">
     <input id="id" name="id" type="hidden" value=""/>
     <input id="agentNum" name="agentNum" type="hidden" value="A148110054952010852"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
@@ -654,16 +686,18 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <span>张明盟代理商</span>
+                    <input type="text" name="affiliationAgent" value="代理商">
+                   <!-- <span>北京艺之彩广告有限公司</span>-->
                 </div>
             </div>
             </td>
+
         </tr>
         <tr>
             <td><div class="control-group">
                 <label class="control-label">商户类型：</label>
                 <div class="controls">
-                    <select id="customerTypeSel" name="customerType" class="input-xlarge required">
+                    <select id="customerTypeSel" name="businessUserType" class="input-xlarge required">
                         <option value="ENTERPRISE">企业商户</option>
                         <option value="PERSONAL">个体户</option>
                     </select>
@@ -673,7 +707,7 @@
             <td><div class="control-group">
                 <label class="control-label">经营名称：</label>
                 <div class="controls">
-                    <input id="businessName" name="businessName" class="input-xlarge required" type="text" value="" maxlength="255"/>
+                    <input id="businessName" name="manageName" class="input-xlarge required" type="text" value="" maxlength="255"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -683,14 +717,14 @@
             <td><div class="control-group">
                 <label class="control-label">商户名称：</label>
                 <div class="controls">
-                    <input id="customerName" name="customerName" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="customerName" name="businessUsername" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
             <td><div class="control-group">
                 <label class="control-label">法人姓名：</label>
                 <div class="controls">
-                    <input id="legalName" name="legalName" class="input-xlarge required" type="text" value="" maxlength="32"/>
+                    <input id="legalName" name="legalPeopleName" class="input-xlarge required" type="text" value="" maxlength="32"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -700,7 +734,7 @@
                 <div class="control-group">
                     <label class="control-label">法人身份证：</label>
                     <div class="controls">
-                        <input id="legalId" name="legalId" class="input-xlarge required isIdCardNo" type="text" value="" maxlength="32"/>
+                        <input id="legalId" name="legalPeopleIdentityCard" class="input-xlarge required isIdCardNo" type="text" value="" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -708,7 +742,7 @@
             <td><div class="control-group">
                 <label class="control-label">联系人：</label>
                 <div class="controls">
-                    <input id="contact" name="contact" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="contact" name="contactPeople" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -725,7 +759,7 @@
                 <div class="control-group">
                     <label class="control-label">联系邮箱：</label>
                     <div class="controls">
-                        <input id="contactEmail" name="contactEmail" class="input-xlarge email" type="text" value="" maxlength="50"/>
+                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" value="" maxlength="50"/>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -744,19 +778,57 @@
             <td><div class="control-group">
                 <label class="control-label">经营地址：</label>
                 <div class="controls">
-                    <input id="businessAddressSel" name="businessAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
+                    <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
                 </div>
             </div></td>
         </tr>
-
         <tr data-toggle="distpicker">
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
 
+
+                <div class="control-group">
+                    <label class="control-label">经营市名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="manageCity" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                        </select>
+                    </div>
+                </div>
+
+            </td>
+            <td>
+
+                <div class="control-group">
+                    <label class="control-label">经营区名称：</label>
+                    <div class="controls">
+
+                        <select id="city1" name="manageDistrict" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group" style="height: 30px;">
+                    </div>
+                </div>
+            </td>
+
+
+        </tr>
+        <!--<tr>
+            <td><div class="control-group">
+                <label class="control-label">经营省名称：</label>
+                <div class="controls">
 
                     <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">--请选择省份--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -765,7 +837,7 @@
                 <div class="controls">
 
                     <select id="citySel" name="manageCity" class="input-xlarge">
-                        <option value="" selected="selected">--请选择市--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                     </select>
                 </div>
             </div></td>
@@ -775,34 +847,12 @@
                 <label class="control-label">经营区名称：</label>
                 <div class="controls">
                     <select id="areaSel" name="manageDistrict" class="input-xlarge">
-                        <option value="" selected="selected">--请选择区--</option>
-                    </select>
-
-                <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                     </select>
                 </div>
             </div>
             </td>
-           <!-- <td>
-                <div class="control-group">
-                    <label class="control-label">经营市名称：</label>
-                    <div class="controls">
-                        <select id="city1" name="cityCode" class="input-xlarge">
-                        </select>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">经营区名称：</label>
-                    <div class="controls">
-                        <select id="district1" name="districtCode" class="input-xlarge">
-                        </select>
-                    </div>
-
-                </div>
-            </td> -->
-
-
-        </tr>
+        </tr>-->
     </table>
 
     <table id="enterpriseTable">
@@ -810,14 +860,14 @@
             <td><div class="control-group">
                 <label class="control-label">营业执照编号：</label>
                 <div class="controls">
-                    <input id="licenseNo" name="licenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
             <td><div class="control-group">
                 <label class="control-label">注册地址：</label>
                 <div class="controls">
-                    <input id="address" name="address" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="address" name="registerAddress" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -844,14 +894,9 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-
-
-
-                        <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
-
+                        <select id="channelStatus-1" name="wechatPayYN" data-index="1" class="input-xlarge channelStatus">
                             <option value="Y" >开通</option>
                             <option  value="N" selected="selected">不开通</option>
-
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -862,7 +907,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input id="tradeFee-1" name="brcbChannelFeeList[0].customerFee.transFee.rate" data-index="1" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
+                                    <input id="tradeFee-1" name="wechatRate" data-index="1" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
                                     <span id="tradeFee_label_1" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
                                 </div>
@@ -871,11 +916,9 @@
                                 <div class="control-group">
                                     <label class="control-label">T+0状态：</label>
                                     <div class="controls">
-
                                         <select id="groupId2" name="wechatT0" data-index="1" class="input-xlarge t0StatusSel">
                                             <option value="0">不开通</option>
                                             <!--<option value="Y">开通</option>-->
-
 
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
@@ -888,7 +931,7 @@
                                 <div class="control-group">
                                     <label class="control-label">经营行业：</label>
                                     <div class="controls">
-                                        <select id="channelBusinessType-1" name="brcbChannelFeeList[0].businessType" data-index="1" class="input-xlarge required">
+                                        <select id="channelBusinessType-1" name="wechatIndustry" data-index="1" class="input-xlarge required">
                                             <option value="" selected="selected">--请选择经营行业--</option>
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
@@ -902,7 +945,7 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号类型：</label>
                                     <div class="controls">
-                                        <select id="brcbChannelFeeList0.contactType" name="brcbChannelFeeList[0].contactType" data-index="1" class="input-xlarge">
+                                        <select id="brcbChannelFeeList0.contactType" name="wechatType" data-index="1" class="input-xlarge">
                                             <option value="" selected="selected">--请选择账号类型--</option>
                                             <option value="type_wechatid">收款人微信号</option>
                                             <option value="type_openid">收款人openId</option>
@@ -914,7 +957,7 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号：</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.contactId" name="brcbChannelFeeList[0].contactId" data-index="1" class="input-xlarge" type="text" value=""/>
+                                        <input id="brcbChannelFeeList0.contactId" name="wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
                                     </div>
                                 </div>
                             </td>
@@ -947,8 +990,8 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped2">否</label>
+                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped"  checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped"  type="radio" value="N"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped2">否</label>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
                                 </div>
@@ -1079,8 +1122,8 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped2">否</label>
+                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped"  checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped"  type="radio" value="N"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped2">否</label>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
                                 </div>
@@ -1115,11 +1158,9 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-
-                        <select id="channelStatus-3" name="alipay" data-index="3" class="input-xlarge channelStatus">
-
+                        <select id="channelStatus-3" name="alipayYN" data-index="3" class="input-xlarge channelStatus">
                             <option value="Y">开通</option>
-                            <option selected="selected" value="N">不开通</option>
+                            <option  value="N" selected="selected">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1130,7 +1171,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input id="tradeFee-3" name="brcbChannelFeeList[2].customerFee.transFee.rate" data-index="3" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
+                                    <input id="tradeFee-3" name="aliRate" data-index="3" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
                                     <span id="tradeFee_label_3" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
                                 </div>
@@ -1139,11 +1180,9 @@
                                 <div class="control-group">
                                     <label class="control-label">T+0状态：</label>
                                     <div class="controls">
-
                                         <select id="groupId3" name="aliT0" data-index="3" class="input-xlarge t0StatusSel">
-                                            <option value="0">不开通</option>
+                                            <option value="0" selected="selected">不开通</option>
                                           <!--  <option value="1">开通</option>-->
-
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
@@ -1155,8 +1194,9 @@
                                 <div class="control-group">
                                     <label class="control-label">经营行业：</label>
                                     <div class="controls">
-                                        <select id="channelBusinessType-3" name="brcbChannelFeeList[2].businessType" data-index="3" class="input-xlarge required">
+                                        <select id="channelBusinessType-3" name="aliIndustry" data-index="3" class="input-xlarge required">
                                             <option value="" selected="selected">--请选择经营行业--</option>
+
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
@@ -1191,11 +1231,9 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-
                                        &lt;!&ndash; <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>
-
+                                        <span class="help-inline"><font color="red">*</font> </span>&ndash;&gt;
                                     </div>
                                 </div>
                             </td>
@@ -1235,7 +1273,7 @@
                 <div class="control-group">
                     <label class="control-label">账户类型 ：</label>
                     <div class="controls">
-                        <select id="accountTypeHidden" name="bankCardInfo.accountType" class="input-xlarge ">
+                        <select id="accountTypeHidden" name="bankcardType" class="input-xlarge ">
                             <option value="COMPANY">公司账户</option>
                             <option value="PERSONAL">个人账户</option>
                         </select>
@@ -1247,7 +1285,7 @@
                 <div class="control-group">
                     <label class="control-label">开户户名：</label>
                     <div class="controls">
-                        <input id="accountNameHidden" name="bankCardInfo.accountName" class="input-xlarge required" type="text" value="" maxlength="100"/>
+                        <input id="accountNameHidden" name="bankcardName" class="input-xlarge required" type="text" value="" maxlength="100"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1258,7 +1296,7 @@
                 <div class="control-group">
                     <label class="control-label">开户卡号：</label>
                     <div class="controls">
-                        <input id="bankCardInfo.bankCard" name="bankCardInfo.bankCard" class="input-xlarge required isBankCard" type="text" value="" maxlength="32"/>
+                        <input id="bankCardInfo.bankCard" name="bankcardNum" class="input-xlarge required isBankCard" type="text" value="" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1267,20 +1305,21 @@
                 <div class="control-group">
                     <label class="control-label">开户行名称：</label>
                     <div class="controls">
-                        <select id="bankNameSel" name="bankCardInfo.bankName" class="input-xlarge required">
+                        <select id="bankNameSel" name="bankName" class="input-xlarge required">
                             <option value="" selected="selected">--请选择银行--</option>
+                            <option value="北京" th:text="${bankName}" th:value="${bankName}" th:each="bankName:${bankNameList}">--北京--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr data-toggle="distpicker">
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
-                        <select id="cardProvinceSel" name="bankCardInfo.province" class="input-xlarge required">
+                        <select id="cardProvinceSel" name="bankProvince" class="input-xlarge required">
                             <option value="" selected="selected">--请选择省--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1291,35 +1330,22 @@
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡城市：</label>
-
-                    <!--<div class="controls">
-                        <select id="cardCitySel" name="bankCity" class="input-xlarge required">
-                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
-                            <option value="北京">&#45;&#45;北京&#45;&#45;</option>
-                        </select>
-                        <span class="help-inline"><font color="red">*</font> </span>
-                    </div>-->
-                </div>
-            </td>
-        </tr>
-       <!-- <tr>
-
                     <div class="controls">
-                        <select id="cardCitySel" name="bankCardInfo.city" class="input-xlarge required">
+                        <select id="cardCity" name="bankCity" class="input-xlarge required">
                             <option value="" selected="selected">--请选择市--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
-        </tr> -->
-        <!-- <tr>
-
+        </tr>
+        <tr>
             <td><div class="control-group">
                 <label class="control-label">支行：</label>
                 <div class="controls">
-                    <select id="cardBranchSel" name="bankCardInfo.bankAddress" class="input-xlarge required">
+                    <select id="cardBranchSel" name="bankDetailed" class="input-xlarge required">
                         <option value="" selected="selected">--请选择支行--</option>
+
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
@@ -1328,24 +1354,23 @@
                 <div class="control-group">
                     <label class="control-label">联行号：</label>
                     <div class="controls">
-                        <input id="bankNo" name="bankCardInfo.alliedBankNo" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="" maxlength="32"/>
+                        <input id="bankNo" name="bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
-        </tr> -->
+        </tr>
     </table>
     <h6>商户资料信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
 
-   <!-- <table>
-
+   <table>
         <tr>
             <td>
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <input id="rightID" name="brcbCustomerMaterial.rightID" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="rightID" name="identityCardFront" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1368,6 +1393,7 @@
 
 
                         <ol id="rightIDPreview"></ol><a href="javascript:" onclick="rightIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
+
                         <script type="text/javascript">
                             function rightIDFinderOpen(){//
                                 var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
@@ -1432,7 +1458,7 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <input id="reservedID" name="brcbCustomerMaterial.reservedID" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="reservedID" name="identityCardReverse" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1521,7 +1547,7 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <input id="IDWithHand" name="brcbCustomerMaterial.IDWithHand" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="IDWithHand" name="identityCardHand" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1608,7 +1634,7 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" name="brcbCustomerMaterial.rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="rightBankCard" name="bankCardFront" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1697,7 +1723,7 @@
                 <div class="control-group">
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
-                        <input id="licenseImage" name="brcbCustomerMaterial.licenseImage" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input id="licenseImage" name="businessLicensePicture" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
 
 
 
@@ -1784,7 +1810,7 @@
                 <div class="control-group">
                     <label class="control-label">门头照：</label>
                     <div class="controls">
-                        <input id="doorHeadImage" name="brcbCustomerMaterial.doorHeadImage" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="doorHeadImage" name="doorPicture" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1871,7 +1897,7 @@
                 <div class="control-group">
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
-                        <input id="accountLicence" name="brcbCustomerMaterial.accountLicence" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="accountLicence" name="registerLicensePicture" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
 
 
 
@@ -1976,7 +2002,7 @@
                 /*初始化经营行业*/
                 $.ajax({
                     type:"get",
-                    url:"/a/operate/business/brcbBusinessType/getByType",
+                    url:"/a/asd/asd/getasd",
                     dataType : "json",
                     data: {customerType:customerType,channelType:channelNum},
                     success:function(data){
@@ -2001,15 +2027,16 @@
                         $('#channelBusinessType-'+index).empty();
                         var $option = "<option code=''  value='' >--请选择经营行业--</option>";
                         $('#channelBusinessType-'+index).append($option);
-                        $.each(data.business, function(i, item) {
+                        $.each(data, function(i, item) {
                             /*  var $option = '<option label='+item.province+' value='+item.cityId+'>'+item.city+'</option>'; */
-                            var $option = '<option type='+item.customerType+' value='+item.businessId+'>'+item.businessName+'</option>';
+                            var $option = '<option type='+item.customerType+' value='+item.firstType+'>'+item.firstType+'</option>';
                             $('#channelBusinessType-'+index).append($option);
                             $("#channelSetting-" + index).show();
                         });
                     }
                 });
-            }else{
+            }
+             else{
                 $("#channelSetting-" + index).hide();
             }
         });
@@ -2221,17 +2248,34 @@
         }) ;
         return flag;
     }
-</script>
-<script src="../../../static/address/distpicker.data.js"></script>
-<script src="../../../static/address/distpicker.js"></script>
-<script src="../../../static/address/main.js"></script>
+    $("#cardCity").change(function(){
+        var bankName = $("#bankNameSel").val();
+        var City=$("#cardCity").val();
+        var Province = $("#cardProvinceSel").val();
+        $.post("findByBankName",{bankName:bankName,city:City,province:Province},function(data){
+            $.each(data,function (i,bank) {
+                var $option="<option  value='"+bank.bankSubName+"'>"+bank.bankSubName+"</option>";
+                $("#cardBranchSel").append($option);
+            })
+        })
+    });
 
+    $("#cardBranchSel").change(function () {
+        var bankNo=$("#cardBranchSel").val();
+        $("#bankNo").removeAttr('readonly');
+        $.post("findBankNo",{bankSubName:bankNo},function (data) {
+            $("#bankNo").val(data);
+        })
+        $("#bankNo").attr('readonly',"readonly");
+
+    });
+</script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
 if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
     $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
     $("#btnMenu").click(function(){
-        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=24d792f720d44afd8ea89a82661beda7', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=5820d85e952a431e9732ce111db7d1f8', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
         //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
     });
 }//-->

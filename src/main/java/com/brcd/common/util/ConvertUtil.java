@@ -50,40 +50,6 @@ public class ConvertUtil {
     }
 
     /**
-     * 字符串拼接转换成Map
-     *
-     * @param str
-     * @return
-     */
-    public static Map<String, Object> strCover2ObjectMap(String str) {
-        Map<String, Object> mapRequest = new HashMap<String, Object>();
-
-        String[] arrSplit = null;
-        if (str == null) {
-            return mapRequest;
-        }
-        // 每个键值为一组
-        arrSplit = str.split("[&]");
-        for (String strSplit : arrSplit) {
-            String[] arrSplitEqual = null;
-            arrSplitEqual = strSplit.split("[=]", 2);
-
-            // 解析出键值
-            if (arrSplitEqual.length > 1) {
-                // 正确解析
-                mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
-
-            } else {
-                if (arrSplitEqual[0] != "") {
-                    // 只有参数没有值，不加入
-                    mapRequest.put(arrSplitEqual[0], "");
-                }
-            }
-        }
-        return mapRequest;
-    }
-
-    /**
      * 将一个 Map 对象转化为一个 JavaBean
      *
      * @param clazz 要转化的类型

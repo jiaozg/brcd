@@ -22,7 +22,6 @@ public class TbWechatTradeController {
     @ResponseBody
     public List<TbWechatTrade> getWechatTrade(){
         List<TbWechatTrade> wechatTrades = tbWechatTradeService.getWechatTrade();
-        System.out.println("-------------------kkkkkkk------------------");
         for(TbWechatTrade t : wechatTrades){
             System.out.println(t);
         }
