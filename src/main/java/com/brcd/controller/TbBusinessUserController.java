@@ -1,11 +1,11 @@
 package com.brcd.controller;
 
 
+import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-
-import com.brcd.bean.TbBusinessUserExtend;
+import com.brcd.service.BankService;
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
@@ -13,8 +13,8 @@ import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -37,15 +37,30 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
+
+    @Value("${FTP_ADDRESS}")
+    private String FTP_ADDRESS;//IP地址
+    @Value("${FTP_PORT}")
+    private Integer FTP_PORT;//端口号
+    @Value("${FTP_USERNAME}")
+    private String FTP_USERNAME;//用户名
+    @Value("${FTP_PASSWORD}")
+    private String FTP_PASSWORD;//密码
+    @Value("${FTP_BASE_PATH}")
+    private String FTP_BASE_PATH;//ftp的图片服务器根路径
+    @Value("${IMAGE_BASE_URL}")
+    private String IMAGE_BASE_URL;//#ftp图片服务器的url
+    @Value("${IMAGEPATH}")
+    private String IMAGEPATH;//#ftp图片服务器的url
+
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
     private TbBankcardInfoService tbBankcardInfoService;
     @Autowired
     private TbBusinessService tbBusinessService;
-
-    private TbBusinessUserService businessManagementService;
-
+    @Autowired
+    private BankService bankService;
 
     /*
     * 时间格式的转换
@@ -60,7 +75,9 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(){
+    public String goToIsert(Model model){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/addCommercial";
     }
 
@@ -68,20 +85,11 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    @ResponseBody
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        businessUser.setBusinessUid("11233");
-        businessManagementService.insertBusinessUser(businessUser, business, bankcardInfo);
-        System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
 
-        String s = businessUser.toString();
-        String s1 = business.toString();
-        String s2 = bankcardInfo.toString();
-        System.out.printf(s);
-        System.out.printf(s1);
-        System.out.printf(s2);
-        String sss = s + "      " + s1 + "         " + s2;
-        return sss;
+
+        return "redirect:/businessUser/query";
     }
 
     /**
@@ -94,6 +102,10 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
+       if(tbBusinessUser == null){
+           tbBusinessUser = new TbBusinessUser();
+       }
+        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -114,6 +126,7 @@ public class TbBusinessUserController {
         request.setAttribute("listCount",listCount);
         return mv;
     }
+
 
     @RequestMapping("/exportExcel")
     public void exportExcel(TbBusinessUser tbBusinessUser, HttpServletRequest request, HttpServletResponse response)throws Exception{
@@ -143,18 +156,17 @@ public class TbBusinessUserController {
         out.close();
     }
 
-    @RequestMapping("/detail")
-    public ModelAndView detail(Integer id){
-        TbBusinessUserExtend businessUserExtend = tbBusinessUserService.getBusinessUserAndBank(id);
-        ModelAndView mv = new ModelAndView("/menu/commercial/shanghuxiangqing.html");
-        mv.addObject("businessUserExtend",businessUserExtend);
-        return mv;
+    @RequestMapping("toManage")
+    public String shanghu(){
+        return "menu/commercial/shanghuxinxifguanli.html";
     }
 
-    @RequestMapping("shanghu")
-    public String shanghu(){
-        System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";}
+
+    @RequestMapping("toUpdate")
+    public String toUpdate(Model model){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
+        return "menu/commercial/businessUserUpdate.html";}
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -163,10 +175,28 @@ public class TbBusinessUserController {
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-        tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
-        return null;
+      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
+        return "menu/commercial/shanghuxinxifguanli.html";
 
 
     }
+
+    /**
+     * 根据大行名称、省、市查询该条件下的支行
+     * @param bank
+     * @return
+     */
+    @RequestMapping("findByBankName")
+    @ResponseBody
+    public List<Bank> findByBankName(Bank bank){
+        System.out.println(bank.getProvince());
+        return bankService.findByBankName(bank);
+    }
+    @RequestMapping("findBankNo")
+    @ResponseBody
+    public String findBankNo(String bankSubName){
+        return bankService.findBankNo(bankSubName);
+    }
+
 }
