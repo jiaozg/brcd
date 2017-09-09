@@ -373,7 +373,7 @@
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <img alt="身份证正面：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" src="169.254.105.60/zheng.png">
+                        <img alt="身份证正面：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;"  th:src="${businessUserExtend.identityCardFront}" src="169.254.105.60/zheng.png">
                     </div>
                 </div>
             </td>
@@ -381,7 +381,7 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <img class="imgList" alt="身份证反面：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                        <img class="imgList" alt="身份证反面：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.identityCardReverse}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
                     </div>
                 </div>
             </td>
@@ -391,7 +391,7 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <img class="imgList" alt="手持身份证：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                        <img class="imgList" alt="手持身份证：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.identityCardHand}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
                     </div>
                 </div>
             </td>
@@ -399,7 +399,33 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <img class="imgList" alt="银行卡正面 ：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                        <img class="imgList" alt="银行卡正面 ：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.bankCardFront}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                    </div>
+                </div>
+            </td>
+            </tr>
+        <tr>
+            <td th:if="${businessUserExtend.businessUserType == '企业商户'}">
+                <div class="control-group">
+                    <label class="control-label">营业执照照片：</label>
+                    <div class="controls">
+                        <img class="imgList" alt="营业执照照片 ：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.businessLicensePicture}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                    </div>
+                </div>
+            </td>
+            <td th:if="${businessUserExtend.businessUserType == '企业商户'}">
+                <div class="control-group">
+                    <label class="control-label">门头照：</label>
+                    <div class="controls">
+                        <img class="imgList" alt="门头照 ：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.doorPicture}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
+                    </div>
+                </div>
+            </td>
+            <td th:if="${businessUserExtend.businessUserType == '企业商户'}">
+                <div class="control-group">
+                    <label class="control-label">开户许可证照片：</label>
+                    <div class="controls">
+                        <img class="imgList" alt="开户许可证照片 ：无" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;" th:src="${businessUserExtend.registerLicensePicture}" src="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png">
                     </div>
                 </div>
             </td>
@@ -407,7 +433,7 @@
 
     </table>
     <div class="form-actions" style="margin-left: 150px">
-        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+        <a id="btnCancel" class="btn" th:href="@{/businessUser/query(affiliationAgent=${session.agentLogin.agentNumber})}">返回</a>
     </div>
 </form>
 <script type="text/javascript">

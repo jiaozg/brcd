@@ -5,6 +5,7 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 
+import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,10 +94,6 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
-       if(tbBusinessUser == null){
-           tbBusinessUser = new TbBusinessUser();
-       }
-        tbBusinessUser.setAffiliationAgent("21564546514");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -143,6 +141,14 @@ public class TbBusinessUserController {
         OutputStream out = response.getOutputStream();
         ex.exportExcel(headers, item, out);
         out.close();
+    }
+
+    @RequestMapping("/detail")
+    public ModelAndView detail(Integer id){
+        TbBusinessUserExtend businessUserExtend = tbBusinessUserService.getBusinessUserAndBank(id);
+        ModelAndView mv = new ModelAndView("/menu/commercial/shanghuxiangqing.html");
+        mv.addObject("businessUserExtend",businessUserExtend);
+        return mv;
     }
 
     @RequestMapping("shanghu")
