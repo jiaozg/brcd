@@ -498,34 +498,6 @@
                     $('#cardBranchSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
                 },100);
             });
-
-
-            //点击选择支行
-            $('#cardBranchSel').change(function(){
-                var _this=$(this);
-                var bankNo = _this.find('option:selected').attr('bankNo');
-
-                if(bankNo == 'other'){
-                    $("#bankNo").val('');
-                    $("#bankNo").removeAttr('readonly');
-                }else{
-                    $("#bankNo").val(bankNo);
-                    $("#bankNo").attr('readonly','readonly');
-                }
-
-                // 清空和显示错误信息
-                if(_this.val()){
-                    $("label[for='cardBranchSel']").css('display','none');
-                    $("label[for='bankNo']").css('display','none');
-                }else{
-                    $("label[for='cardBranchSel']").css('display','block');
-                    $("label[for='bankNo']").css('display','block');
-                }
-            });
-
-
-
-
         });
 
         // 遍历添加city
@@ -1335,21 +1307,20 @@
                     <div class="controls">
                         <select id="bankNameSel" name="bankName" class="input-xlarge required">
                             <option value="" selected="selected">--请选择银行--</option>
-                            <option value="北京" >--北京--</option>
+                            <option value="北京" th:text="${bankName}" th:value="${bankName}" th:each="bankName:${bankNameList}">--北京--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr data-toggle="distpicker">
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
                         <select id="cardProvinceSel" name="bankProvince" class="input-xlarge required">
                             <option value="" selected="selected">--请选择省--</option>
-                            <option value="北京" >--北京--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1360,7 +1331,7 @@
                 <div class="control-group">
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
-                        <select id="cardCitySel" name="bankCity" class="input-xlarge required">
+                        <select id="cardCity" name="bankCity" class="input-xlarge required">
                             <option value="" selected="selected">--请选择市--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -2277,6 +2248,27 @@
         }) ;
         return flag;
     }
+    $("#cardCity").change(function(){
+        var bankName = $("#bankNameSel").val();
+        var City=$("#cardCity").val();
+        var Province = $("#cardProvinceSel").val();
+        $.post("findByBankName",{bankName:bankName,city:City,province:Province},function(data){
+            $.each(data,function (i,bank) {
+                var $option="<option  value='"+bank.bankSubName+"'>"+bank.bankSubName+"</option>";
+                $("#cardBranchSel").append($option);
+            })
+        })
+    });
+
+    $("#cardBranchSel").change(function () {
+        var bankNo=$("#cardBranchSel").val();
+        $("#bankNo").removeAttr('readonly');
+        $.post("findBankNo",{bankSubName:bankNo},function (data) {
+            $("#bankNo").val(data);
+        })
+        $("#bankNo").attr('readonly',"readonly");
+
+    });
 </script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
