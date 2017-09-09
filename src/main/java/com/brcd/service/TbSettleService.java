@@ -11,7 +11,7 @@ public interface TbSettleService {
 
     /**
      * 查询交易信息
-     * @param settle
+     * @param settle page row
      */
-    List<TbSettle> selectTbSettleList(TbSettle settle);
+    List<TbSettle> selectSettleList(TbSettle settle);
 }

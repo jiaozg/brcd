@@ -34,5 +34,8 @@ public class TbProfit {
 
     private String remark;
 
+    private Date startTime;
+
+    private Date endTime;
 
 }

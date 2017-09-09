@@ -57,8 +57,11 @@ public class TbBusinessUser {
 
 
     private Integer businessUserStatus;
+
     private Date startTime;
+
     private Date endTime;
+
     private String businessUserKey;
 
 
@@ -74,6 +77,7 @@ public class TbBusinessUser {
 
 
     private TbBankcardInfo tbBankcardInfo;
+
 
     private  TbBusiness tbBusiness;
 
