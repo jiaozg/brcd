@@ -1017,33 +1017,36 @@
         <tr data-toggle="distpicker">
 
             <td>
-                <div class="control-group">
-                    <label class="control-label" ></label>
-                    <div class="controls">
 
-                    </div>
-                </div>
                 <div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
-                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
             </div>
-
+                <div class="control-group">
+                    <label class="control-label" ></label>
+                    <div class="controls">
+                      <li></li>
+                    </div>
+                </div>
             </td>
             <td>
                 <div class="control-group">
                     <label class="control-label" >经营市名称：</label>
                     <div class="controls">
-                        <select id="city1" name="cityCode" class="input-xlarge">
+                        <select id="city1" name="manageCity" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" >经营区名称：</label>
                     <div class="controls">
-                        <select id="district1" name="districtCode" class="input-xlarge">
+                        <select id="district1" name="manageDistrict" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                         </select>
                     </div>
 
@@ -1102,9 +1105,9 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-1" name="brcbChannelFeeList[0].isOpenChannel" data-index="1" class="input-xlarge channelStatus">
-                            <option value="Y" >开通</option>
-                            <option value="N" >不开通</option>
+                        <select id="channelStatus-1" name="tbBusiness.wechatPay" data-index="1" class="input-xlarge channelStatus">
+                            <option value="Y"  >开通</option>
+                            <option value="N" selected="selected">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1115,7 +1118,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input name="brcbChannelFeeList[0].customerFee.transFee.rate" data-index = "1" value="" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-1">
+                                    <input name="tbBusiness.wechatRate" data-index = "1" value="" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-1">
 
                                     <span id="tradeFee_label_1" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1123,9 +1126,9 @@
                             </div></td>
                             <td>
                                 <div class="control-group">
-                                    <label class="control-label">T+0状态：</label>
+                                    <label class="control-label" >T+0状态：</label>
                                     <div class="controls">
-                                        <select id="t0StatusSel-1" name="brcbChannelFeeList[0].t0Status" data-index="1" class="input-xlarge t0StatusSel">
+                                        <select disabled="disabled" id="t0StatusSel-1" name="" data-index="1" class="input-xlarge t0StatusSel">
                                             <option value="N" selected="selected">不开通</option>
                                             <option value="Y">开通</option>
                                         </select>
@@ -1139,7 +1142,7 @@
                                 <div class="control-group">
                                     <label class="control-label">经营行业：</label>
                                     <div class="controls">
-                                        <select id="channelBusinessType-1" name="brcbChannelFeeList[0].businessType" data-index="1" class="input-xlarge required">
+                                        <select id="channelBusinessType-1" name="tbBusiness.wechatIndustry" data-index="1" class="input-xlarge required">
                                             <option value="" selected="selected">--请选择经营行业--</option>
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1154,7 +1157,7 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号类型：</label>
                                     <div class="controls">
-                                        <select id="brcbChannelFeeList0.contactType" name="brcbChannelFeeList[0].contactType" data-index="1" class="input-xlarge">
+                                        <select id="brcbChannelFeeList0.contactType" name="tbBusiness.wechatType" data-index="1" class="input-xlarge">
                                             <option value="" selected="selected">--请选择账号类型--</option>
                                             <option value="type_wechatid">收款人微信号</option>
                                             <option value="type_openid">收款人openId</option>
@@ -1166,14 +1169,14 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号：</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.contactId" name="brcbChannelFeeList[0].contactId" data-index="1" class="input-xlarge" type="text" value=""/>
+                                        <input id="brcbChannelFeeList0.contactId" name="tbBusiness.wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
                                     </div>
                                 </div>
                             </td>
                         </tr>
 
                     </table>
-                    <table id="settleModeSel-1" class="settleModeSel">
+                    <!--<table id="settleModeSel-1" class="settleModeSel">
                         <tr>
                             <td><div class="control-group">
                                 <label class="control-label">T+0费率%:</label>
@@ -1199,15 +1202,15 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                       <!-- <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                       &lt;!&ndash; <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>-->
+                                        <span class="help-inline"><font color="red">*</font> </span>&ndash;&gt;
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="control-group">
-                                    <!-- <label class="control-label">结算方式:</label> -->
+                                    &lt;!&ndash; <label class="control-label">结算方式:</label> &ndash;&gt;
                                     <div class="controls">
 
                                         <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.settleMode" value="T0_HANDING">
@@ -1226,7 +1229,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </table>
+                    </table>-->
                 </div>
             </div>
 
@@ -1241,9 +1244,9 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-3" name="brcbChannelFeeList[2].isOpenChannel" data-index="3" class="input-xlarge channelStatus">
-                            <option value="Y" selected="selected">开通</option>
-                            <option value="N">不开通</option>
+                        <select id="channelStatus-3" name="tbBusiness.alipay" data-index="3" class="input-xlarge channelStatus">
+                            <option value="Y" >开通</option>
+                            <option value="N" selected="selected">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1254,7 +1257,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input name="brcbChannelFeeList[2].customerFee.transFee.rate" data-index = "3" value="0.2500" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-3">
+                                    <input name="tbBusiness.aliRate" data-index = "3" value="0.2500" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-3">
 
                                     <span id="tradeFee_label_3" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1264,7 +1267,7 @@
                                 <div class="control-group">
                                     <label class="control-label">T+0状态：</label>
                                     <div class="controls">
-                                        <select id="t0StatusSel-3" name="brcbChannelFeeList[2].t0Status" data-index="3" class="input-xlarge t0StatusSel">
+                                        <select disabled="disabled" id="t0StatusSel-3" name="brcbChannelFeeList[2].t0Status" data-index="3" class="input-xlarge t0StatusSel">
                                             <option value="N" selected="selected">不开通</option>
                                             <option value="Y">开通</option>
                                         </select>
@@ -1278,7 +1281,7 @@
                                 <div class="control-group">
                                     <label class="control-label">经营行业：</label>
                                     <div class="controls">
-                                        <select id="channelBusinessType-3" name="brcbChannelFeeList[2].businessType" data-index="3" class="input-xlarge required">
+                                        <select id="channelBusinessType-3" name="tbBusiness.aliIndustry" data-index="3" class="input-xlarge required">
                                             <option value="">--请选择经营行业--</option>
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1289,7 +1292,7 @@
                         </tr>
 
                     </table>
-                    <table id="settleModeSel-3" class="settleModeSel">
+                   <!-- <table id="settleModeSel-3" class="settleModeSel">
                         <tr>
                             <td><div class="control-group">
                                 <label class="control-label">T+0费率%:</label>
@@ -1315,15 +1318,15 @@
                                 <div class="control-group">
                                     <label class="control-label">是否封顶:</label>
                                     <div class="controls">
-                                        <!--<input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &lt;!&ndash;<input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped2">否</label>
-                                        <span class="help-inline"><font color="red">*</font> </span>-->
+                                        <span class="help-inline"><font color="red">*</font> </span>&ndash;&gt;
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="control-group">
-                                    <!-- <label class="control-label">结算方式:</label> -->
+                                    &lt;!&ndash; <label class="control-label">结算方式:</label> &ndash;&gt;
                                     <div class="controls">
 
                                         <input type="hidden" name="brcbChannelFeeList[2].customerFee.settleFee.settleMode" value="T0_HANDING">
@@ -1342,7 +1345,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </table>
+                    </table>-->
                 </div>
             </div>
 
@@ -1357,7 +1360,7 @@
                 <div class="control-group">
                     <label class="control-label">账户类型 ：</label>
                     <div class="controls">
-                        <select id="accountTypeHidden" name="bankCardInfo.accountType" class="input-xlarge ">
+                        <select id="accountTypeHidden" name="tbBankCardInfo.bankcardType" class="input-xlarge ">
                             <option value="COMPANY">公司账户</option>
                             <option value="PERSONAL" selected="selected">个人账户</option>
                         </select>
@@ -1369,7 +1372,7 @@
                 <div class="control-group">
                     <label class="control-label">开户户名：</label>
                     <div class="controls">
-                        <input id="accountNameHidden" name="bankCardInfo.accountName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
+                        <input id="accountNameHidden" name="tbBankCardInfo.bankcardName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1380,7 +1383,7 @@
                 <div class="control-group">
                     <label class="control-label">开户卡号：</label>
                     <div class="controls">
-                        <input id="bankCardInfo.bankCard" name="bankCardInfo.bankCard" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
+                        <input id="bankCardInfo.bankCard" name="tbBankCardInfo.bankcardNum" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1389,7 +1392,7 @@
                 <div class="control-group">
                     <label class="control-label">开户行名称：</label>
                     <div class="controls">
-                        <select id="bankNameSel" name="bankCardInfo.bankName" class="input-xlarge required">
+                        <select id="bankNameSel" name="tbBankCardInfo.bankName" class="input-xlarge required">
                             <option value="">--请选择银行--</option>
 
                             <option th:value="${bank}" th:text="${bank}" value="农业银行" th:each="bank:${bankNameList}">农业银行</option>
@@ -1404,9 +1407,8 @@
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
-                        <select id="cardProvinceSel" name="province" class="input-xlarge required">
+                        <select id="cardProvinceSel" name="tbBankCardInfo.bankProvince" class="input-xlarge required">
                             <option value="">--请选择省--</option>
-                            <option value="河北省">河北省</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1418,9 +1420,8 @@
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
 
-                        <select id="cardCitySel" name="city" class="input-xlarge required">
+                        <select id="cardCitySel" name="tbBankCardInfo.bankCity" class="input-xlarge required">
                             <option value="">--请选择城市--</option>
-                            <option value="石家庄">石家庄</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1432,7 +1433,7 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
 
-                    <select id="cardBranchSel" name="bankCardInfo.bankAddress" class="input-xlarge required">
+                    <select id="cardBranchSel" name="tbBankCardInfo.bankDetailed" class="input-xlarge required">
                         <option value="">--请选择支行--</option>
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1442,7 +1443,7 @@
                 <div class="control-group">
                     <label class="control-label">联行号：</label>
                     <div class="controls">
-                        <input id="bankNo"  name="bankCardInfo.alliedBankNo" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
+                        <input id="bankNo"  name="tbBankCardInfo.bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1456,8 +1457,13 @@
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
                         <input id="rightID" name="identityCardFrontImg" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file1"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
 
-                        <ol id="rightIDPreview"></ol><a href="javascript:" onclick="rightIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
+                        <ol id="rightIDPreview">
+                            <li>
+                                <img id="img" class="imgList" src="../image-resources/logo-admin.png" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            </li>
+                        </ol><a href="javascript:" onclick="$('#file1').trigger('click'); " class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1468,8 +1474,8 @@
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
                         <input id="reservedID" name="identityCardReverseImg" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-                        <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="reservedIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
+                        <input type="file" id="file2"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="$('#file2').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1482,8 +1488,8 @@
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
                         <input id="IDWithHand" name="identityCardHandImg" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-                        <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="IDWithHandFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
+                        <input type="file" id="file3"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="$('#file3').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
@@ -1493,9 +1499,9 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" name="bankCardFrontimg" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-
-                        <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="rightBankCardFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
+                        <input id="rightBankCard" name="bankCardFrontImg" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file4"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="$('#file4').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1508,8 +1514,8 @@
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
                         <input id="licenseImage" name="businessLicensePictureImg" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
-
-                        <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="licenseImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
+                        <input type="file" id="file5"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="$('#file5').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1520,8 +1526,8 @@
                     <label class="control-label">门头照：</label>
                     <div class="controls">
                         <input id="doorHeadImage" name="doorPictureImg" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-
-                        <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="doorHeadImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
+                        <input type="file" id="file6"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="$('#file6').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
@@ -1532,8 +1538,8 @@
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
                         <input id="accountLicence" name="registerLicensePictureImg" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-
-                        <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="accountLicenceFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
+                        <input type="file" id="file7"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="$('#file7').trigger('click');" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1559,6 +1565,51 @@
             window.top.dialog('img',$(this).attr("url"));
         });
     });
+    $("input[type='file']").change(function () {
+        var isFile = this.files[0];
+        var file = $(this).val();
+
+        var fileName = getFileName(file);
+        $(this).prev().removeAttr("readonly");
+        $(this).prev().val(fileName);
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.readAsDataURL(isFile);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                alert(e.target.result);
+                $(this).next().children().children().attr('src',e.target.result);
+            };
+        }
+
+
+        $(this).prev().attr("readonly","readonly");
+    })
+    function getFileName(o){
+        var pos=o.lastIndexOf("\\");
+        return o.substring(pos+1);
+    }
+
+    <!--显示照片-->
+    /*$(function () {
+        $("input [type='file']").change(function () {
+            var file = this.files[0];
+            if (window.FileReader) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                //监听文件读取结束后事件
+                reader.onloadend = function (e) {
+                    showXY(e.target.result, file.fileName);
+                };
+            }
+        });
+    });
+    function showXY(source) {
+        $("#nameImage").val("");
+        $("#nameImagePreview").text(" ");
+        var img = document.getElementById("loc_img");
+        img.src = source;
+    }*/
 </script>
 
 <script id="auditRecordTemplate" type="text/html">
