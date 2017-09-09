@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.TbOrderMapper" >
+    <select id="select" resultType="com.brcd.bean.TbOrder" parameterType="com.brcd.bean.TbOrder">
+         select * from tb_order where 1 = 1
+     <!-- 判断订单编号 -->
+         <if test="orderNum != null and orderNum !=''"> and order_num = #{orderNum}</if>
+     <!-- 判断商户编号 -->
+         <if test="customerNum != null and customerNum !=''"> and customer_num = #{customerNum}</if>
+     <!-- 判断渠道商（代理商）编号 -->
+         <if test="proxyNum != null and proxyNum !=''"> and proxy_num = #{proxyNum}</if>
+      <!-- 判断订单类型 -->
+         <if test="orderType != null and orderType !=''"> and order_type = #{orderType}</if>
+      <!-- 判断订单状态 -->
+         <if test="orderState != null and orderState !=''"> and order_state = #{orderState}</if>
+      <!-- 判断渠道商单号-->
+         <if test="proxyNo != null and proxyNo !=''"> and proxy_no = #{proxyNo}</if>
+      <!-- 判断结算状态-->
+         <if test="settleState != null and settleState !=''"> and settle_state = #{settleState}</if>
+      <!-- 判断结算方式-->
+         <if test="settleMode != null and settleMode !=''"> and settle_mode = #{settleMode}</if>
+      <!-- 判断查询开始时间-->
+          <if test="beginDate != null and beginDate !=''"> and create_time > #{beginDate}</if>
+      <!-- 判断结束时间 -->
+        <if test="endDate != null and endDate !=''"> and create_time &lt; #{endDate}</if>
+    </select>
+
+
+
+
+ </mapper>

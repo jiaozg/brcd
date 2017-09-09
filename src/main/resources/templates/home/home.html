@@ -415,11 +415,13 @@
                             <ul>
                                 <li class="leaf " pid="fd429879c802494d875abc27375bfea2">
                                     <a style="padding-left:30px;" href="../menu/jiaoyiguanli/jiaoyijilu.html"
+                                       th:href="@{a/operate/order/list}"
                                        title="交易记录" target="mainFrame">
                                         <i class="glyph-icon icon-list-ol" style="color:#cc0001;"></i>
                                         <span>交易记录</span></a>
                                 </li>
                                 <a style="padding-left:30px;" href="../menu/jiaoyiguanli/fenrunjilu.html" title="分润记录"
+                                   th:href="@{profit/findProfitListToPage}"
                                    target="mainFrame">
                                     <i class="glyph-icon icon-th-large" style="color:#cc0001;"></i>
                                     <span>分润记录</span></a>
@@ -450,7 +452,7 @@
                             <ul>
 
                                 <li class="leaf " pid="6ab2ae156be04cfea17484c2f8647e91">
-                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html" th:href="@{/pageIndex}"
+                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html" th:href="@{settle/selectTbSettleList}"
                                        title="结算记录" target="mainFrame">
                                         <i class="glyph-icon icon-align-justify" style="color:#cc0001;"></i>
                                         <span>结算记录</span></a>
