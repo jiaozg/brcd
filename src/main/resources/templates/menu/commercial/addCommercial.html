@@ -814,7 +814,7 @@
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
-                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
                         <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
@@ -824,7 +824,7 @@
                 <div class="control-group">
                     <label class="control-label">经营市名称：</label>
                     <div class="controls">
-                        <select id="district1" name="districtCode" class="input-xlarge">
+                        <select id="district1" name="manageCity" class="input-xlarge">
                             <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                         </select>
                     </div>
@@ -837,7 +837,7 @@
                     <label class="control-label">经营区名称：</label>
                     <div class="controls">
 
-                        <select id="city1" name="cityCode" class="input-xlarge">
+                        <select id="city1" name="manageDistrict" class="input-xlarge">
                             <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                         </select>
                     </div>
@@ -1356,12 +1356,12 @@
                 </div>
             </td>
 
-            <!--<td>
+            <td>
                 <div class="control-group">
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
                         <select id="cardCitySel" name="bankCity" class="input-xlarge required">
-                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                            <option value="" selected="selected">--请选择市--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1373,7 +1373,7 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
                     <select id="cardBranchSel" name="bankDetailed" class="input-xlarge required">
-                        <option value="" selected="selected">&#45;&#45;请选择支行&#45;&#45;</option>
+                        <option value="" selected="selected">--请选择支行--</option>
 
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1387,13 +1387,13 @@
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
-            </td>-->
+            </td>
         </tr>
     </table>
     <h6>商户资料信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
 
-   <!--<table>
+   <table>
         <tr>
             <td>
                 <div class="control-group">
@@ -1655,7 +1655,7 @@
                             }
                             IDWithHandPreview();
                         </script>
-                        &lt;!&ndash; <span class="help-inline"><font color="red">*</font> </span> &ndash;&gt;
+                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
             </td>
@@ -1918,7 +1918,7 @@
                             }
                             doorHeadImagePreview();
                         </script>
-                        &lt;!&ndash; <span class="help-inline"><font color="red">*</font> </span> &ndash;&gt;
+                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
             </td>
@@ -2009,7 +2009,7 @@
                 </div>
             </td>
         </tr>
-    </table>-->
+    </table>
 
     <div class="form-actions">
         <input id="btnSubmit" class="btn btn-primary" type="button" value="保 存"/>&nbsp;
