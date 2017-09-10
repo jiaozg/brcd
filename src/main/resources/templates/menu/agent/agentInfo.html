@@ -106,7 +106,7 @@
                 <div class="control-group">
                     <label class="control-label">代理商邮箱：</label>
                     <div class="controls">
-                        <span th:text="${agent.agentContactPhone}">Q</span>
+                        <span th:text="${agent.email}">Q</span>
                     </div>
                 </div>
             </td>
@@ -124,11 +124,11 @@
                 <div class="control-group">
                     <label class="control-label">审核状态：</label>
                     <div class="controls">
-							<span th:text="${agent.auditStatus}">
-
-								Q
-
-							</span>
+                        <div th:switch="${agent.auditStatus}">
+                            <span th:case="0">待审核</span>
+                            <span th:case="1">审核通过</span>
+                            <span th:case="2">审核拒绝</span>
+                        </div>
                     </div>
                 </div>
             </td>
@@ -292,6 +292,7 @@
         </div>
     </div>
 </form>
+
 <a id="btnCancel" class="btn" type="button" href="/brcd/agent/getAgent">返回</a>
 <script type="text/javascript">
     $(function(){

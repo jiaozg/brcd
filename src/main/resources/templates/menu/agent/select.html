@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>按组织结构选择</title>
+    <!--<base target="_self">-->
+    <link rel="stylesheet" href="../../../static/css/demo.css"
+          th:href="@{/css/demo.css}" type="text/css">
+    <link rel="stylesheet" href="../../../static/css/zTreeStyle/zTreeStyle.css"
+          th:href="@{/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <script type="text/javascript" src="../../../static/js/jquery-1.4.4.min.js"
+        th:src="@{/js/jquery-1.4.4.min.js}"></script>
+    <script type="text/javascript" src="../../../static/js/jquery.ztree.core.js"
+        th:src="@{/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript">
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+//                  idKey:"id",
+//                  pIdKey:"pId",
+                }
+            },
+            async: {
+                enable: true,
+                url: "./classificationQuery",
+                autoParam: ["id"],
+                otherParam: {},
+                dataFilter: filter
+            }
+        };
+       /* var setting = {
+            async: {
+                enable: true,
+                type: "post",
+                url: "./classificationQuery"
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    rootPId: 0
+                }
+            }
+        };
+        $(document).ready(function(){
+            alert("ztree is run ")
+            $.fn.zTree.init($("#ztree"), setting);
+        });*/
+      /*,
+           data: {
+               simpleData: {
+                   enable: true,
+                   idKey: "id",
+                   rootPId: 0
+               }
+           }*/
+
+
+/*
+       function filter(treeId, parentNode, childNodes) {
+           if (!childNodes) return null;
+           for (var i=0, l=childNodes.length; i<l; i++) {
+               childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+           }
+           return childNodes;
+       }*/
+
+       $(document).ready(function(){
+           alert(111111111);
+
+           $.fn.zTree.init($("#ztree"), setting);
+       });
+    </script>
+</head>
+
+<body>
+<ul id="ztree" class="ztree">11</ul>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.brcd.service.impl;
 
+import com.brcd.bean.AgentTree;
+import com.brcd.bean.Dd;
 import com.brcd.bean.TbAgent;
 import com.brcd.mapper.AgentMapper;
 import com.brcd.service.AgentService;
@@ -44,4 +46,19 @@ public class AgentServiceImpl implements AgentService{
 
        agentMapper.addAgent(agent);
     }
+    @Override
+    public void updateAgent(TbAgent agent) {
+        agentMapper.updateAgent(agent);
+    }
+
+    @Override
+    public List<Dd> lookUpWork(String dictDataKey) {
+        return agentMapper.lookUpWork(dictDataKey);
+    }
+
+    @Override
+    public List<AgentTree> classificationQuery(Long id) {
+        return agentMapper.classificationQuery(id);
+    }
+
 }
