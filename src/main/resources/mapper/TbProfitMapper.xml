@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.TbProfitMapper">
+
+    <select id="findProfitListToPage" resultType="com.brcd.bean.TbProfit" parameterType="com.brcd.bean.TbProfit">
+        SELECT
+        payoff_num,settle_num,settle_time,customer_num,
+        owner_type,settle_type,settle_mode,order_amount,order_count,
+        trade_fee,settle_fee,settle_amount,settle_status,remark
+        FROM tb_profit WHERE 1=1
+        <!-- /*结算批次号*/ -->
+        <if test="payoffNum != null and payoffNum!=''">
+            AND payoff_num=#{payoffNum}
+        </if>
+        <!-- /*结算流水号*/ -->
+        <if test="settleNum != null and settleNum !=''">
+            AND settle_num=#{settleNum}
+        </if>
+        <!-- /*商户编号*/ -->
+        <if test="customerNum != null and customerNum !=''">
+            AND customer_num=#{customerNum}
+        </if>
+        <!--  /*结算类型*/ -->
+        <if test="settleType != null and settleType !=''">
+            AND payoff_num=#{settleType}
+        </if>
+        <!-- /*结算模式*/ -->
+        <if test="settleMode != null and settleMode !=''">
+            AND settle_mode=#{settleMode}
+        </if>
+        <!-- /*结算状态*/ -->
+        <if test="settleStatus != null and settleStatus !=''">
+            AND settle_status=#{settleStatus}
+        </if>
+        <!-- /*起始时间*/ -->
+        <if test="startTime != null and startTime !=''">
+            AND (start_time<![CDATA[ >=  ]]>#{startTime})
+        </if>
+        <!--   /*结束时间*/ -->
+        <if test="endTime != null and endTime !=''">
+            AND (end_time<![CDATA[ <=  ]]>#{endTime}
+        </if>
+    </select>
+</mapper>

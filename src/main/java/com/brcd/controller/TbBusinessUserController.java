@@ -133,7 +133,7 @@ public class TbBusinessUserController {
         String[] headers = {"商户编号","所属代理商","商户类型","经营名称","商户名称","法人姓名","法人身份证","联系人","联系电话","联系邮箱","客服电话","经营地址","经营省","经营市"
                 ,"经营区","营业执照编号","注册地址","身份证正面","身份证反面","身份证手持","银行卡正面","营业执照照片","门头照","开户许可证照片","商户状态","起始时间","结束时间","商户秘钥"};
 
-        String fileName="日志导出.xls";
+        String fileName="商户查询.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -148,10 +148,10 @@ public class TbBusinessUserController {
 
         ExportExcel<TbBusinessUser> ex = new ExportExcel<>();
 
-        List<TbBusinessUser> item = tbBusinessUserService.query(tbBusinessUser);
+        List<TbBusinessUser> list = tbBusinessUserService.query(tbBusinessUser);
 
         OutputStream out = response.getOutputStream();
-        ex.exportExcel(headers, item, out);
+        ex.exportExcel(headers, list, out);
         out.close();
     }
 
