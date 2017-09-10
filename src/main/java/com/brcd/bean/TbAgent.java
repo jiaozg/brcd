@@ -95,9 +95,9 @@ public class TbAgent {
 
     private String mobilePhone;//手机号
 
-    private String remark;
+    private String remark;  //备注
 
 
-   private Integer wOrAilpay;
+    private Integer wOrAlipay; //微信或支付宝
 
 }

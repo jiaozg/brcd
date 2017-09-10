@@ -69,7 +69,7 @@ public class TbBusinessUser {
 
     private TbBankcardInfo tbBankcardInfo;
 
-    private  TbBusiness tbBusiness;
+
 
     private volatile MultipartFile identityCardFrontImg;
 

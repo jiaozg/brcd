@@ -1,5 +1,7 @@
 package com.brcd.service;
 
+import com.brcd.bean.AgentTree;
+import com.brcd.bean.Dd;
 import com.brcd.bean.TbAgent;
 import com.github.pagehelper.Page;
 
@@ -33,4 +35,22 @@ public interface AgentService {
      * @param agent
      */
     void addAgent(TbAgent agent);
+
+    /**
+     * 修改代理商详细信息
+     * @param agent
+     */
+    void updateAgent(TbAgent agent);
+    /**
+     * 查找数据字典
+     * @param dictDataKey
+     * @return
+     */
+    List<Dd> lookUpWork(String dictDataKey);
+    /**
+     * 分级查询
+     * @param id
+     * @return
+     */
+    List<AgentTree> classificationQuery(Long id);
 }

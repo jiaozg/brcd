@@ -107,8 +107,7 @@
 <script>
     function choose_agent(){
         var pram='status:no;directories:yes;help:no;scroll: no;dialogWidth:400px;dialogHeight:300px;dialogLeft:600px;dialogTop:300px;';
-       var inner = window.showModalDialog("select.html",null,pram);
-       alert('输入了：'+inner);
+       var inner = window.showModalDialog("toSelectAgent",null,pram);
     }
 </script>
 <form id="searchForm" class="breadcrumb form-search" action="/brcd/agent/getAgent" method="get">
@@ -127,8 +126,8 @@
             </select>-->
            <select id="customerType" name="agentGrade" style="width:155px;" class="input-medium">
                <option value="" selected="selected">&#45;&#45;请选择等级&#45;&#45;</option>
-               <option  th:each="x:${grade}" th:value="${x.dj}" th:text="${x.yi}"
-                         th:attr="selected=${x.dj==showBack.agentGrade}"></option>
+               <option  th:each="x:${grade}" th:value="${x.dictDataCode}" th:text="${x.dictDataValue}"
+                         th:attr="selected=${x.dictDataCode==showBack.agentGrade}"></option>
             </select>
         </li>
         <li><label>商户电话：</label>
@@ -148,8 +147,8 @@
             </select>-->
            <select id="customerStatus" name="auditStatus" style="width:155px;" class="input-medium">
                <option value="" selected="selected">&#45;&#45;审核状态&#45;&#45;</option>
-               <option  th:each="x:${status}" th:value="${x.dj}" th:text="${x.yi}"
-                         th:attr="selected=${x.dj == showBack.auditStatus}"></option>
+               <option  th:each="x:${status}" th:value="${x.dictDataCode}" th:text="${x.dictDataValue}"
+                         th:attr="selected=${x.dictDataCode == showBack.auditStatus}"></option>
             </select>
         </li>
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
@@ -192,7 +191,7 @@
                 <a th:href="@{/agent/findAgentById(id=${agent.id})}">详细</a>
             </span>|
             <span class="glyphicon glyphicon-cog">
-                <a th:href="@{/agent/findAgentById(id=${agent.id})}">编辑</a>
+                <a th:href="@{/agent/showBack(id=${agent.id})}">编辑</a>
             </span>
         </td>
     </tr>
