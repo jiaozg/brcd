@@ -3,7 +3,6 @@ package com.brcd.service.impl;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.common.util.IDUtils;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
