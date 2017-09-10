@@ -33,11 +33,11 @@
 
         })
         function exportExcel() {
-            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v) {
+            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v,h,f) {
                 if(v=="ok"){
+                    alert(1111);
                     $("#searchForm").attr("action","/brcd/businessUser/exportExcel");
                     $("#searchForm").submit();
-                    $("#searchForm").attr("action","/brcd/businessUser/query");
                 }
             })
         }
@@ -76,7 +76,7 @@
 <form id="searchForm" class="breadcrumb form-search" th:action="@{/businessUser/query}" action="#" method="get">
     <input id="pageNo" type="hidden" name="currentPage" th:value="${#request.getAttribute('currentPage')}"/>
      <!--   <input id="operate" name="operate" type="hidden" value="detail"/>-->
-    <input id="agentId" name="affiliationAgent" type="hidden" th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+    <input id="agentId" name="affiliationAgent" type="hidden" value="21564546514"/>
     <ul class="ul-form">
         <li><label>商户编号：</label>
             <input id="customerNum" name="businessUid" th:value="${history.businessUid}" class="input-medium" type="text" value="" maxlength="32"/>
@@ -171,11 +171,9 @@
         <td th:text="${shang.businessUserType}">个体商户</td>
         <td th:text="${shang.legalPeopleName}">张明盟</td>
         <td th:text="${shang.manageName}">张明盟小卖部</td>
-
         <td th:if="${shang.businessUserStatus==0}">待审核</td>
         <td th:if="${shang.businessUserStatus==1}">审核通过</td>
         <td th:if="${shang.businessUserStatus==2}">审核拒绝</td>
-        <td th:if="${shang.businessUserStatus=='' or shang.businessUserStatus==null}"></td>
         <td>
             <a href="javascript:void(0);" onclick="showApikey(this)">查看密钥</a>
             <span style="display:none;" th:text="${shang.businessUserKey}">
@@ -186,7 +184,7 @@
         <td th:text="${#dates.format(shang.startTime, 'yyyy-MM-dd')}">2017-05-23 06:38:44</td>
 
         <td>
-            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:href="@{/businessUser/detail(id=${shang.businessUid})}">详情</a>
+            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709">详情</a>
         </td>
     </tr>
 
