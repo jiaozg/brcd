@@ -1,12 +1,10 @@
 package com.brcd.controller;
 
 
-import com.brcd.bean.TbBankcardInfo;
-import com.brcd.bean.TbBusiness;
-import com.brcd.bean.TbBusinessUser;
+import com.brcd.bean.*;
 
-import com.brcd.bean.TbBusinessUserExtend;
 import com.brcd.common.util.ExportExcel;
+import com.brcd.service.BankService;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
@@ -43,9 +41,8 @@ public class TbBusinessUserController {
     private TbBankcardInfoService tbBankcardInfoService;
     @Autowired
     private TbBusinessService tbBusinessService;
-
-    private TbBusinessUserService businessManagementService;
-
+    @Autowired
+    private BankService bankService;
 
     /*
     * 时间格式的转换
@@ -60,7 +57,11 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(){
+    public String goToIsert(Model model,HttpSession session){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        model.addAttribute("agentLogin",agentLogin);
         return "menu/commercial/addCommercial";
     }
 
@@ -68,20 +69,10 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    @ResponseBody
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        businessUser.setBusinessUid("11233");
-        businessManagementService.insertBusinessUser(businessUser, business, bankcardInfo);
-        System.out.printf("zhangsan1111111111111111111111111111111111111111111111111111111111");
-
-        String s = businessUser.toString();
-        String s1 = business.toString();
-        String s2 = bankcardInfo.toString();
-        System.out.printf(s);
-        System.out.printf(s1);
-        System.out.printf(s2);
-        String sss = s + "      " + s1 + "         " + s2;
-        return sss;
+        System.out.println(business.toString()+"11111111111");
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
+        return "redirect:/businessUser/query";
     }
 
     /**
@@ -151,7 +142,7 @@ public class TbBusinessUserController {
         return mv;
     }
 
-    @RequestMapping("shanghu")
+    @RequestMapping("toManage")
     public String shanghu(){
         System.out.println("进入方法================");
         return "menu/commercial/shanghuxinxifguanli.html";}
@@ -168,5 +159,21 @@ public class TbBusinessUserController {
         return null;
 
 
+    }
+    /**
+     * 根据大行名称、省、市查询该条件下的支行
+     * @param bank
+     * @return
+     */
+    @RequestMapping("findByBankName")
+    @ResponseBody
+    public List<Bank> findByBankName(Bank bank){
+        System.out.println(bank.getProvince());
+        return bankService.findByBankName(bank);
+    }
+    @RequestMapping("findBankNo")
+    @ResponseBody
+    public String findBankNo(String bankSubName){
+        return bankService.findBankNo(bankSubName);
     }
 }

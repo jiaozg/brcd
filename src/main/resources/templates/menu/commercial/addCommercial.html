@@ -686,8 +686,8 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <input type="text" name="affiliationAgent" value="代理商">
-                   <!-- <span>北京艺之彩广告有限公司</span>-->
+                    <input type="hidden" name="affiliationAgent" th:value="${agentLogin.agentNumber}">
+                    <span th:text="${agentLogin.agentFullName}"></span>
                 </div>
             </div>
             </td>

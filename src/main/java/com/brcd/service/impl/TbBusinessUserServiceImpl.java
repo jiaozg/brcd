@@ -12,6 +12,7 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
 import java.util.List;
 
@@ -49,9 +50,12 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
+
         businessUser.setStartTime(new Date());
         businessUser.setEndTime(new Date());
+        System.out.print("123****************************************");
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        System.out.print("123****************************************");
     }
 
 
@@ -61,12 +65,16 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     private void insertBusiness(TbBusiness business) {
 
         if (business.getWechatPayYN().equals("Y")) {
+            System.out.print("123****************************************");
+            business.setWechatRate(business.getWechatRate()*0.01);
             business.setWechatT0(0);
             business.setAliT0(0);
             business.setWechatPay(1);
             business.setAlipay(0);
             tbBusinessMapper.insertTbBusiness(business);
         }else if (business.getAlipayYN() .equals("Y")) {
+            System.out.print("123......................................");
+            business.setAliRate(business.getAliRate()*0.01);
             business.setWechatT0(0);
             business.setAliT0(0);
             business.setWechatPay(0);
@@ -79,6 +87,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户银行信息
      */
     private void insertBankcardInfo(TbBankcardInfo bankcardInfo) {
+        System.out.print("123///////////////////////////////////////");
         tbBankcardInfoMapper.insertTbBankcardInfo(bankcardInfo);
     }
 
