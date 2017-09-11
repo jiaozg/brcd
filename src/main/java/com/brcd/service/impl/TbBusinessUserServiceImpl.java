@@ -53,6 +53,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         tbBusinessUserMapper.insertBusinessUser(businessUser);
     }
 
+
     /**
      * 添加商户开通线下支付信息
      */
@@ -91,5 +92,12 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
 
     }
+
+
+    @Override
+    public TbBusinessUserExtend getBusinessUserAndBank(int id) {
+        return tbBusinessUserMapper.getBusinessUserAndBank(id);
+    }
+
 }
 

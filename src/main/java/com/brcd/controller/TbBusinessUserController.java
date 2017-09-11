@@ -13,6 +13,7 @@ import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +36,22 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
+
+    @Value("${FTP_ADDRESS}")
+    private String FTP_ADDRESS;//IP地址
+    @Value("${FTP_PORT}")
+    private Integer FTP_PORT;//端口号
+    @Value("${FTP_USERNAME}")
+    private String FTP_USERNAME;//用户名
+    @Value("${FTP_PASSWORD}")
+    private String FTP_PASSWORD;//密码
+    @Value("${FTP_BASE_PATH}")
+    private String FTP_BASE_PATH;//ftp的图片服务器根路径
+    @Value("${IMAGE_BASE_URL}")
+    private String IMAGE_BASE_URL;//#ftp图片服务器的url
+    @Value("${IMAGEPATH}")
+    private String IMAGEPATH;//#ftp图片服务器的url
+
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
@@ -58,7 +74,9 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(){
+    public String goToIsert(Model model){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/addCommercial";
     }
 
@@ -66,7 +84,6 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
 
@@ -116,7 +133,7 @@ public class TbBusinessUserController {
         String[] headers = {"商户编号","所属代理商","商户类型","经营名称","商户名称","法人姓名","法人身份证","联系人","联系电话","联系邮箱","客服电话","经营地址","经营省","经营市"
                 ,"经营区","营业执照编号","注册地址","身份证正面","身份证反面","身份证手持","银行卡正面","营业执照照片","门头照","开户许可证照片","商户状态","起始时间","结束时间","商户秘钥"};
 
-        String fileName="日志导出.xls";
+        String fileName="商户查询.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -131,10 +148,10 @@ public class TbBusinessUserController {
 
         ExportExcel<TbBusinessUser> ex = new ExportExcel<>();
 
-        List<TbBusinessUser> item = tbBusinessUserService.query(tbBusinessUser);
+        List<TbBusinessUser> list = tbBusinessUserService.query(tbBusinessUser);
 
         OutputStream out = response.getOutputStream();
-        ex.exportExcel(headers, item, out);
+        ex.exportExcel(headers, list, out);
         out.close();
     }
 

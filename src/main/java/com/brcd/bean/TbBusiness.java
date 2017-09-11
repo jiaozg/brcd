@@ -8,7 +8,7 @@ public class TbBusiness {
 
     private Integer wechatPay;
 
-    private Integer wechatRate;
+    private Double wechatRate;
 
     private Integer wechatT0;
 
@@ -20,7 +20,7 @@ public class TbBusiness {
 
     private Integer alipay;
 
-    private Integer aliRate;
+    private Double aliRate;
 
     private Integer aliT0;
 
@@ -33,8 +33,8 @@ public class TbBusiness {
 
     private String businessUid;
 
-
     private volatile String wechatPayYN;
+
     private volatile String alipayYN;
 
 }
