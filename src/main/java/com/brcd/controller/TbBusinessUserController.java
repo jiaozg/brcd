@@ -1,12 +1,16 @@
 package com.brcd.controller;
 
 
+
+import com.brcd.bean.*;
 import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.service.BankService;
+
 import com.brcd.common.util.ExportExcel;
+import com.brcd.service.BankService;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
@@ -74,9 +78,11 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(Model model){
+    public String goToIsert(Model model,HttpSession session){
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        model.addAttribute("agentLogin",agentLogin);
         return "menu/commercial/addCommercial";
     }
 
@@ -86,8 +92,6 @@ public class TbBusinessUserController {
     @RequestMapping("/insertBusinessUser")
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-
-
         return "redirect:/businessUser/query";
     }
 
@@ -157,8 +161,8 @@ public class TbBusinessUserController {
 
     @RequestMapping("toManage")
     public String shanghu(){
-        return "menu/commercial/shanghuxinxifguanli.html";
-    }
+        System.out.println("进入方法================");
+        return "menu/commercial/shanghuxinxifguanli.html";}
 
 
     @RequestMapping("toUpdate")
@@ -180,7 +184,7 @@ public class TbBusinessUserController {
 
 
     }
-
+  
     /**
      * 根据大行名称、省、市查询该条件下的支行
      * @param bank
@@ -197,5 +201,4 @@ public class TbBusinessUserController {
     public String findBankNo(String bankSubName){
         return bankService.findBankNo(bankSubName);
     }
-
 }
