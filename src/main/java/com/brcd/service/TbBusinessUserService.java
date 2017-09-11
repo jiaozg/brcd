@@ -15,7 +15,7 @@ public interface TbBusinessUserService {
     /**
      * 添加商户
      */
-    public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo);
+    void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo);
 
 
 
@@ -26,5 +26,12 @@ public interface TbBusinessUserService {
      * @param tbBusinessUser
      */
     void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
+
+    /**
+     * 根据主键查询商户
+     * @param businessUid
+     * @return
+     */
+    TbBusinessUser findByBusinessUid(Integer businessUid);
 
 }

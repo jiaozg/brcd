@@ -24,7 +24,7 @@
     identity_card_reverse=#{identityCardReverse},
     identity_card_hand=#{identityCardHand},
     bank_card_front=#{bankCardFront}
-    <if test="business_user_type=='ENTERPRISE'">
+    <if test="businessUserType=='ENTERPRISE'">
         ,
         business_license_no=#{businessLicenseNo},
         register_address=#{registerAddress},
@@ -35,13 +35,9 @@
     WHERE business_uid=#{businessUid}
 
 </update>
-<!--
-,
-   /* identity_card_front=#{identityCardFront},
-    identity_card_reverse=#{identityCardReverse},
-    identity_card_hand=#{identityCardHand},
-    bank_card_front=#{bankCardFront},*/
--->
+    <select id="findByBusinessUid" parameterType="java.lang.Integer" resultType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user WHERE business_uid=#{businessUid}
+    </select>
     <!--添加商户信息-->
     <insert id="insertBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
         INSERT INTO tb_business_user(business_uid, affiliation_agent, business_user_type,

@@ -37,22 +37,6 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
-
-    @Value("${FTP_ADDRESS}")
-    private String FTP_ADDRESS;//IP地址
-    @Value("${FTP_PORT}")
-    private Integer FTP_PORT;//端口号
-    @Value("${FTP_USERNAME}")
-    private String FTP_USERNAME;//用户名
-    @Value("${FTP_PASSWORD}")
-    private String FTP_PASSWORD;//密码
-    @Value("${FTP_BASE_PATH}")
-    private String FTP_BASE_PATH;//ftp的图片服务器根路径
-    @Value("${IMAGE_BASE_URL}")
-    private String IMAGE_BASE_URL;//#ftp图片服务器的url
-    @Value("${IMAGEPATH}")
-    private String IMAGEPATH;//#ftp图片服务器的url
-
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
@@ -61,8 +45,7 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
     @Autowired
     private BankService bankService;
-    @Autowired
-    private Upload upload;
+
 
     /*
     * 时间格式的转换
@@ -176,27 +159,6 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
-        try {
-            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
-            tbBusinessUser.setBankCardFront(bankCardFront);
-            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
-            tbBusinessUser.setIdentityCardFront(identityCardFront);
-            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
-            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
-            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
-            tbBusinessUser.setIdentityCardHand(identityCardHand);
-            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
-                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
-                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
-                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
-                tbBusinessUser.setDoorPicture(doorPicture);
-                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
-                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
       /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
         tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
