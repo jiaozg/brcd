@@ -69,7 +69,6 @@ public class TbBusinessUser {
 
     private TbBankcardInfo tbBankcardInfo;
 
-    private  TbBusiness tbBusiness;
 
     private volatile MultipartFile identityCardFrontImg;
 
@@ -89,7 +88,7 @@ public class TbBusinessUser {
 
     private volatile MultipartFile registerLicensePictureImg;
 
-    
+
 
     
 
