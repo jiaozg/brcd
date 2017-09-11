@@ -11,6 +11,7 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
 import java.util.List;
 
@@ -48,9 +49,12 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
+
         businessUser.setStartTime(new Date());
         businessUser.setEndTime(new Date());
+        System.out.print("123****************************************");
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        System.out.print("123****************************************");
     }
 
 
@@ -59,17 +63,9 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     private void insertBusiness(TbBusiness business) {
 
-        if (business.getWechatPayYN().equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(1);
-            business.setAlipay(0);
+        if (business.getWechatPay().equals("Y")) {
             tbBusinessMapper.insertTbBusiness(business);
-        }else if (business.getAlipayYN() .equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(0);
-            business.setAlipay(1);
+        }else if (business.getAlipay() .equals("Y")) {
             tbBusinessMapper.insertTbBusiness(business);
         }
     }
@@ -78,6 +74,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户银行信息
      */
     private void insertBankcardInfo(TbBankcardInfo bankcardInfo) {
+        System.out.print("123///////////////////////////////////////");
         tbBankcardInfoMapper.insertTbBankcardInfo(bankcardInfo);
     }
 
@@ -92,12 +89,5 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
 
     }
-
-
-    @Override
-    public TbBusinessUserExtend getBusinessUserAndBank(int id) {
-        return tbBusinessUserMapper.getBusinessUserAndBank(id);
-    }
-
 }
 

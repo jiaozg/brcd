@@ -714,8 +714,8 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <input type="text" name="affiliationAgent" value="代理商">
-                   <!-- <span>北京艺之彩广告有限公司</span>-->
+                    <input type="hidden" name="affiliationAgent" th:value="${agentLogin.agentNumber}">
+                    <span th:text="${agentLogin.agentFullName}"></span>
                 </div>
             </div>
             </td>
@@ -922,7 +922,7 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-1" name="wechatPayYN" data-index="1" class="input-xlarge channelStatus">
+                        <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
                             <option value="Y" >开通</option>
                             <option  value="N" selected="selected">不开通</option>
                         </select>
@@ -1186,7 +1186,7 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-3" name="alipayYN" data-index="3" class="input-xlarge channelStatus">
+                        <select id="channelStatus-3" name="alipay" data-index="3" class="input-xlarge channelStatus">
                             <option value="Y">开通</option>
                             <option  value="N" selected="selected">不开通</option>
                         </select>
@@ -1400,6 +1400,7 @@
                     <label class="control-label">身份证正面：</label>
                     <img src="" id="loc_img" width="150" height="150"/>
                     <div class="controls">
+
                         <input id="nameImage" name="identityCardFront" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
 
 -

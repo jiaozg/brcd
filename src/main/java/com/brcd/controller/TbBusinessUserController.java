@@ -1,12 +1,17 @@
 package com.brcd.controller;
 
 
+
+import com.brcd.bean.*;
 import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.common.util.Upload;
 import com.brcd.service.BankService;
+
 import com.brcd.common.util.ExportExcel;
+import com.brcd.service.BankService;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
@@ -60,6 +65,8 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
     @Autowired
     private BankService bankService;
+    @Autowired
+    private Upload upload;
 
     /*
     * 时间格式的转换
@@ -74,9 +81,11 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(Model model){
+    public String goToIsert(Model model,HttpSession session){
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        model.addAttribute("agentLogin",agentLogin);
         return "menu/commercial/addCommercial";
     }
 
@@ -86,8 +95,6 @@ public class TbBusinessUserController {
     @RequestMapping("/insertBusinessUser")
     public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-
-
         return "redirect:/businessUser/query";
     }
 
@@ -157,8 +164,8 @@ public class TbBusinessUserController {
 
     @RequestMapping("toManage")
     public String shanghu(){
-        return "menu/commercial/shanghuxinxifguanli.html";
-    }
+        System.out.println("进入方法================");
+        return "menu/commercial/shanghuxinxifguanli.html";}
 
 
     @RequestMapping("toUpdate")
@@ -173,6 +180,27 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
+        try {
+            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
+            tbBusinessUser.setBankCardFront(bankCardFront);
+            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
+            tbBusinessUser.setIdentityCardFront(identityCardFront);
+            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
+            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
+            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
+            tbBusinessUser.setIdentityCardHand(identityCardHand);
+            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
+                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
+                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
+                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
+                tbBusinessUser.setDoorPicture(doorPicture);
+                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
+                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
       /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
         tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
@@ -180,7 +208,7 @@ public class TbBusinessUserController {
 
 
     }
-
+  
     /**
      * 根据大行名称、省、市查询该条件下的支行
      * @param bank
@@ -197,5 +225,4 @@ public class TbBusinessUserController {
     public String findBankNo(String bankSubName){
         return bankService.findBankNo(bankSubName);
     }
-
 }
