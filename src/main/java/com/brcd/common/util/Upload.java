@@ -38,8 +38,7 @@ public class Upload {
 	 * @return newName （文件名）
 	 * @throws Exception
 	 */
-	public  String getUpload(HttpServletRequest request,
-			MultipartFile file) throws Exception {
+	public  String getUpload(MultipartFile file) throws Exception {
 		String newName="";
 		if (file != null) {
 			String oldName = file.getOriginalFilename();//取出原始文件名

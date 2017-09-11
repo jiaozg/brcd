@@ -19,7 +19,19 @@
     manage_address=#{manageAddress},
     manage_province=#{manageProvince},
     manage_city=#{manageCity},
-    manage_district=#{manageDistrict}
+    manage_district=#{manageDistrict},
+    identity_card_front=#{identityCardFront},
+    identity_card_reverse=#{identityCardReverse},
+    identity_card_hand=#{identityCardHand},
+    bank_card_front=#{bankCardFront}
+    <if test="business_user_type=='ENTERPRISE'">
+        ,
+        business_license_no=#{businessLicenseNo},
+        register_address=#{registerAddress},
+        business_license_picture=#{businessLicensePicture},
+        door_picture=#{doorPicture},
+        register_license_picture=#{registerLicensePicture}
+    </if>
     WHERE business_uid=#{businessUid}
 
 </update>

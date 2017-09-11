@@ -5,6 +5,7 @@ import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.common.util.Upload;
 import com.brcd.service.BankService;
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.TbBankcardInfoService;
@@ -60,6 +61,8 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
     @Autowired
     private BankService bankService;
+    @Autowired
+    private Upload upload;
 
     /*
     * 时间格式的转换
@@ -173,7 +176,27 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
-        System.out.println(tbBusinessUser+"================");
+        try {
+            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
+            tbBusinessUser.setBankCardFront(bankCardFront);
+            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
+            tbBusinessUser.setIdentityCardFront(identityCardFront);
+            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
+            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
+            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
+            tbBusinessUser.setIdentityCardHand(identityCardHand);
+            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
+                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
+                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
+                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
+                tbBusinessUser.setDoorPicture(doorPicture);
+                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
+                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
       /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
         tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
