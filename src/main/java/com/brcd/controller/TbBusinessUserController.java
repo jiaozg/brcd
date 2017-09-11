@@ -173,6 +173,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
+        System.out.println(tbBusinessUser+"================");
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
       /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
         tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/

@@ -64,7 +64,6 @@ public class TbBusinessUser {
 
     private String businessUserKey;
 
-
     private  TbAgent tbAgent;
 
     private TbBankcardInfo tbBankcardInfo;
@@ -82,10 +81,6 @@ public class TbBusinessUser {
     private volatile MultipartFile businessLicensePictureImg;
 
     private volatile MultipartFile doorPictureImg;
-
-
-
-    private  TbBusiness tbBusiness;
 
     private volatile MultipartFile registerLicensePictureImg;
 

@@ -854,7 +854,7 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="/a/operate/customer/brcbCustomer/editForm?id=534709">商户信息修改</a></li>
 </ul><br/>
-<form id="inputForm" class="form-horizontal" action="updateTbBusinessUser" method="post" enctype="multipart/form-data">
+<form id="inputForm" onsubmit="toSubmit()" class="form-horizontal" action="updateTbBusinessUser" method="post" enctype="multipart/form-data">
 
     <input id="id" name="businessUid" type="hidden" value="10"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
@@ -966,54 +966,6 @@
                 </div>
             </td>
         </tr>
-       <!--<tr>
-
-            <td><div class="control-group">
-                <label class="control-label">经营省名称：</label>
-                <div class="controls">
-
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
-
-                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
-                        <option value="北京" >北京</option>=======
-                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
-
-                    </select>
-                </div>
-            </div></td>
-        </tr>
-        <tr>
-
-            <td><div class="control-group">
-                <label class="control-label">经营市名称：</label>
-                <div class="controls">
-
-                    <select id="citySel" name="manageCity" class="input-xlarge">
-
-                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
-                        <option value="房山区" >海淀区</option>
-
-                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
-
-                    </select>
-                </div>
-            </div></td>
-            <td><div class="control-group">
-                <label class="control-label">经营区名称：</label>
-                <div class="controls">
-
-                    <select id="areaSel" name="manageDistrict" class="input-xlarge">
-
-                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
-                        <option value="上地七街" >上地七街</option>
-
-                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
-
-                    </select>
-                </div>
-            </div></td>
-        </tr>-->
-
         <tr data-toggle="distpicker">
 
             <td>
@@ -1095,12 +1047,12 @@
             </ul>
 
             <div id="tabs-1" >
-                <input type="hidden" name="brcbChannelFeeList[0].channelNum" value="WECHAT" id="channelNum-1">
+               <!-- <input type="hidden" name="brcbChannelFeeList[0].channelNum" value="WECHAT" id="channelNum-1">
                 <input type="hidden" name="brcbChannelFeeList[0].channelName" value="微信线下支付" >
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.transFee.id" value="">
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.id" value="">
                 <input type="hidden" name="brcbChannelFeeList[0].customerFee.transFee.customerFeeNum" value="">
-                <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.customerFeeNum" value="">
+                <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.customerFeeNum" value="">-->
 
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
@@ -1125,7 +1077,7 @@
                                 </div>
                             </div></td>
                             <td>
-                                <div class="control-group">
+                                <!--<div class="control-group">
                                     <label class="control-label" >T+0状态：</label>
                                     <div class="controls">
                                         <select disabled="disabled" id="t0StatusSel-1" name="" data-index="1" class="input-xlarge t0StatusSel">
@@ -1134,7 +1086,7 @@
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
-                                </div>
+                                </div>-->
                             </td>
                         </tr>
                         <tr>
@@ -1264,16 +1216,16 @@
                                 </div>
                             </div></td>
                             <td>
-                                <div class="control-group">
+                              <!--  <div class="control-group">
                                     <label class="control-label">T+0状态：</label>
                                     <div class="controls">
-                                        <select disabled="disabled" id="t0StatusSel-3" name="brcbChannelFeeList[2].t0Status" data-index="3" class="input-xlarge t0StatusSel">
+                                        <select disabled="disabled" id="t0StatusSel-3" name="" data-index="3" class="input-xlarge t0StatusSel">
                                             <option value="N" selected="selected">不开通</option>
                                             <option value="Y">开通</option>
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
-                                </div>
+                                </div>-->
                             </td>
                         </tr>
                         <tr>
@@ -1456,8 +1408,8 @@
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <input id="rightID" name="identityCardFrontImg" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-                        <input type="file" id="file1"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="rightID"  style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file1" name="identityCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="rightIDPreview">
                             <li >
                                 <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
@@ -1474,8 +1426,8 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <input id="reservedID" name="identityCardReverseImg" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-                        <input type="file" id="file2"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="reservedID"  style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file2" name="identityCardReverseImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="reservedIDPreview"> <li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
@@ -1490,8 +1442,8 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <input id="IDWithHand" name="identityCardHandImg" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-                        <input type="file" id="file3"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="IDWithHand"  style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file3" name="identityCardHandImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="IDWithHandPreview"> <li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
@@ -1504,8 +1456,8 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" name="bankCardFrontImg" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
-                        <input type="file" id="file4"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input type="file" id="file4"  name="bankCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="rightBankCardPreview"> <li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
@@ -1520,8 +1472,8 @@
                 <div class="control-group">
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
-                        <input id="licenseImage" name="businessLicensePictureImg" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
-                        <input type="file" id="file5"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="licenseImage"  style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file5" name="businessLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="licenseImagePreview"> <li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
@@ -1534,8 +1486,8 @@
                 <div class="control-group">
                     <label class="control-label">门头照：</label>
                     <div class="controls">
-                        <input id="doorHeadImage" name="doorPictureImg" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-                        <input type="file" id="file6"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="doorHeadImage"  style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file6" name="doorPictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="doorHeadImagePreview"><li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
@@ -1548,8 +1500,8 @@
                 <div class="control-group">
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
-                        <input id="accountLicence" name="registerLicensePictureImg" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
-                        <input type="file" id="file7"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <input id="accountLicence"  style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file7" name="registerLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="accountLicencePreview"><li >
                             <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
@@ -2024,6 +1976,11 @@ if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
             $("#channelSetting-3").hide();
         }
     })
+
+    function toSubmit(){
+        var $html = $("html input[readonly='readonly']");
+        $html.removeAttr("readonly")
+    }
 </script>
 </body>
 </html>

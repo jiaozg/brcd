@@ -7,7 +7,6 @@ $(function () {
             reader.readAsDataURL(file);
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
-                alert(file.fileName);
                 showXY(e.target.result, file.fileName);
             };
         }
