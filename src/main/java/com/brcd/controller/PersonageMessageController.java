@@ -82,7 +82,6 @@ public class PersonageMessageController {
 
     @RequestMapping("updatePassword")//实现修改
     public String updatePassword(TbAgent tbAgent, HttpSession session) {
-
         personageMessageService.updatePassword(tbAgent);
         System.out.println(tbAgent);
         session.removeAttribute("agentLogin");
