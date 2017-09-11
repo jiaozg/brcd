@@ -33,7 +33,7 @@ public class Upload {
 	private String IMAGEPATH;//#ftp图片服务器的url
 	/**
 	 * 单文件上传
-	 * @param request
+	 * @param
 	 * @param file （文件）
 	 * @return newName （文件名）
 	 * @throws Exception
@@ -48,7 +48,7 @@ public class Upload {
 				boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
 			}
 		}
-		return newName;
+		return FTP_ADDRESS +":"+FTP_PORT+"/"+newName;
 	}
 
 
