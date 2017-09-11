@@ -63,23 +63,9 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     private void insertBusiness(TbBusiness business) {
 
-        if (business.getWechatPayYN().equals("Y")) {
-            System.out.print("123****************************************");
-
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(1);
-            business.setAlipay(0);
-            business.setWechatRate(business.getWechatRate()/100);
+        if (business.getWechatPay().equals("Y")) {
             tbBusinessMapper.insertTbBusiness(business);
-        }else if (business.getAlipayYN() .equals("Y")) {
-            System.out.print("123......................................");
-
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(0);
-            business.setAlipay(1);
-            business.setAliRate(business.getAliRate()/100);
+        }else if (business.getAlipay() .equals("Y")) {
             tbBusinessMapper.insertTbBusiness(business);
         }
     }
@@ -103,12 +89,5 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
 
     }
-
-
-    @Override
-    public TbBusinessUserExtend getBusinessUserAndBank(int id) {
-        return tbBusinessUserMapper.getBusinessUserAndBank(id);
-    }
-
 }
 
