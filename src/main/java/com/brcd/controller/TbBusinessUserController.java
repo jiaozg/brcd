@@ -93,8 +93,8 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
+    public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
         return "redirect:/businessUser/query";
     }
 
