@@ -11,6 +11,7 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
 import java.util.List;
 
@@ -48,9 +49,12 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
+
         businessUser.setStartTime(new Date());
         businessUser.setEndTime(new Date());
+        System.out.print("123****************************************");
         tbBusinessUserMapper.insertBusinessUser(businessUser);
+        System.out.print("123****************************************");
     }
 
 
@@ -70,6 +74,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户银行信息
      */
     private void insertBankcardInfo(TbBankcardInfo bankcardInfo) {
+        System.out.print("123///////////////////////////////////////");
         tbBankcardInfoMapper.insertTbBankcardInfo(bankcardInfo);
     }
 

@@ -25,8 +25,8 @@
     <script src="../../../static/address/distpicker.js" th:src="@{/address/distpicker.js}"></script>
     <script src="../../../static/address/main.js" th:src="@{/address/main.js}"></script>
     <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
-
-
+    <script src="../../static/js/updateImges.js" th:src="@{/js/updateImges.js}"></script>
+    <link href="../../static/css/fileCSS.css" th:href="@{/css/fileCSS.css}" type="text/css" rel="stylesheet"/>
     <meta name="decorator" content="default"/>
     <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css" th:href="@{/static/jquery-ui/ui.css}">
     <script src="../../../static/static/jquery-ui/ui.js" th:src="@{/static/jquery-ui/ui.js}"></script>
@@ -498,6 +498,34 @@
                     $('#cardBranchSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
                 },100);
             });
+
+
+            //点击选择支行
+            $('#cardBranchSel').change(function(){
+                var _this=$(this);
+                var bankNo = _this.find('option:selected').attr('bankNo');
+
+                if(bankNo == 'other'){
+                    $("#bankNo").val('');
+                    $("#bankNo").removeAttr('readonly');
+                }else{
+                    $("#bankNo").val(bankNo);
+                    $("#bankNo").attr('readonly','readonly');
+                }
+
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='cardBranchSel']").css('display','none');
+                    $("label[for='bankNo']").css('display','none');
+                }else{
+                    $("label[for='cardBranchSel']").css('display','block');
+                    $("label[for='bankNo']").css('display','block');
+                }
+            });
+
+
+
+
         });
 
         // 遍历添加city
@@ -686,8 +714,8 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <input type="text" name="affiliationAgent" value="代理商">
-                   <!-- <span>北京艺之彩广告有限公司</span>-->
+                    <input type="hidden" name="affiliationAgent" th:value="${agentLogin.agentNumber}">
+                    <span th:text="${agentLogin.agentFullName}"></span>
                 </div>
             </div>
             </td>
@@ -786,7 +814,7 @@
             <td><div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                    <select id="provinceSel" name="provinceCode" class="input-xlarge">
                         <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
@@ -796,7 +824,7 @@
                 <div class="control-group">
                     <label class="control-label">经营市名称：</label>
                     <div class="controls">
-                        <select id="district1" name="manageCity" class="input-xlarge">
+                        <select id="district1" name="districtCode" class="input-xlarge">
                             <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                         </select>
                     </div>
@@ -809,7 +837,7 @@
                     <label class="control-label">经营区名称：</label>
                     <div class="controls">
 
-                        <select id="city1" name="manageDistrict" class="input-xlarge">
+                        <select id="city1" name="cityCode" class="input-xlarge">
                             <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
                         </select>
                     </div>
@@ -1307,32 +1335,33 @@
                     <div class="controls">
                         <select id="bankNameSel" name="bankName" class="input-xlarge required">
                             <option value="" selected="selected">--请选择银行--</option>
-                            <option value="北京" th:text="${bankName}" th:value="${bankName}" th:each="bankName:${bankNameList}">--北京--</option>
+                            <option value="北京" >--北京--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr data-toggle="distpicker">
+        <tr>
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
                         <select id="cardProvinceSel" name="bankProvince" class="input-xlarge required">
                             <option value="" selected="selected">--请选择省--</option>
+                            <option value="北京" >--北京--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
 
-            <td>
+            <!--<td>
                 <div class="control-group">
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
-                        <select id="cardCity" name="bankCity" class="input-xlarge required">
-                            <option value="" selected="selected">--请选择市--</option>
+                        <select id="cardCitySel" name="bankCity" class="input-xlarge required">
+                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1344,7 +1373,7 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
                     <select id="cardBranchSel" name="bankDetailed" class="input-xlarge required">
-                        <option value="" selected="selected">--请选择支行--</option>
+                        <option value="" selected="selected">&#45;&#45;请选择支行&#45;&#45;</option>
 
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1358,77 +1387,83 @@
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
-            </td>
+            </td>-->
         </tr>
     </table>
     <h6>商户资料信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
 
-   <table>
+   <!--<table>
         <tr>
             <td>
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
+                    <img src="" id="loc_img" width="150" height="150"/>
                     <div class="controls">
-                        <input id="rightID" name="identityCardFront" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
 
-                        <ol id="rightIDPreview"></ol><a href="javascript:" onclick="rightIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
+                        <input id="nameImage" name="identityCardFront" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+
+-
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="identityCardFront" id="headSculptureFile" class="file"/>
+                        </a>
 
                         <script type="text/javascript">
-                            function rightIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightIDSelectAction&thumbFunc=rightIDThumbSelectAction&cb=rightIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function rightIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function rightIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function rightIDCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function rightIDDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#rightID").val($("#rightID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightIDPreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function rightIDDelAll(){
-                                $("#rightID").val("");
-                                rightIDPreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function rightIDPreview(){
-                                var li, urls = $("#rightID").val().split("|");
-                                $("#rightIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightIDDel(this);\">×</a></li>";
-                                        $("#rightIDPreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#rightIDPreview").text() == ""){
-                                    $("#rightIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            rightIDPreview();
+                            nameImagePreview();
                         </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1460,62 +1495,66 @@
 
 
 
-                        <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="reservedIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="identityCardReverse" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function reservedIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=reservedIDSelectAction&thumbFunc=reservedIDThumbSelectAction&cb=reservedIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function reservedIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function reservedIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function reservedIDCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function reservedIDDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#reservedID").val($("#reservedID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                reservedIDPreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function reservedIDDelAll(){
-                                $("#reservedID").val("");
-                                reservedIDPreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function reservedIDPreview(){
-                                var li, urls = $("#reservedID").val().split("|");
-                                $("#reservedIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"reservedIDDel(this);\">×</a></li>";
-                                        $("#reservedIDPreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#reservedIDPreview").text() == ""){
-                                    $("#reservedIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            reservedIDPreview();
+                            nameImagePreview();
                         </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1549,64 +1588,68 @@
 
 
 
-                        <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="IDWithHandFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="identityCardHand" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function IDWithHandFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=IDWithHandSelectAction&thumbFunc=IDWithHandThumbSelectAction&cb=IDWithHandCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function IDWithHandSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function IDWithHandThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function IDWithHandCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function IDWithHandDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#IDWithHand").val($("#IDWithHand").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                IDWithHandPreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function IDWithHandDelAll(){
-                                $("#IDWithHand").val("");
-                                IDWithHandPreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function IDWithHandPreview(){
-                                var li, urls = $("#IDWithHand").val().split("|");
-                                $("#IDWithHandPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"IDWithHandDel(this);\">×</a></li>";
-                                        $("#IDWithHandPreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#IDWithHandPreview").text() == ""){
-                                    $("#IDWithHandPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            IDWithHandPreview();
+                            nameImagePreview();
                         </script>
-                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
+                        &lt;!&ndash; <span class="help-inline"><font color="red">*</font> </span> &ndash;&gt;
                     </div>
                 </div>
             </td>
@@ -1636,62 +1679,66 @@
 
 
 
-                        <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="rightBankCardFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="bankCardFront" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function rightBankCardFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightBankCardSelectAction&thumbFunc=rightBankCardThumbSelectAction&cb=rightBankCardCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function rightBankCardSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function rightBankCardThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function rightBankCardCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function rightBankCardDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#rightBankCard").val($("#rightBankCard").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightBankCardPreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function rightBankCardDelAll(){
-                                $("#rightBankCard").val("");
-                                rightBankCardPreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function rightBankCardPreview(){
-                                var li, urls = $("#rightBankCard").val().split("|");
-                                $("#rightBankCardPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightBankCardDel(this);\">×</a></li>";
-                                        $("#rightBankCardPreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#rightBankCardPreview").text() == ""){
-                                    $("#rightBankCardPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            rightBankCardPreview();
+                            nameImagePreview();
                         </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1725,62 +1772,66 @@
 
 
 
-                        <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="licenseImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="businessLicensePicture" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function licenseImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=licenseImageSelectAction&thumbFunc=licenseImageThumbSelectAction&cb=licenseImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function licenseImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function licenseImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function licenseImageCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function licenseImageDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#licenseImage").val($("#licenseImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                licenseImagePreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function licenseImageDelAll(){
-                                $("#licenseImage").val("");
-                                licenseImagePreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function licenseImagePreview(){
-                                var li, urls = $("#licenseImage").val().split("|");
-                                $("#licenseImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"licenseImageDel(this);\">×</a></li>";
-                                        $("#licenseImagePreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#licenseImagePreview").text() == ""){
-                                    $("#licenseImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            licenseImagePreview();
+                            nameImagePreview();
                         </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1812,64 +1863,68 @@
 
 
 
-                        <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="doorHeadImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="doorPicture" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function doorHeadImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=doorHeadImageSelectAction&thumbFunc=doorHeadImageThumbSelectAction&cb=doorHeadImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function doorHeadImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function doorHeadImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function doorHeadImageCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function doorHeadImageDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#doorHeadImage").val($("#doorHeadImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                doorHeadImagePreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function doorHeadImageDelAll(){
-                                $("#doorHeadImage").val("");
-                                doorHeadImagePreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function doorHeadImagePreview(){
-                                var li, urls = $("#doorHeadImage").val().split("|");
-                                $("#doorHeadImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"doorHeadImageDel(this);\">×</a></li>";
-                                        $("#doorHeadImagePreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#doorHeadImagePreview").text() == ""){
-                                    $("#doorHeadImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            doorHeadImagePreview();
+                            nameImagePreview();
                         </script>
-                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
+                        &lt;!&ndash; <span class="help-inline"><font color="red">*</font> </span> &ndash;&gt;
                     </div>
                 </div>
             </td>
@@ -1899,68 +1954,72 @@
 
 
 
-                        <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="accountLicenceFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
+                        <ol id="nameImagePreview"></ol><!--<a href="javascript:" onclick="rightIDFinderOpen();" class="btn" >选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>-->
+                        <a class="file">选择
+                            <input type="file" name="registerLicensePicture" id="headSculptureFile" class="file"/>
+                        </a>
+
                         <script type="text/javascript">
-                            function accountLicenceFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=accountLicenceSelectAction&thumbFunc=accountLicenceThumbSelectAction&cb=accountLicenceCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
+                            function nameImageFinderOpen() {//
+                                var date = new Date(), year = date.getFullYear(),
+                                    month = (date.getMonth() + 1) > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                                var url = "user/xiugaimima";
+                                windowOpen(url, "文件管理", 1000, 700);
                                 //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
                             }
-                            function accountLicenceSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
+                            function nameImageSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {//
                                     url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function accountLicenceThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
+                            function nameImageThumbSelectAction(fileUrl, data, allFiles) {
+                                var url = "", files = ckfinderAPI.getSelectedFiles();
+                                for (var i = 0; i < files.length; i++) {
                                     url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
+                                    if (i < files.length - 1) url += "|";
                                 }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
+                                $("#nameImage").val(url);//
+                                nameImagePreview();
                                 //top.$.jBox.close();
                             }
-                            function accountLicenceCallback(api){
+                            function nameImageCallback(api) {
                                 ckfinderAPI = api;
                             }
-                            function accountLicenceDel(obj){
+                            function nameImageDel(obj) {
                                 var url = $(obj).prev().attr("url");
-                                $("#accountLicence").val($("#accountLicence").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                accountLicencePreview();
+                                $("#nameImage").val($("#nameImage").val().replace("|" + url, "", "").replace(url + "|", "", "").replace(url, "", ""));
+                                nameImagePreview();
                             }
-                            function accountLicenceDelAll(){
-                                $("#accountLicence").val("");
-                                accountLicencePreview();
+                            function nameImageDelAll() {
+                                $("#nameImage").val("");
+                                nameImagePreview();
                             }
-                            function accountLicencePreview(){
-                                var li, urls = $("#accountLicence").val().split("|");
-                                $("#accountLicencePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"accountLicenceDel(this);\">×</a></li>";
-                                        $("#accountLicencePreview").append(li);
+                            function nameImagePreview() {
+                                var li, urls = $("#nameImage").val().split("|");
+                                $("#nameImagePreview").children().remove();
+                                for (var i = 0; i < urls.length; i++) {
+                                    if (urls[i] != "") {//
+                                        li = "<li><img class='imgList' src=\"" + urls[i] + "\" url=\"" + urls[i] + "\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
+                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"nameImageDel(this);\">×</a></li>";
+                                        $("#nameImagePreview").append(li);
                                     }
                                 }
-                                if ($("#accountLicencePreview").text() == ""){
-                                    $("#accountLicencePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
+                                if ($("#nameImagePreview").text() == "") {
+                                    $("#nameImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
                                 }
                             }
-                            accountLicencePreview();
+                            nameImagePreview();
                         </script>
                     </div>
                 </div>
             </td>
         </tr>
-    </table>
+    </table>-->
 
     <div class="form-actions">
         <input id="btnSubmit" class="btn btn-primary" type="button" value="保 存"/>&nbsp;
@@ -2228,27 +2287,6 @@
         }) ;
         return flag;
     }
-    $("#cardCity").change(function(){
-        var bankName = $("#bankNameSel").val();
-        var City=$("#cardCity").val();
-        var Province = $("#cardProvinceSel").val();
-        $.post("findByBankName",{bankName:bankName,city:City,province:Province},function(data){
-            $.each(data,function (i,bank) {
-                var $option="<option  value='"+bank.bankSubName+"'>"+bank.bankSubName+"</option>";
-                $("#cardBranchSel").append($option);
-            })
-        })
-    });
-
-    $("#cardBranchSel").change(function () {
-        var bankNo=$("#cardBranchSel").val();
-        $("#bankNo").removeAttr('readonly');
-        $.post("findBankNo",{bankSubName:bankNo},function (data) {
-            $("#bankNo").val(data);
-        })
-        $("#bankNo").attr('readonly',"readonly");
-
-    });
 </script>
 
 <script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
