@@ -10,7 +10,7 @@ public class TbBusiness {
 
     private Double wechatRate;
 
-    private Integer wechatT0;
+    private Integer wechatT0=0;
 
     private String wechatIndustry;
 
@@ -22,7 +22,7 @@ public class TbBusiness {
 
     private Double aliRate;
 
-    private Integer aliT0;
+    private Integer aliT0=0;
 
     private String aliIndustry;
 
