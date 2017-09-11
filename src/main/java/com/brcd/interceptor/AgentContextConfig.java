@@ -1,4 +1,3 @@
-/*
 package com.brcd.interceptor;
 
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +10,6 @@ public class AgentContextConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AgentInterceptor()).addPathPatterns("*/
-/**");
+        registry.addInterceptor(new AgentInterceptor()).addPathPatterns("/**");
     }
 }
-*/
