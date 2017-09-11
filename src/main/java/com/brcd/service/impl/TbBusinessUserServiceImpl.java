@@ -92,9 +92,12 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
 
     }
+
+
     @Override
     public TbBusinessUserExtend getBusinessUserAndBank(int id) {
         return tbBusinessUserMapper.getBusinessUserAndBank(id);
     }
+
 }
 
