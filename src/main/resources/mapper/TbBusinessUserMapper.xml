@@ -86,9 +86,4 @@
             and contact_phone = #{contactPhone}
         </if>
     </select>
-
-
-    <select id="getBusinessUserAndBank" parameterType="int" resultType="com.brcd.bean.TbBusinessUserExtend">
-       SELECT * FROM tb_business_user u left JOIN tb_bankcard_info b ON u.business_uid = b.business_uid WHERE u.business_uid = #{id}
-    </select>
 </mapper>

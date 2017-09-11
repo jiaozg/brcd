@@ -56,6 +56,7 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
+
     private Integer businessUserStatus;
 
     private Date startTime;
@@ -63,6 +64,11 @@ public class TbBusinessUser {
     private Date endTime;
 
     private String businessUserKey;
+
+    private Integer businessId;
+    private  TbAgent tbAgent;
+    private Integer bankId;
+
 
 
     private  TbAgent tbAgent;
@@ -82,6 +88,7 @@ public class TbBusinessUser {
     private volatile MultipartFile businessLicensePictureImg;
 
     private volatile MultipartFile doorPictureImg;
+
 
 
 
