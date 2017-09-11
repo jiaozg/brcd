@@ -4,11 +4,13 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.util.IDUtils;
+import com.brcd.common.util.Upload;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -29,18 +31,21 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Autowired
     private TbBankcardInfoMapper tbBankcardInfoMapper;
 
+    @Autowired
+    private Upload upload;
+
     /**
      * 添加商户基本信息
      *
-     * @param businessUser
+     * @param tbBusinessUser
      * @param business
      * @param bankcardInfo
      */
     @Override
-    public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+    public void insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         //设置主键ID'
         String sid = IDUtils.genItemId();
-        businessUser.setBusinessUid(sid);
+        tbBusinessUser.setBusinessUid(sid);
 
         //设置外键的值
         business.setBusinessUid(sid);
@@ -48,9 +53,30 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
-        businessUser.setStartTime(new Date());
-        businessUser.setEndTime(new Date());
-        tbBusinessUserMapper.insertBusinessUser(businessUser);
+        tbBusinessUser.setStartTime(new Date());
+        tbBusinessUser.setEndTime(new Date());
+        try {
+            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
+            tbBusinessUser.setBankCardFront(bankCardFront);
+            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
+            tbBusinessUser.setIdentityCardFront(identityCardFront);
+            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
+            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
+            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
+            tbBusinessUser.setIdentityCardHand(identityCardHand);
+            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
+                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
+                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
+                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
+                tbBusinessUser.setDoorPicture(doorPicture);
+                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
+                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
     }
 
 
@@ -59,17 +85,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      */
     private void insertBusiness(TbBusiness business) {
 
-        if (business.getWechatPayYN().equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(1);
-            business.setAlipay(0);
+        if (business.getWechatPay().equals("Y")) {
+            business.setWechatRate(business.getWechatRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
-        }else if (business.getAlipayYN() .equals("Y")) {
-            business.setWechatT0(0);
-            business.setAliT0(0);
-            business.setWechatPay(0);
-            business.setAlipay(1);
+        }else if (business.getAlipay() .equals("Y")) {
+            business.setAliRate(business.getAliRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
         }
     }
@@ -92,6 +112,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
 
     }
+
 
 }
 
