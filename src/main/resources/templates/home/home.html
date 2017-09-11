@@ -1,9 +1,4 @@
-
-
-<html  style="overflow-x:auto;overflow-y:auto;" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-
+<head xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <style>
         /* Loading Spinner */
         .spinner {
@@ -218,7 +213,7 @@
                         <div class="box-sm">
                             <ul class="reset-ul mrg5B">
                                 <li>
-                                    <a href="toPersonageMessage" th:href="@{'toPersonageMessage'}" target="mainFrame">
+                                    <a href="toPersonageMessage" target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
                                         个人信息
                                     </a>
@@ -333,7 +328,7 @@
                             <ul>
 
                                 <li class="leaf " pid="81866a0e944446f0b150422645c2cdae">
-                                    <a style="padding-left:30px;" href="../menu/commercial/goToInsertBusinessUser"
+                                    <a style="padding-left:30px;" th:href="@{/businessUser/goToInsertBusinessUser}" href="../menu/commercial/goToInsertBusinessUser"
                                        title="添加商户" target="mainFrame">
 
 
@@ -381,8 +376,7 @@
                                         <span>商户查询</span></a>
                                 </li>
                                 <li class="leaf " pid="b968aea48b9e49a7aed21f16281a039f">
-                                    <a style="padding-left:30px;" href="../menu/commercial/shanghuxinxifguanli.html"
-                                       th:href="@{businessUser/toQuery}"
+                                    <a style="padding-left:30px;"  href="../menu/commercial/shanghuxinxifguanli.html" th:href="@{/businessUser/toManage}"
                                        title="商户信息管理" target="mainFrame">
                                         <i class="glyph-icon icon-cog" style="color:#cc0001;"></i>
                                         <span>商户信息管理</span></a>
@@ -421,11 +415,13 @@
                             <ul>
                                 <li class="leaf " pid="fd429879c802494d875abc27375bfea2">
                                     <a style="padding-left:30px;" href="../menu/jiaoyiguanli/jiaoyijilu.html"
+                                       th:href="@{a/operate/order/list}"
                                        title="交易记录" target="mainFrame">
                                         <i class="glyph-icon icon-list-ol" style="color:#cc0001;"></i>
                                         <span>交易记录</span></a>
                                 </li>
                                 <a style="padding-left:30px;" href="../menu/jiaoyiguanli/fenrunjilu.html" title="分润记录"
+                                   th:href="@{profit/findProfitListToPage}"
                                    target="mainFrame">
                                     <i class="glyph-icon icon-th-large" style="color:#cc0001;"></i>
                                     <span>分润记录</span></a>
@@ -456,8 +452,7 @@
                             <ul>
 
                                 <li class="leaf " pid="6ab2ae156be04cfea17484c2f8647e91">
-                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html"
-                                       th:href="@{/pageIndex}"
+                                    <a style="padding-left:30px;" href="../menu/jiesuanguanli/jiesuanjilu.html" th:href="@{settle/selectTbSettleList}"
                                        title="结算记录" target="mainFrame">
                                         <i class="glyph-icon icon-align-justify" style="color:#cc0001;"></i>
                                         <span>结算记录</span></a>
@@ -473,7 +468,7 @@
                     </li>
                     <li>
                     </li>
-                    <li>
+<!--                    <li>
                         <a href="#" title="对账管理">
                             <i class="glyph-icon icon-circle-arrow-right" style="color:#cc0001;"></i>
                             <span>对账管理</span>
@@ -489,7 +484,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li>-->
                     <li>
                     </li>
                     <li>

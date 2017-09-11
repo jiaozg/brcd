@@ -1,8 +1,8 @@
 package com.brcd.controller;
 
-import com.brcd.bean.TbSettle;
+import com.brcd.bean.TbProfit;
 import com.brcd.common.util.ExportExcel;
-import com.brcd.service.TbSettleService;
+import com.brcd.service.TbProfitService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.deploy.net.URLEncoder;
@@ -22,14 +22,17 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 朱梦光 on 2017/9/7.查询结算交易Controller
+ * @author 付德鹏
+ * @version V1.0
+ * @Title: 分润controller
+ * @Package com.brcd.controller
+ * @date 2017-09-06
  */
 @Controller
-@RequestMapping("settle")
-public class TbSettleController {
+public class TbProfitController {
 
     @Autowired
-    private TbSettleService tbSettleService;
+    private TbProfitService profitService;
 
     /*
 * 时间格式的转换
@@ -39,52 +42,40 @@ public class TbSettleController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
     }
 
-    @RequestMapping("/pageIndex")
-    public String pageIndex() {
-
-        return "forward:selectTbSettleList";
-    }
-
-    @RequestMapping("/selectTbSettleList")
-    public String selectTbSettleList(TbSettle settle, Model model, Integer pageNo) {
-
+    @RequestMapping("profit/findProfitListToPage")
+    public String findProfitListToPage(TbProfit profit, Model model, Integer pageNo,HttpServletRequest request) {
+        System.out.println("======::======");
+        //分页查询
         if (pageNo == null) {
             pageNo = 1;
         }
-
-        Integer pageSize = 15;
-        PageHelper.startPage(pageNo,pageSize);
-        List<TbSettle> pageList = tbSettleService.selectSettleList(settle);
-        model.addAttribute("pageList", pageList);
-        model.addAttribute("showBack", settle);
-
-        PageInfo pageInfo = new PageInfo<>(pageList, 15);
-
-        model.addAttribute("selectTbSettleList", pageInfo.getList());
-
-        long listCount = pageInfo.getTotal(); //总记录数
-        int pageCount = pageInfo.getPages();   //总条数
-
-        //当前页
-        model.addAttribute("total", pageNo);
-        //总记录数
-        model.addAttribute("pages", listCount);
-        //总页码
-        model.addAttribute("pageNo", pageCount);
+        int pageSize = 5;
+        PageHelper.startPage(pageNo, pageSize);
+        List<TbProfit> page = profitService.findProfitListToPage(profit);
+        model.addAttribute("profitList", page);
+        request.setAttribute("exportPage",page);
+        model.addAttribute("showBack", profit);
+        //分页信息
+        PageInfo<TbProfit> pageInfo = new PageInfo<>(page);
+        //添加分页的参数
+        long total = pageInfo.getTotal(); //总记录数
+        int pages = pageInfo.getPages();   //总条数
+        model.addAttribute("total", total);
+        model.addAttribute("pages", pages);
+        model.addAttribute("pageNo", pageNo);
 
 
-        return "menu/jiesuanguanli/jiesuanjilu";
+        return "menu/jiaoyiguanli/fenrunjilu";
     }
-
     /*
-    导出数据
-    */
-    @RequestMapping("settle/exportExcel")
-    public void exportExcel(TbSettle settle, HttpServletRequest request, HttpServletResponse response)throws Exception{
+     导出数据
+     */
+    @RequestMapping("profit/exportExcel")
+    public void exportExcel(TbProfit profit, HttpServletRequest request, HttpServletResponse response)throws Exception{
 
-        String[] headers = {"结算批次号","结算流水","结算时间","商户编号","商户类型","结算类型","结算模式","订单总金额","订单总笔数","手续费","结算金额","结算状态","备注"};
+        String[] headers = {"结算批次号","结算流水","结算时间","商户编号","拥有者类型","结算类型","结算模式","订单总金额","订单总笔数","交易手续费","结算手续费","结算金额","结算状态","备注"};
 
-        String fileName="结算记录.xls";
+        String fileName="分润记录.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -97,13 +88,15 @@ public class TbSettleController {
         response.setContentType("application/vnd.ms-excel;charset=GBK");
         response.setCharacterEncoding("GBK");
 
-        ExportExcel<TbSettle> ex = new ExportExcel<>();
+        ExportExcel<TbProfit> ex = new ExportExcel<>();
 
-         List<TbSettle> pageList = tbSettleService.selectSettleList(settle);
+        List<TbProfit> pageList = profitService.findProfitListToPage(profit);
+
         OutputStream out = response.getOutputStream();
 
         ex.exportExcel(headers,pageList,out);
 
         out.close();
     }
+
 }

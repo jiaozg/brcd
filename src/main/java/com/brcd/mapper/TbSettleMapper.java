@@ -15,6 +15,8 @@ public interface TbSettleMapper {
     /*
       查询结算记录
      */
-    List<TbSettle> selectTbSettleList(TbSettle settle);
+    List<TbSettle> selectSettleList(TbSettle settle);
+
+
 
 }

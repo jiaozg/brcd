@@ -1,24 +1,32 @@
 package com.brcd.controller;
 
 
+
+import com.brcd.bean.*;
+import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
+import com.brcd.common.util.Upload;
+import com.brcd.service.BankService;
+
 import com.brcd.common.util.ExportExcel;
+import com.brcd.service.BankService;
 import com.brcd.service.TbBankcardInfoService;
 import com.brcd.service.TbBusinessService;
 import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,12 +41,32 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
+
+    @Value("${FTP_ADDRESS}")
+    private String FTP_ADDRESS;//IP地址
+    @Value("${FTP_PORT}")
+    private Integer FTP_PORT;//端口号
+    @Value("${FTP_USERNAME}")
+    private String FTP_USERNAME;//用户名
+    @Value("${FTP_PASSWORD}")
+    private String FTP_PASSWORD;//密码
+    @Value("${FTP_BASE_PATH}")
+    private String FTP_BASE_PATH;//ftp的图片服务器根路径
+    @Value("${IMAGE_BASE_URL}")
+    private String IMAGE_BASE_URL;//#ftp图片服务器的url
+    @Value("${IMAGEPATH}")
+    private String IMAGEPATH;//#ftp图片服务器的url
+
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
     private TbBankcardInfoService tbBankcardInfoService;
     @Autowired
     private TbBusinessService tbBusinessService;
+    @Autowired
+    private BankService bankService;
+    @Autowired
+    private Upload upload;
 
     /*
     * 时间格式的转换
@@ -53,7 +81,11 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(){
+    public String goToIsert(Model model,HttpSession session){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        model.addAttribute("agentLogin",agentLogin);
         return "menu/commercial/addCommercial";
     }
 
@@ -61,11 +93,8 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-
-
+    public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
         return "redirect:/businessUser/query";
     }
 
@@ -111,7 +140,7 @@ public class TbBusinessUserController {
         String[] headers = {"商户编号","所属代理商","商户类型","经营名称","商户名称","法人姓名","法人身份证","联系人","联系电话","联系邮箱","客服电话","经营地址","经营省","经营市"
                 ,"经营区","营业执照编号","注册地址","身份证正面","身份证反面","身份证手持","银行卡正面","营业执照照片","门头照","开户许可证照片","商户状态","起始时间","结束时间","商户秘钥"};
 
-        String fileName="日志导出.xls";
+        String fileName="商户查询.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
@@ -126,25 +155,24 @@ public class TbBusinessUserController {
 
         ExportExcel<TbBusinessUser> ex = new ExportExcel<>();
 
-        List<TbBusinessUser> item = tbBusinessUserService.query(tbBusinessUser);
+        List<TbBusinessUser> list = tbBusinessUserService.query(tbBusinessUser);
 
         OutputStream out = response.getOutputStream();
-        ex.exportExcel(headers, item, out);
+        ex.exportExcel(headers, list, out);
         out.close();
     }
 
-    @RequestMapping("shanghu")
+    @RequestMapping("toManage")
     public String shanghu(){
         System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";
-    }
+        return "menu/commercial/shanghuxinxifguanli.html";}
 
 
     @RequestMapping("toUpdate")
-    public String toUpdate(){
-        return "menu/commercial/businessUserUpdate.html";
-    }
-
+    public String toUpdate(Model model){
+        List<String> bankNameList = bankService.findBankName();
+        model.addAttribute("bankNameList",bankNameList);
+        return "menu/commercial/businessUserUpdate.html";}
     /**
      *商户修改的方法
      *@param tbBusinessUser
@@ -152,6 +180,27 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
+        try {
+            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
+            tbBusinessUser.setBankCardFront(bankCardFront);
+            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
+            tbBusinessUser.setIdentityCardFront(identityCardFront);
+            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
+            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
+            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
+            tbBusinessUser.setIdentityCardHand(identityCardHand);
+            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
+                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
+                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
+                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
+                tbBusinessUser.setDoorPicture(doorPicture);
+                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
+                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
       /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
         tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
@@ -159,5 +208,21 @@ public class TbBusinessUserController {
 
 
     }
-
+  
+    /**
+     * 根据大行名称、省、市查询该条件下的支行
+     * @param bank
+     * @return
+     */
+    @RequestMapping("findByBankName")
+    @ResponseBody
+    public List<Bank> findByBankName(Bank bank){
+        System.out.println(bank.getProvince());
+        return bankService.findByBankName(bank);
+    }
+    @RequestMapping("findBankNo")
+    @ResponseBody
+    public String findBankNo(String bankSubName){
+        return bankService.findBankNo(bankSubName);
+    }
 }

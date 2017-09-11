@@ -19,8 +19,8 @@ public class TbSettleServiceImpl implements TbSettleService{
     private TbSettleMapper tbSettleMapper;
 
     @Override
-    public List<TbSettle> selectTbSettleList(TbSettle settle) {
-        List<TbSettle> settleList = tbSettleMapper.selectTbSettleList(settle);
-        return settleList;
+    public List<TbSettle> selectSettleList(TbSettle settle) {
+
+        return tbSettleMapper.selectSettleList(settle);
     }
 }

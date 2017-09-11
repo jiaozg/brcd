@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -13,50 +15,41 @@ import org.springframework.web.multipart.MultipartFile;
  * @user 白雪杰
  * @date 2017年6月26日
  */
+@Component
 public class Upload {
+	@Value("${FTP_ADDRESS}")
+	private String FTP_ADDRESS;//IP地址
+	@Value("${FTP_PORT}")
+	private Integer FTP_PORT;//端口号
+	@Value("${FTP_USERNAME}")
+	private String FTP_USERNAME;//用户名
+	@Value("${FTP_PASSWORD}")
+	private String FTP_PASSWORD;//密码
+	@Value("${FTP_BASE_PATH}")
+	private String FTP_BASE_PATH;//ftp的图片服务器根路径
+	@Value("${IMAGE_BASE_URL}")
+	private String IMAGE_BASE_URL;//#ftp图片服务器的url
+	@Value("${IMAGEPATH}")
+	private String IMAGEPATH;//#ftp图片服务器的url
 	/**
 	 * 单文件上传
-	 * @param request
+	 * @param
 	 * @param file （文件）
-	 * @param url （上传地址）
-	 * @return
+	 * @return newName （文件名）
 	 * @throws Exception
 	 */
-	public static String getUpload(HttpServletRequest request,
-			MultipartFile file,String url) throws Exception {
-		if (file.getOriginalFilename().length() > 0) {
-			String fileName =Uid.getUuid()+ file.getOriginalFilename();
-			//System.out.println(fileName);
-			File files = new File(url + fileName);
-			file.transferTo(files);
-			return fileName;
-		}
-		return null;
-	}
-
-	/**
-	 * 多文件上传
-	 * @param request
-	 * @param file （文件集合）
-	 * @param url （上传地址）
-	 * @return
-	 * @throws Exception
-	 */
-	public static List<String> getUploads(HttpServletRequest request,
-			MultipartFile[] file,String url) throws Exception {
-		List<String> list = new ArrayList<String>();
-
-		for (int i = 0; i < file.length; i++) {
-			if (file[i].getOriginalFilename().length() > 0
-					&& file[i].getOriginalFilename() != "") {
-				String fileName =  Uid.getUuid() + file[i].getOriginalFilename();
-				//System.out.println(fileName);
-				list.add(fileName);
-				File files = new File(url + fileName);
-				file[i].transferTo(files);
+	public  String getUpload(MultipartFile file) throws Exception {
+		String newName="";
+		if (file != null) {
+			String oldName = file.getOriginalFilename();//取出原始文件名
+			newName= IDUtils.genItemId();//随机生成一个毫秒数
+			if (oldName.indexOf(".") != -1) {
+				newName = newName + oldName.substring(oldName.indexOf("."));
+				boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
 			}
-
 		}
-		return list;
+		return FTP_ADDRESS +":"+FTP_PORT+"/"+newName;
 	}
+
+
 }
