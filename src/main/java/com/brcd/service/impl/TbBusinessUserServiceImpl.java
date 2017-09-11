@@ -66,19 +66,21 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
         if (business.getWechatPayYN().equals("Y")) {
             System.out.print("123****************************************");
-            business.setWechatRate(business.getWechatRate()*0.01);
+
             business.setWechatT0(0);
             business.setAliT0(0);
             business.setWechatPay(1);
             business.setAlipay(0);
+            business.setWechatRate(business.getWechatRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
         }else if (business.getAlipayYN() .equals("Y")) {
             System.out.print("123......................................");
-            business.setAliRate(business.getAliRate()*0.01);
+
             business.setWechatT0(0);
             business.setAliT0(0);
             business.setWechatPay(0);
             business.setAlipay(1);
+            business.setAliRate(business.getAliRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
         }
     }
