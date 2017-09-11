@@ -44,11 +44,6 @@
     <script type="text/javascript" src="../../../static/static/jquery-tmpl/template.js"
     th:src="@{../static/jquery-tmpl/template.js}"></script>
     <script type="text/javascript">
-
-
-
-
-
         $(document).ready(function() {
             //判断当前商户是否有信息变更在审核中
             $.ajax({
@@ -64,29 +59,6 @@
                 }
             });
 
-            $.ajax({
-                type:"get",
-                url:"/brcd/wechatTrade/findWechatTrade",
-                dataType : "json",
-                success:function(data){
-                    $.each(data, function(i, wechatTrades) {
-                        var $option = '<option  value='+wechatTrades.tradeName+'>'+wechatTrades.tradeName+'</option>';
-                        $('#channelBusinessType-1').append($option);
-                    });
-                }
-            });
-
-            $.ajax({
-                type:"get",
-                url:"/brcd/AlipayTrade/findAlipayTrade",
-                dataType : "json",
-                success:function(data){
-                    $.each(data, function(i, alipayTrade) {
-                        var $option = '<option  value='+alipayTrade.firstType+'>'+alipayTrade.firstType+'</option>';
-                        $('#channelBusinessType-3').append($option);
-                    });
-                }
-            });
 
             //异步加载审核意见
             $.ajax({
