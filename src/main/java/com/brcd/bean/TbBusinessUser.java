@@ -96,7 +96,7 @@ public class TbBusinessUser {
 
     private volatile MultipartFile registerLicensePictureImg;
 
-    
+
 
     
 
