@@ -1,10 +1,12 @@
 
 package com.brcd.controller;
 
+import com.brcd.bean.FtpMsg;
 import com.brcd.bean.TbAgent;
 import com.brcd.common.util.DateUtil;
 import com.brcd.common.util.MD5Util;
 import com.brcd.service.AgentLoginService;
+import com.brcd.service.FtpMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,15 +35,13 @@ public class AgentLoginController {
 
     @RequestMapping("toAgentLogin")
     public String toAgentLogin() {
-        System.out.println("-------到登陆的界面------");
         return "login";
     }
 
     //退出登录
     @RequestMapping("AgentExit")
     public String AgentExit(HttpSession session) {
-//        server.session.timeout;
-//        session.invalidate();
+//        session.removeAttribute("agentLogin");
         return "login";
     }
 
