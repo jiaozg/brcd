@@ -4,6 +4,7 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.util.IDUtils;
+import com.brcd.common.util.MD5Util;
 import com.brcd.common.util.Upload;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
@@ -12,6 +13,7 @@ import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  * Created by admin on 2017/9/5.
  */
 @Service
+@Transactional
 public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Autowired
     private TbBusinessUserMapper tbBusinessUserMapper;
@@ -75,6 +78,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        //将MD5加密商户密码
+        if (tbBusinessUser.getPassWord() != null && tbBusinessUser.getPassWord() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassWord());
+            tbBusinessUser.setPassWord(md5Encode);
         }
         tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
     }
@@ -138,6 +146,9 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
             e.printStackTrace();
         }
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
+        System.out.println(tbBusinessUser.getTbBusiness()+"===============================");
+        tbBusinessMapper.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoMapper.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
 
 
     }

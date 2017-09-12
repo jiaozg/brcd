@@ -90,10 +90,6 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
-       if(tbBusinessUser == null){
-           tbBusinessUser = new TbBusinessUser();
-       }
-        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -169,8 +165,6 @@ public class TbBusinessUserController {
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
         return "menu/commercial/shanghuxinxifguanli.html";
 
 
