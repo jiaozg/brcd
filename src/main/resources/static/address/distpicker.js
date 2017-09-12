@@ -173,7 +173,6 @@
           '</option>'
         );
       });
-
       return list.join('');
     },
 

@@ -8,13 +8,10 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.util.Upload;
-import com.brcd.service.BankService;
+import com.brcd.service.*;
 
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.BankService;
-import com.brcd.service.TbBankcardInfoService;
-import com.brcd.service.TbBusinessService;
-import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +46,8 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
     @Autowired
     private BankService bankService;
+    @Autowired
+    private TbAreaDictionaryService tbAreaDictionaryService;
 
 
     /*
@@ -146,13 +145,19 @@ public class TbBusinessUserController {
     }
 
     @RequestMapping("toManage")
-    public String shanghu(){
-        System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";}
+    public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
 
-
+    /**
+     * 进入商户修改页面
+     * @param model
+     * @return
+     */
     @RequestMapping("toUpdate")
-    public String toUpdate(Model model){
+    public String toUpdate(Model model ,Integer businessUid){
+        List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
+        model.addAttribute("provinceList",addrList);
+        TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);
+        model.addAttribute("businessUser",business);
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/businessUserUpdate.html";}
