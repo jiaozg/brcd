@@ -10,10 +10,10 @@ import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
 import java.util.List;
 
@@ -39,15 +39,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     /**
      * 添加商户基本信息
      *
-     * @param businessUser
+     * @param tbBusinessUser
      * @param business
      * @param bankcardInfo
      */
     @Override
-    public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+    public void insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         //设置主键ID'
         String sid = IDUtils.genItemId();
-        businessUser.setBusinessUid(sid);
+        tbBusinessUser.setBusinessUid(sid);
 
         //设置外键的值
         business.setBusinessUid(sid);
@@ -55,12 +55,30 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
+        tbBusinessUser.setStartTime(new Date());
+        tbBusinessUser.setEndTime(new Date());
+        try {
+            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
+            tbBusinessUser.setBankCardFront(bankCardFront);
+            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
+            tbBusinessUser.setIdentityCardFront(identityCardFront);
+            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
+            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
+            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
+            tbBusinessUser.setIdentityCardHand(identityCardHand);
+            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
+                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
+                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
+                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
+                tbBusinessUser.setDoorPicture(doorPicture);
+                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
+                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
+            }
 
-        businessUser.setStartTime(new Date());
-        businessUser.setEndTime(new Date());
-        System.out.print("123****************************************");
-        tbBusinessUserMapper.insertBusinessUser(businessUser);
-        System.out.print("123****************************************");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
     }
 
 
@@ -70,8 +88,10 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     private void insertBusiness(TbBusiness business) {
 
         if (business.getWechatPay().equals("Y")) {
+            business.setWechatRate(business.getWechatRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
         }else if (business.getAlipay() .equals("Y")) {
+            business.setAliRate(business.getAliRate()/100);
             tbBusinessMapper.insertTbBusiness(business);
         }
     }
@@ -80,7 +100,6 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
      * 添加商户银行信息
      */
     private void insertBankcardInfo(TbBankcardInfo bankcardInfo) {
-        System.out.print("123///////////////////////////////////////");
         tbBankcardInfoMapper.insertTbBankcardInfo(bankcardInfo);
     }
 
