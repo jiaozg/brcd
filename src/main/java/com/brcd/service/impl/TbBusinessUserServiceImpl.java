@@ -11,6 +11,7 @@ import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Date;
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by admin on 2017/9/5.
  */
 @Service
+@Transactional
 public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Autowired
     private TbBusinessUserMapper tbBusinessUserMapper;
@@ -119,6 +121,9 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
             e.printStackTrace();
         }
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
+        System.out.println(tbBusinessUser.getTbBusiness()+"===============================");
+        tbBusinessMapper.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoMapper.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
 
 
     }
