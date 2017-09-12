@@ -47,7 +47,7 @@ public class Upload {
 				boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
 			}
 		}
-		return FTP_ADDRESS+":"+FTP_PORT+newName;
+		return FTP_ADDRESS +":"+FTP_PORT+"/"+newName;
 	}
 
 
