@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>商户信息管理 - Powered By JeeSite</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
+    <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
+    <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache"><meta http-equiv="Cache-Control" content="no-store">
+    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript" th:src="@{/static/jquery/jquery-1.8.3.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" th:href="@{/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript" th:src="@{/static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome.min.css}" type="text/css" rel="stylesheet" />
+    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet" th:href="@{/static/jquery-select2/3.4/select2.min.css}" />
+    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript" th:src="@{/static/jquery-select2/3.4/select2.min.js}"></script>
+    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" th:href="@{/static/jquery-validation/1.11.0/jquery.validate.min.css}" type="text/css" rel="stylesheet" />
+    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript" th:src="@{/static/jquery-validation/1.11.0/jquery.validate.min.js}"></script>
+    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" th:href="@{/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}"/>
+    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript" th:src="@{/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js}"></script>
+    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/static/My97DatePicker/WdatePicker.js}"></script>
+    <script src="../../../static/static/common/mustache.min.js" type="text/javascript" th:src="@{/static/common/mustache.min.js}"></script>
+    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet" th:href="@{/static/common/jeesite.css}"/>
+    <script src="../../../static/static/common/jeesite.js" type="text/javascript" th:src="@{/static/common/jeesite.js}"></script>
+    <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
+
+    <script src="../../../static/address/distpicker.data.js" th:src="@{/address/distpicker.data.js}"></script>
+    <script src="../../../static/address/distpicker.js" th:src="@{/address/distpicker.js}"></script>
+    <script src="../../../static/address/main.js" th:src="@{/address/main.js}"></script>
+    <!-- Baidu tongji analytics --><script>var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?82116c626a8d504a5c0675073362ef6f";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);})();</script>
+
+
+    <meta name="decorator" content="default"/>
+    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css" th:href="@{/static/jquery-ui/ui.css}">
+    <script src="../../../static/static/jquery-ui/ui.js" th:src="@{/static/jquery-ui/ui.js}"></script>
+    <style type="text/css">
+        ol {list-style: none;}
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#channelStatus-1").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/wechatTrade/findWechatTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, wechatTrades) {
+                                var $option = '<option  value='+wechatTrades.tradeName+'>'+wechatTrades.tradeName+'</option>';
+                                $('#channelBusinessType-1').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-3').prop("disabled", true);
+                }else{
+                    $('#channelStatus-3').prop("disabled", false);
+                }
+            })
+            $("#channelStatus-3").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/AlipayTrade/findAlipayTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, alipayTrade) {
+                                var $option = '<option  value='+alipayTrade.firstType+'>'+alipayTrade.firstType+'</option>';
+                                $('#channelBusinessType-3').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-1').prop("disabled", true);
+                }else{
+                    $('#channelStatus-1').prop("disabled", false);
+                }
+            })
+
+
+
+            $('#groupId').prop("disabled", true);
+            $('#groupId2').prop("disabled", true);
+            $('#groupId3').prop("disabled", true);
+
+            $("#settleModeSel").hide();
+
+            /*判断代理商是否有进件权限及T0状态*/
+            /*  $.ajax({
+             type:"get",
+             url:"/a/operate/agent/getByNum?",
+             dataType : "json",
+             data: {agentNum:$("#agentNum").val()},
+             success:function(data){
+             if(data.agent.intoStatus == 'N'){
+             window.top.openDialog('抱歉，您的商户进件权限未开通，请联系管理员！');
+             setTimeout(function () {
+             parent.location.reload();
+             }, 2500);
+             }
+             }
+             });  */
+
+
+            /*初始化经营行业*/
+            $.ajax({
+                type:"get",
+                url:"/a/asd/asd/getasd",
+                dataType : "json",
+                data: {tradeType:$("#customerTypeSel").val()},
+                success:function(data){
+                    $.each(data.wechatTrades, function(i, item) {
+                        var $option = '<option type='+item.tradeType+' value='+item.tradeName+'>'+item.tradeName+'</option>';
+                        $('#businessSel').append($option);
+                    });
+                }
+            });
+
+
+            /*初始化银行大行列表*/
+            $.ajax({
+                type:"get",
+                url:"/a/operate/branch/brcbBankNo/getAllBank",
+                dataType : "json",
+                success:function(data){
+                    $.each(data.allBank, function(i, item) {
+                        var $option = '<option  value='+item.bankName+'>'+item.bankName+'</option>';
+                        $('#bankNameSel').append($option);
+                    });
+                }
+            });
+            /*初始化省份*/
+            $.ajax({
+                type:"get",
+                url:"/a/operate/province/brcbProvince/getProvince?",
+                dataType : "json",
+                success:function(data){
+                    $.each(data.province, function(i, item) {
+                        var $option = '<option code='+item.provinceid+' value='+item.provinceid+'>'+item.province+'</option>';
+                        var $optionCard = '<option code='+item.provinceid+' value='+item.province+'>'+item.province+'</option>';
+                        //经营地区
+                        $('#provinceSel').append($option);
+                        //开卡省份
+                        $('#cardProvinceSel').append($optionCard);
+                    });
+                }
+            });
+
+            /* //商户费率验证  不能小于代理商的费率
+             jQuery.validator.addMethod("rateLimit", function(value, element) {
+             var isPass=false;
+             //获取代理商签约费率
+             $.ajax({
+             type:"post",
+             url:"/a/operate/agent/checkRate",
+             dataType : "json",
+             async: false,
+             data: {
+             agentNum:$("#agentNum").val()
+             },
+             success:function(data){
+             if(data.success == 'true'){
+             var rate=data.agentFee.rate*100;
+             if(value >= rate){
+             isPass=true;
+             }
+             }
+             }
+             });
+             return this.optional(element) || isPass;
+             }, "请检查所属代理商，输入费率不能低于代理商签约费率！"); */
+
+            //form 提交验证事件
+            $("#inputForm").validate({
+                submitHandler: function(form){
+                    if(!checkSign()) return;
+                    $("#btnSubmit").attr("disabled","disabled");
+                    loading('正在提交，请稍等...');
+                    form.submit();
+                },
+                errorContainer: "#messageBox",
+                errorPlacement: function(error, element) {
+                    $("#messageBox").text("输入有误，请先更正。");
+                    if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
+                        error.appendTo(element.parent().parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            //企业对私账户 ，法人姓名必须和开户户名一致
+            $("#btnSubmit").click(function(){
+                var customerTypeSel =$("#customerTypeSel").val();//个体 or 企业
+                var accountType=$("#accountTypeHidden").val();
+                var accountName=$("#accountNameHidden").val();
+                var legalName=$("#legalName").val();
+                var channelStatus=$("#channelStatus-3").val();
+                var businessAddress=$("#businessAddressSel").val();
+                var province=$("#provinceSel").val();
+                var city=$("#citySel").val();
+                var area=$("#areaSel").val();
+       /*         if(channelStatus == 'Y'){
+                    if(businessAddress==null || businessAddress==''){
+                        window.top.openDialog('提示：开通支付宝经营地址不能为空');
+
+                        return;
+                    }
+                    if(province==null || province==''){
+                        window.top.openDialog('提示：开通支付宝经营省份不能为空');
+                        return;
+                    }
+                    if(city==null || city==''){
+                        window.top.openDialog('提示：开通支付宝经营市不能为空');
+                        return;
+                    }
+                    if(area == null || area==''){
+                        window.top.openDialog('提示：开通支付宝经营区县不能为空');
+                        return;
+                    }
+                }*/
+                if(customerTypeSel == 'ENTERPRISE' && accountType== 'PERSONAL'){
+                    if(accountName != legalName){
+                        window.top.openDialog('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
+                        alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
+                        return;
+                    }
+                }
+                $("#btnSubmit").submit();
+            });
+
+            // 如果企业商户  需额外录入几个字段
+            $("#customerTypeSel").change(function(){
+                $.each($("select[class*='channelStatus']"),function(index,data){
+                    $("#s2id_channelStatus-"+index+" .select2-chosen").html("不开通");
+                    $("#channelStatus-" + index).val("N");
+                    $("#channelSetting-" + index).hide();
+                    $("#s2id_channelBusinessType-"+index+" .select2-chosen").html("--请选择经营行业--");
+                })
+                //企业 需要额外录入两张图片
+                if(this.value=='ENTERPRISE'){
+                    $("#enterpriseTable").show();
+                    $("#enterpriseImage").show();
+                }else{
+                    $("#enterpriseTable").hide();
+                    $("#enterpriseImage").hide();
+                }
+
+
+
+
+                /*初始化经营行业*/
+                /* $.ajax({
+                 type:"get",
+                 url:"/a/operate/business/brcbBusinessType/getByType",
+                 dataType : "json",
+                 data: {customerType:this.value},
+                 success:function(data){
+
+                 $('#businessSel').empty();
+                 var $option = "<option code=''  value='' >--请选择经营行业--</option>";
+                 $('#businessSel').append($option);
+
+                 $.each(data.business, function(i, item) {
+                 var $option = '<option type='+item.customerType+' value='+item.businessId+'>'+item.businessName+'</option>';
+                 $('#businessSel').append($option);
+                 });
+                 }
+                 }); */
+            });
+
+            //是否有封顶  选择事件  有封地 则显示  输入封顶值的输入框
+            $('input:radio').click(function () {
+                var checkValue=this.value;
+                if(checkValue=='N'){
+                    $("#capValue").hide();
+                }else{
+                    $("#capValue").show();
+                }
+            });
+
+            // 银行卡号验证
+            jQuery.validator.addMethod("isBankCard", function(value, element) {
+                var reg = /^\d{9,30}$/;
+                return this.optional(element) || (reg.test(value));
+            }, "请输入正确的银行卡号");
+
+
+            // 手机号码验证
+            jQuery.validator.addMethod("isMobile", function(value, element) {
+                var length = value.length;
+                var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+                return this.optional(element) || (length == 11 && mobile.test(value));
+            }, "请输入正确的手机号码");
+
+            // 金额验证  两位小数
+            jQuery.validator.addMethod("money", function(value, element) {
+                var moneryReg = /^(([1-9]\d*)|\d)(\.\d{1,2})?$/;
+                return this.optional(element) || (moneryReg.test(value));
+            }, "请输入正确的金额");
+
+            // 身份证
+            jQuery.validator.addMethod("isIdCardNo", function (value, element) {
+                /* isIDCard1=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+                 isIDCard2=/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/; */
+                var isIdCard=IdentityCodeValid(value);
+                return this.optional(element) || isIdCard;
+            }, "请正确输入您的身份证号码（如最后一位为X需大写）");
+
+            // 7位数字
+            jQuery.validator.addMethod("sevenBit", function(value, element) {
+                return this.optional(element) || value.length<8;
+            }, "请输入正确的数值，最大长度7位");
+
+            // 固话 正则
+            jQuery.validator.addMethod("telephone", function(value, element) {
+                var telephone = /^([0-9-]+)$/;
+                return this.optional(element) || (telephone.test(value));
+            }, "请输入正确的客服电话");
+
+            // 选择开户行事件
+            $("#bankNameSel").change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='bankNameSel']").css('display','none');
+                }else{
+                    $("label[for='bankNameSel']").css('display','block');
+                }
+                //清空市区  连行号
+                $("#s2id_cardProvinceSel .select2-chosen").html('--请选择省--');
+                $("#s2id_cardCitySel .select2-chosen").html('--请选择市--');
+                $("#s2id_cardBranchSel .select2-chosen").html('--请选择支行--');
+                $("#cardProvinceSel,#cardBranchSel,#cardCitySel").find("option:selected").removeAttr("selected");
+                //清空联行号
+                $("#bankNo").val('');
+                $("#bankNo").attr('readonly','readonly');
+            });
+
+
+            //点击选择省份
+            $('#provinceSel').change(function(){
+
+                //清空 市区 option 内容
+                $("#s2id_citySel .select2-chosen").html('--请选择市--');
+                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='provinceSel']").css('display','none');
+                }else{
+                    $("label[for='provinceSel']").css('display','block');
+                }
+
+                $("#citySel,#areaSel").empty();
+
+                var $cityOption = "<option code=''  value='' >--请选择市--</option>";
+                var $areaOption = "<option code=''  value='' >--请选择区--</option>";
+
+                $("#citySel").append($cityOption);
+                $("#areaSel").append($areaOption);
+
+                //遍历添加区
+                var provinceCode = _this.find('option:selected').attr('code');
+                var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
+                masterAddrC(cityUrl,'#citySel');
+
+                setTimeout(function(){
+                    var cityCode = $('#citySel').find('option').eq(0).attr('code');
+                    var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+                    masterAddrA(areaUrl,'areaSel');
+                    setTimeout(function(){
+                        $('#provinceSel').attr('province_id',provinceCode);
+                        $('#citySel').attr('city_id',$('#citySel').find('option').eq(0).attr('code'));
+                        $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+                    },300);
+                },300);
+            });
+
+
+            //点击选择城市
+            $('#citySel').change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='citySel']").css('display','none');
+                }else{
+                    $("label[for='citySel']").css('display','block');
+                }
+
+                //清空 市区 option 内容
+                $("#s2id_areaSel .select2-chosen").html('--请选择区--');
+
+                $("#areaSel").empty();
+
+                var $option = "<option code=''  value='' >--请选择区--</option>";
+                $("#areaSel").append($option);
+
+                var cityCode = _this.find('option:selected').attr('code');
+                var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+                masterAddrA(areaUrl,'#areaSel');
+                setTimeout(function(){
+                    $('#citySel').attr('city_id',cityCode);
+                    $('#areaSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+                },100);
+            });
+
+            //点击选择区
+            $('#areaSel').change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='areaSel']").css('display','none');
+                }else{
+                    $("label[for='areaSel']").css('display','block');
+                }
+
+            });
+
+            //点击经营行业
+            $('#businessSel').change(function(){
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='businessSel']").css('display','none');
+                }else{
+                    $("label[for='businessSel']").css('display','block');
+                }
+
+            });
+
+
+            //点击 选择开卡省份
+            $('#cardProvinceSel').change(function(){
+
+                //清空市区  连行号
+                $("#s2id_cardCitySel .select2-chosen").html('--请选择市--');
+                $("#s2id_cardBranchSel .select2-chosen").html('--请选择支行--');
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='cardProvinceSel']").css('display','none');
+                }else{
+                    $("label[for='cardProvinceSel']").css('display','block');
+                }
+
+                $("#cardCitySel,#cardBranchSel").empty();
+
+                var $cityOption = "<option code=''  value='' >--请选择市--</option>";
+                var $branchOption = "<option code=''  value='' >--请选择支行--</option>";
+
+                $("#cardCitySel").append($cityOption);
+                $("#cardBranchSel").append($branchOption);
+
+                //清空联行号
+                $("#bankNo").val('');
+                $("#bankNo").attr('readonly','readonly');
+
+                var provinceCode = _this.find('option:selected').attr('code');
+                var cityUrl ='/a/operate/city/brcbCity/getCityByProvince?provinceid='+provinceCode;
+                masterAddrCCard(cityUrl,'#cardCitySel');
+
+                setTimeout(function(){
+                    var cityCode = $('#cardCitySel').find('option').eq(0).attr('code');
+                    var areaUrl = '/a/operate/area/brcbAreas/getAreaByCity?cityid='+cityCode;
+                    masterAddrACard(areaUrl,'areaSel');
+                    setTimeout(function(){
+                        $('#cardProvinceSel').attr('province_id',provinceCode);
+                        $('#cardCitySel').attr('city_id',$('#cardCitySel').find('option').eq(0).attr('code'));
+                        $('#cardBranchSel').attr('branch_id',$('#cardBranchSel').find('option').eq(0).attr('code'));
+                    },300);
+                },300);
+
+            });
+
+
+            //点击选择开卡城市
+            $('#cardCitySel').change(function(){
+
+                //清空支行  、联行号
+                $("#s2id_cardBranchSel .select2-chosen").html('--请选择支行--');
+
+                var _this=$(this);
+                // 清空和显示错误信息
+                if(_this.val()){
+                    $("label[for='cardCitySel']").css('display','none');
+                }else{
+                    $("label[for='cardCitySel']").css('display','block');
+                }
+
+                $("#cardBranchSel").empty();
+
+                var $branchOption = "<option code=''  value='' >--请选择支行--</option>";
+                $("#cardBranchSel").append($branchOption);
+
+                $("#bankNo").val('');
+                $("#bankNo").attr('readonly','readonly');
+
+                var cityCode = _this.find('option:selected').attr('code');
+                var areaUrl = '/a/operate/branch/brcbBankNo/getByArea?';
+                masterAddrCard(areaUrl,'#cardBranchSel');
+                setTimeout(function(){
+                    $('#cardCitySel').attr('city_id',cityCode);
+                    $('#cardBranchSel').attr('area_id',$('#areaSel').find('option').eq(0).attr('code'));
+                },100);
+            });
+        });
+
+        // 遍历添加city
+        function masterAddrC(url,appendId){
+            $.ajax({
+                url:url,
+                success:function(data){
+                    $.each(data.city,function(i,item){
+                        var $option = '<option code='+item.cityid+' value='+item.cityid+' >'+item.city+'</option>';
+                        $(appendId).append($option);
+                    });
+                },
+                error:function(){
+                    console.log("fail");
+                    return;
+                }
+            });
+        }
+        function masterAddrCCard(url,appendId){
+            $.ajax({
+                url:url,
+                success:function(data){
+                    $.each(data.city,function(i,item){
+                        var $option = '<option code='+item.cityid+' value='+item.city+' >'+item.city+'</option>';
+                        $(appendId).append($option);
+                    });
+                },
+                error:function(){
+                    console.log("fail");
+                    return;
+                }
+            });
+        }
+
+        // 遍历添加区
+        function masterAddrA(url,select){
+            $(select).empty();
+            $.ajax({
+                url:url,
+                success:function(data){
+                    $(select).empty();
+                    $.each(data.area,function(i,item){
+                        var $option = '<option code='+item.areaid+' value='+item.areaid+'>'+item.area+'</option>';
+                        $(select).append($option);
+                    });
+                },
+                error:function(){
+                    console.log("fail");
+                    return;
+                }
+            });
+        }
+        // 遍历添加区
+        function masterAddrACard(url,select){
+            $(select).empty();
+            $.ajax({
+                url:url,
+                success:function(data){
+                    $(select).empty();
+                    $.each(data.area,function(i,item){
+                        var $option = '<option code='+item.areaid+' value='+item.area+'>'+item.area+'</option>';
+                        $(select).append($option);
+                    });
+                },
+                error:function(){
+                    console.log("fail");
+                    return;
+                }
+            });
+        }
+
+        //遍历添加支行
+        function masterAddrCard(url,select){
+
+            var $bankName=$("#bankNameSel").val();
+            var $provinceName=$("#cardProvinceSel").val();
+
+            if(!$bankName || !$provinceName){
+                window.top.openDialog('提示：请先选择开户行和开卡省份！');
+                return ;
+            }
+
+            $.ajax({
+                type:"post",
+                url:url,
+                dataType : "json",
+                data: {province:$("#cardProvinceSel").val(),city:$("#cardCitySel").val(),bankName:$("#bankNameSel").val()},
+                success:function(data){
+                    $.each(data.branch,function(i,item){
+                        var $option = '<option bankNo='+item.bankNo+' value='+item.bankSubName+'>'+item.bankSubName+'</option>';
+                        $(select).append($option);
+                    });
+                    var $option = "<option bankNo='other' value='other'>其他支行</option>";
+                    $(select).append($option);
+                },
+                error:function(){
+                    console.log("fail");
+                    return;
+                }
+            });
+        }
+
+        //身份证验证
+        function IdentityCodeValid(code) {
+            var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
+            var tip = "";
+            var pass= true;
+
+            if(!/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|10|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)){
+                tip = "身份证号格式错误";
+                pass = false;
+            }
+
+            else if(!city[code.substr(0,2)]){
+                tip = "地址编码错误";
+                pass = false;
+            }
+            else{
+                //18位身份证需要验证最后一位校验位
+                if(code.length == 18){
+                    code = code.split('');
+                    //∑(ai×Wi)(mod 11)
+                    //加权因子
+                    var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
+                    //校验位
+                    var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
+                    var sum = 0;
+                    var ai = 0;
+                    var wi = 0;
+                    for (var i = 0; i < 17; i++)
+                    {
+                        ai = code[i];
+                        wi = factor[i];
+                        sum += ai * wi;
+                    }
+                    var last = parity[sum % 11];
+                    if(parity[sum % 11] != code[17]){
+                        tip = "校验位错误";
+                        pass =false;
+                    }
+                }
+            }
+            return pass;
+        }
+
+        //如果 设置封顶 需要输入封顶值
+        /* 	function radioCheck(own){
+         alert(own.value);
+         var capValue = document.getElementById("capValue");
+         } */
+    </script>
+
+
+</head>
+<body>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="/a/operate/customer/brcbCustomer/form?id=">商户信息添加</a></li>
+</ul><br/>
+<form id="inputForm" class="form-horizontal" enctype="multipart/form-data" action="/brcd/businessUser/insertBusinessUser" method="post">
+    <input id="id" name="id" type="hidden" value=""/>
+    <input id="agentNum" name="agentNum" type="hidden" value="A148110054952010852"/>
+
+    <script type="text/javascript">top.$.jBox.closeTip();</script>
+
+    <h6>商户基本信息</h6>
+    <hr width="100%" style="border:1px solid #008fe2;"/>
+    <table>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">所属代理商：</label>
+                <div class="controls">
+                    <input type="text" name="">
+                </div>
+            </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">商户类型：</label>
+                <div class="controls">
+                    <select id="customerTypeSel" name="businessUserType" class="input-xlarge required">
+                        <option value="ENTERPRISE">企业商户</option>
+                        <option value="PERSONAL">个体户</option>
+                    </select>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+            <td><div class="control-group">
+                <label class="control-label">经营名称：</label>
+                <div class="controls">
+                    <input id="businessName" name="manageName" class="input-xlarge required" type="text" value="" maxlength="255"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+        </tr>
+        <tr>
+
+            <td><div class="control-group">
+                <label class="control-label">商户名称：</label>
+                <div class="controls">
+                    <input id="customerName" name="businessUsername" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+            <td><div class="control-group">
+                <label class="control-label">法人姓名：</label>
+                <div class="controls">
+                    <input id="legalName" name="legalPeopleName" class="input-xlarge required" type="text" value="" maxlength="32"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">法人身份证：</label>
+                    <div class="controls">
+                        <input id="legalId" name="legalPeopleIdentityCard" class="input-xlarge required isIdCardNo" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td><div class="control-group">
+                <label class="control-label">联系人：</label>
+                <div class="controls">
+                    <input id="contact" name="contactPeople" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">联系电话：</label>
+                <div class="controls">
+                    <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">联系邮箱：</label>
+                    <div class="controls">
+                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" value="" maxlength="50"/>
+                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">客服电话：</label>
+                    <div class="controls">
+                        <input id="servicePhone" name="servicePhone" class="input-xlarge telephone required " type="text" value="" maxlength="20"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td><div class="control-group">
+                <label class="control-label">经营地址：</label>
+                <div class="controls">
+                    <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
+                </div>
+            </div></td>
+        </tr>
+        <tr data-toggle="distpicker">
+            <td><div class="control-group">
+                <label class="control-label">经营省名称：</label>
+                <div class="controls">
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+
+
+                <div class="control-group">
+                    <label class="control-label">经营市名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="manageCity" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                        </select>
+                    </div>
+                </div>
+
+            </td>
+            <td>
+
+                <div class="control-group">
+                    <label class="control-label">经营区名称：</label>
+                    <div class="controls">
+
+                        <select id="city1" name="manageDistrict" class="input-xlarge">
+                            <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group" style="height: 30px;">
+                    </div>
+                </div>
+            </td>
+
+
+        </tr>
+        <!--<tr>
+            <td><div class="control-group">
+                <label class="control-label">经营省名称：</label>
+                <div class="controls">
+
+                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                    </select>
+                </div>
+            </div></td>
+            <td><div class="control-group">
+                <label class="control-label">经营市名称：</label>
+                <div class="controls">
+
+                    <select id="citySel" name="manageCity" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                    </select>
+                </div>
+            </div></td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">经营区名称：</label>
+                <div class="controls">
+                    <select id="areaSel" name="manageDistrict" class="input-xlarge">
+                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                    </select>
+                </div>
+            </div>
+            </td>
+        </tr>-->
+    </table>
+
+    <table id="enterpriseTable">
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">营业执照编号：</label>
+                <div class="controls">
+                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+            <td><div class="control-group">
+                <label class="control-label">注册地址：</label>
+                <div class="controls">
+                    <input id="address" name="registerAddress" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+        </tr>
+    </table>
+
+    <h6>业务信息</h6>
+    <hr width="100%" style="border:1px solid #008fe2;"/>
+    <div class="control-group">
+        <label class="control-label">通道费率设置：</label>
+        <div id="tabs">
+            <ul>
+
+                <li><a href="#tabs-1">微信线下支付</a></li>
+
+                <li><a href="#tabs-2" >微信APP支付</a></li>
+
+                <li><a href="#tabs-3">支付宝</a></li>
+
+            </ul>
+
+            <div id="tabs-1" >
+                <input type="hidden" name="brcbChannelFeeList[0].channelNum" value="WECHAT" id="channelNum-1">
+                <div class="control-group">
+                    <label class="control-label">是否开通：</label>
+                    <div class="controls">
+                        <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
+                            <option value="Y" >开通</option>
+                            <option  value="N" selected="selected">不开通</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+                <div id="channelSetting-1" class="hide">
+                    <table>
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">收款费率%：</label>
+                                <div class="controls">
+                                    <input id="tradeFee-1" name="wechatRate" data-index="1" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
+                                    <span id="tradeFee_label_1" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div></td>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">T+0状态：</label>
+                                    <div class="controls">
+                                        <select id="groupId2" name="wechatT0" data-index="1" class="input-xlarge t0StatusSel">
+                                            <option value="0">不开通</option>
+                                            <!--<option value="Y">开通</option>-->
+
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">经营行业：</label>
+                                    <div class="controls">
+                                        <select id="channelBusinessType-1" name="wechatIndustry" data-index="1" class="input-xlarge required">
+                                            <option value="" selected="selected">--请选择经营行业--</option>
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">联系人微信账号类型：</label>
+                                    <div class="controls">
+                                        <select id="brcbChannelFeeList0.contactType" name="wechatType" data-index="1" class="input-xlarge">
+                                            <option value="" selected="selected">--请选择账号类型--</option>
+                                            <option value="type_wechatid">收款人微信号</option>
+                                            <option value="type_openid">收款人openId</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">联系人微信账号：</label>
+                                    <div class="controls">
+                                        <input id="brcbChannelFeeList0.contactId" name="wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                   <!-- <table id="settleModeSel-1" class="settleModeSel">
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">T+0费率%:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number settleFee" id="settleFee-1" data-index = "1"  placeholder="请输入T+0费率 " maxLength="5"  name="brcbChannelFeeList[0].customerFee.settleFee.rate" value=""  />
+                                    <span id="settleFee_label_1" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                            <td><div class="control-group">
+                                <label class="control-label">加收单笔（元）:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number money fixedFee" id="fixedFee-1" data-index = "1"   placeholder="请输入单笔费用 " maxLength=7  name="brcbChannelFeeList[0].customerFee.settleFee.fixedFee" value=""  />
+                                    <span id="fixedFee_label_1" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">是否封顶:</label>
+                                    <div class="controls">
+                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped"  checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input id="brcbChannelFeeList0.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[0].customerFee.settleFee.isCapped"  type="radio" value="N"/><label for="brcbChannelFeeList0.customerFee.settleFee.isCapped2">否</label>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control-group">
+                                    &lt;!&ndash; <label class="control-label">结算方式:</label> &ndash;&gt;
+                                    <div class="controls">
+
+                                        <input type="hidden" name="brcbChannelFeeList[0].customerFee.settleFee.settleMode" value="T0_HANDING">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="capValue">
+                                <div class="control-group">
+                                    <label class="control-label">封顶值（元）:</label>
+                                    <div class="controls">
+                                        <input type="text" class="input-xlarge required  number money"  placeholder="请输入封顶值 " maxLength=7  name="brcbChannelFeeList[0].customerFee.settleFee.upperFee" value=""  />
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>-->
+                </div>
+            </div>
+
+            <div id="tabs-2" >
+                <input type="hidden" name="brcbChannelFeeList[1].channelNum" value="WECHAT_APP" id="channelNum-2">
+                <div class="control-group">
+                    <label class="control-label">是否开通：</label>
+                    <div class="controls">
+                        <select id="groupId" name="brcbChannelFeeList[1].isOpenChannel" data-index="2" class="input-xlarge channelStatus">
+                           <!-- <option value="Y">开通</option>-->
+                            <option selected="selected">不开通</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+             <!--   <div id="channelSetting-2">
+                    <table>
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">收款费率%：</label>
+                                <div class="controls">
+                                    <input id="tradeFee-2" name="brcbChannelFeeList[1].customerFee.transFee.rate" data-index="2" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
+                                    <span id="tradeFee_label_2" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div></td>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">T+0状态：</label>
+                                    <div class="controls">
+                                        <select id="t0StatusSel-2" name="brcbChannelFeeList[1].t0Status" data-index="2" class="input-xlarge t0StatusSel">
+                                            <option value="N">不开通</option>
+                                            <option value="Y">开通</option>
+
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">经营行业：</label>
+                                    <div class="controls">
+                                        <select id="channelBusinessType-2" name="brcbChannelFeeList[1].businessType" data-index="2" class="input-xlarge required">
+                                            <option value="" selected="selected">&#45;&#45;请选择经营行业&#45;&#45;</option>
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">联系人微信账号类型：</label>
+                                    <div class="controls">
+                                        <select id="brcbChannelFeeList1.contactType" name="brcbChannelFeeList[1].contactType" data-index="2" class="input-xlarge">
+                                            <option value="" selected="selected">&#45;&#45;请选择账号类型&#45;&#45;</option>
+                                            <option value="type_wechatid">收款人微信号</option>
+                                            <option value="type_openid">收款人openId</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">联系人微信账号：</label>
+                                    <div class="controls">
+                                        <input id="brcbChannelFeeList1.contactId" name="brcbChannelFeeList[1].contactId" data-index="2" class="input-xlarge" type="text" value=""/>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table id="settleModeSel-2" class="settleModeSel">
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">T+0费率%:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number settleFee" id="settleFee-2" data-index = "2"  placeholder="请输入T+0费率 " maxLength="5"  name="brcbChannelFeeList[1].customerFee.settleFee.rate" value=""  />
+                                    <span id="settleFee_label_2" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                            <td><div class="control-group">
+                                <label class="control-label">加收单笔（元）:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number money fixedFee" id="fixedFee-2" data-index = "2"   placeholder="请输入单笔费用 " maxLength=7  name="brcbChannelFeeList[1].customerFee.settleFee.fixedFee" value=""  />
+                                    <span id="fixedFee_label_2" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">是否封顶:</label>
+                                    <div class="controls">
+                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped"  checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input id="brcbChannelFeeList1.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[1].customerFee.settleFee.isCapped"  type="radio" value="N"/><label for="brcbChannelFeeList1.customerFee.settleFee.isCapped2">否</label>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control-group">
+                                    &lt;!&ndash; <label class="control-label">结算方式:</label> &ndash;&gt;
+                                    <div class="controls">
+
+                                        <input type="hidden" name="brcbChannelFeeList[1].customerFee.settleFee.settleMode" value="T0_HANDING">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="capValue">
+                                <div class="control-group">
+                                    <label class="control-label">封顶值（元）:</label>
+                                    <div class="controls">
+                                        <input type="text" class="input-xlarge required  number money"  placeholder="请输入封顶值 " maxLength=7  name="brcbChannelFeeList[1].customerFee.settleFee.upperFee" value=""  />
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>-->
+            </div>
+
+            <div id="tabs-3" >
+                <input type="hidden" name="brcbChannelFeeList[2].channelNum" value="ALIPAY" id="channelNum-3">
+                <div class="control-group">
+                    <label class="control-label">是否开通：</label>
+                    <div class="controls">
+                        <select id="channelStatus-3" name="alipay" data-index="3" class="input-xlarge channelStatus">
+                            <option value="Y">开通</option>
+                            <option  value="N" selected="selected">不开通</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+                <div id="channelSetting-3" class="hide">
+                    <table>
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">收款费率%：</label>
+                                <div class="controls">
+                                    <input id="tradeFee-3" name="aliRate" data-index="3" class="input-xlarge required number tradeFee" type="text" value="" maxlength="7"/>
+                                    <span id="tradeFee_label_3" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div></td>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">T+0状态：</label>
+                                    <div class="controls">
+                                        <select id="groupId3" name="aliT0" data-index="3" class="input-xlarge t0StatusSel">
+                                            <option value="0" selected="selected">不开通</option>
+                                          <!--  <option value="1">开通</option>-->
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">经营行业：</label>
+                                    <div class="controls">
+                                        <select id="channelBusinessType-3" name="aliIndustry" data-index="3" class="input-xlarge required">
+                                            <option value="" selected="selected">--请选择经营行业--</option>
+
+                                        </select>
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                  <!--  <table id="settleModeSel-3" class="settleModeSel">
+                        <tr>
+                            <td><div class="control-group">
+                                <label class="control-label">T+0费率%:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number settleFee" id="settleFee-3" data-index = "3"  placeholder="请输入T+0费率 " maxLength="5"  name="brcbChannelFeeList[2].customerFee.settleFee.rate" value=""  />
+                                    <span id="settleFee_label_3" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                            <td><div class="control-group">
+                                <label class="control-label">加收单笔（元）:</label>
+                                <div class="controls">
+                                    <input type="text" class="input-xlarge required number money fixedFee" id="fixedFee-3" data-index = "3"   placeholder="请输入单笔费用 " maxLength=7  name="brcbChannelFeeList[2].customerFee.settleFee.fixedFee" value=""  />
+                                    <span id="fixedFee_label_3" style="color:red;"></span>
+                                    <span class="help-inline"><font color="red">*</font> </span>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="control-group">
+                                    <label class="control-label">是否封顶:</label>
+                                    <div class="controls">
+                                       &lt;!&ndash; <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped1" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" checked="true" type="radio" value="Y"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input id="brcbChannelFeeList2.customerFee.settleFee.isCapped2" name="brcbChannelFeeList[2].customerFee.settleFee.isCapped" name="isCapped" type="radio" value="N"/><label for="brcbChannelFeeList2.customerFee.settleFee.isCapped2">否</label>
+                                        <span class="help-inline"><font color="red">*</font> </span>&ndash;&gt;
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="control-group">
+                                    &lt;!&ndash; <label class="control-label">结算方式:</label> &ndash;&gt;
+                                    <div class="controls">
+
+                                        <input type="hidden" name="brcbChannelFeeList[2].customerFee.settleFee.settleMode" value="T0_HANDING">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="capValue">
+                                <div class="control-group">
+                                    <label class="control-label">封顶值（元）:</label>
+                                    <div class="controls">
+                                        <input type="text" class="input-xlarge required  number money"  placeholder="请输入封顶值 " maxLength=7  name="brcbChannelFeeList[2].customerFee.settleFee.upperFee" value=""  />
+                                        <span class="help-inline"><font color="red">*</font> </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <h6>商户银行卡信息</h6>
+    <hr width="100%" style="border:1px solid #008fe2;"/>
+    <table id="bankCardInfo">
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">账户类型 ：</label>
+                    <div class="controls">
+                        <select id="accountTypeHidden" name="bankcardType" class="input-xlarge ">
+                            <option value="COMPANY">公司账户</option>
+                            <option value="PERSONAL">个人账户</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户户名：</label>
+                    <div class="controls">
+                        <input id="accountNameHidden" name="bankcardName" class="input-xlarge required" type="text" value="" maxlength="100"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户卡号：</label>
+                    <div class="controls">
+                        <input id="bankCardInfo.bankCard" name="bankcardNum" class="input-xlarge required isBankCard" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户行名称：</label>
+                    <div class="controls">
+                        <select id="bankNameSel" name="bankName" class="input-xlarge required">
+                            <option value="" selected="selected">--请选择银行--</option>
+                            <option value="北京" th:text="${bankName}" th:value="${bankName}" th:each="bankName:${bankNameList}">--北京--</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr data-toggle="distpicker">
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开卡省份：</label>
+                    <div class="controls">
+                        <select id="cardProvinceSel" name="bankProvince" class="input-xlarge required">
+                            <option value="" selected="selected">--请选择省--</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开卡城市：</label>
+                    <div class="controls">
+                        <select id="cardCity" name="bankCity" class="input-xlarge required">
+                            <option value="" selected="selected">--请选择市--</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">支行：</label>
+                <div class="controls">
+                    <select id="cardBranchSel" name="bankDetailed" class="input-xlarge required">
+                        <option value="" selected="selected">--请选择支行--</option>
+
+                    </select>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">联行号：</label>
+                    <div class="controls">
+                        <input id="bankNo" name="bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <h6>商户资料信息</h6>
+    <hr width="100%" style="border:1px solid #008fe2;"/>
+
+    <table>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">身份证正面：</label>
+                    <div class="controls">
+                        <input id="rightID"  style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file1" name="identityCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="rightIDPreview">
+                            <li>
+                                <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:1;padding:3px;">
+                            </li>
+                        </ol>
+                        <a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;
+                        <a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">身份证反面：</label>
+                    <div class="controls">
+                        <input id="reservedID"  style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file2" name="identityCardReverseImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="reservedIDPreview"> <li>
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">手持身份证：</label>
+                    <div class="controls">
+                        <input id="IDWithHand"  style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file3" name="identityCardHandImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="IDWithHandPreview"> <li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+
+                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">银行卡正面：</label>
+                    <div class="controls">
+                        <input id="rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file4"  name="bankCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="rightBankCardPreview"> <li>
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr id="enterpriseImage" >
+            <td>
+                <div class="control-group">
+                    <label class="control-label">营业执照：</label>
+                    <div class="controls">
+                        <input id="licenseImage"  style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file5" name="businessLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="licenseImagePreview"> <li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
+
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">门头照：</label>
+                    <div class="controls">
+                        <input id="doorHeadImage"  style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file6" name="doorPictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="doorHeadImagePreview" ><li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
+
+                        <!-- <span class="help-inline"><font color="red">*</font> </span> -->
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户许可证：</label>
+                    <div class="controls">
+                        <input id="accountLicence"  style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file7" name="registerLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="accountLicencePreview"><li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
+
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="form-actions">
+        <input id="btnSubmit" class="btn btn-primary" type="button" value="保 存"/>&nbsp;
+        <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function(){
+        $(".imgList").click(function(){
+            window.top.dialog('img',$(this).attr("url"));
+        });
+    });
+    $("input[type='file']").change(function () {
+        var isFile = this.files[0];
+        var file = $(this).val();
+
+        var fileName = getFileName(file);
+        $(this).prev().removeAttr("readonly");
+        $(this).prev().val(fileName);
+        var image=$(this);
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.readAsDataURL(isFile);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                image.next().children().children().attr('src',e.target.result);
+            };
+        }
+
+
+        $(this).prev().attr("readonly","readonly");
+    })
+    function getFileName(o){
+        var pos=o.lastIndexOf("\\");
+        return o.substring(pos+1);
+    }
+    function addImg(o){
+        $(o).prevAll("input[type='file']").trigger('click');
+    }
+    function clearImg(o){
+        $(o).prevAll("input[type='text']").removeAttr("readonly");
+        $(o).prevAll("input[type='text']").val("");
+        $(o).prevAll("input[type='text']").attr("readonly","readonly");
+        $(o).prevAll("input[type='file']").removeAttr("value");
+        $(o).prevAll("ol").children().children().attr("src","");
+        /* $(o).parent().html(" " +
+         "<input id='rightID' name='identityCardFrontImg' style='width:139px;' placeholder='请选择身份证正面照片' axlength='255' class='input-xlarge required' readonly='readonly' type='text' value=''/>"
+         +"<input type='file' id='file1'  style='filter:alpha(opacity=0);opacity:0;width: 0;height: 0;'/>"
+         +"<ol id='rightIDPreview'>"
+         +"<li >"
+         +"<img  class='imgList' src='' url='' style='max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;'>"
+         +"</li>"
+         +"</ol>"
+         +"<a href='javascript:'  class='btn' onclick='addImg(this)'>选择</a>&nbsp;"
+         +"<a href='javascript:' onclick='clearImg();' class='btn'>清除</a>"
+         +"<span class='help-inline'><font color='red'>*</font> </span>");*/
+
+    }
+    <!--显示照片-->
+    /*$(function () {
+     $("input [type='file']").change(function () {
+     var file = this.files[0];
+     if (window.FileReader) {
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     //监听文件读取结束后事件
+     reader.onloadend = function (e) {
+     showXY(e.target.result, file.fileName);
+     };
+     }
+     });
+     });
+     function showXY(source) {
+     $("#nameImage").val("");
+     $("#nameImagePreview").text(" ");
+     var img = document.getElementById("loc_img");
+     img.src = source;
+     }*/
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#tabs").tabs();
+
+        //通道 开通关闭事件
+        $(".channelStatus").change(function(){
+            var index = $(this).attr("data-index");
+            var sel_value = $(this).val();
+            var customerType=$("#customerTypeSel").val();
+            var channelNum=$("#channelNum-" + index).val();
+             var t0StatusSel=$("#t0StatusSel-" + index).val();
+            if(sel_value == 'Y'){
+                /*初始化经营行业*/
+                $.ajax({
+                    type:"get",
+                    url:"/a/asd/asd/getasd",
+                    dataType : "json",
+                    data: {customerType:customerType,channelType:channelNum},
+                    success:function(data){
+                        var t0Status=data.channelFee.t0Status;
+                        /* $("#t0StatusSel-" + index).val(t0Status); */
+                        if(t0Status== 'N'){
+
+                             /* var selectedComs = document.getElementById("t0StatusSel-" + index);
+                             alert(selectedComs.options[1].value)
+                             alert(selectedComs.options[0].selected)
+                             alert(selectedComs.options[1].selected)
+                             for(var i=0;i<2;i++){
+
+                             }
+                             document.getElementById("t0StatusSel-" + index).value='N';
+                             selectedComs.options[1].selected = 'selected';
+                              document.getElementById("t0StatusSel-" + index).value="N";
+                            $("#t0StatusSel-" + index).attr("readonly","true");*/
+
+                        }
+                        $("#settleModeSel-" + index).hide();
+                        $('#channelBusinessType-'+index).empty();
+                        var $option = "<option code=''  value='' >--请选择经营行业--</option>";
+                        $('#channelBusinessType-'+index).append($option);
+                        $.each(data, function(i, item) {
+                            /*  var $option = '<option label='+item.province+' value='+item.cityId+'>'+item.city+'</option>'; */
+                            var $option = '<option type='+item.customerType+' value='+item.firstType+'>'+item.firstType+'</option>';
+                            $('#channelBusinessType-'+index).append($option);
+                            $("#channelSetting-" + index).show();
+                        });
+                    }
+                });
+            }
+             else{
+                $("#channelSetting-" + index).hide();
+            }
+        });
+
+        //T0 开通关闭事件
+        $(".t0StatusSel").change(function(){
+            var index = $(this).attr("data-index");
+            var sel_value = $(this).val();
+            if(sel_value == 'Y'){
+                $("#settleModeSel-" + index).show();
+            }else{
+                $("#settleModeSel-" + index).hide();
+            }
+        });
+        // 检查上游通道开通及t0状态
+        $.each($("select[class*='channelStatus']"),function(index,data){
+            var agentNum = $("#agentNum").val();
+            var index = $(this).attr("data-index");
+            var channelNum = $("#channelNum-"+index).val();
+            var channelStatus = $(this).val();
+            $.ajax({
+                url:"/a/operate/customer/brcbCustomer/getAgentChannel",
+                type:"get",
+                dataType:"json",
+                data:{
+                    agentNum:agentNum,
+                    channelNum:channelNum
+                },
+                success:function(res){
+                    if(res == null){
+                        $("#s2id_channelStatus-"+index+" .select2-chosen").html("不开通");
+                        $("#channelStatus-" + index).val("N");
+                        $("#channelStatus-" + index).attr("readonly","true");
+                        $("#channelSetting-" + index).hide();
+                        return;
+                    }
+                    if(res.isOpenChannel == "N"){
+                        $("#s2id_channelStatus-"+index+" .select2-chosen").html("不开通");
+                        $("#channelStatus-" + index).val("N");
+                        $("#channelStatus-" + index).attr("readonly","true");
+                        $("#channelSetting-" + index).hide();
+                        return;
+                    }else{
+                        $("#s2id_channelStatus-"+index+" .select2-chosen").html("不开通");
+                        $("#channelStatus-" + index).val("N");
+                        $("#channelSetting-" + index).hide();
+                        return;
+                    }
+                    if(res.t0Status == "N"){
+                        $("#s2id_t0StatusSel-"+index+" .select2-chosen").html("不开通");
+                        $("#t0StatusSel-" + index).val("N");
+                        $("#t0StatusSel-" + index).attr("readonly","true");
+                        $("#settleModeSel-" + index).hide();
+                        return;
+                    }
+
+                }
+            })
+        })
+
+        $(".channelStatus").change(function(){
+            var index = $(this).attr("data-index");
+            var sel_value = $(this).val();
+            if(sel_value == 'Y'){
+                $("#channelSetting-" + index).show();
+            }else{
+                $("#channelSetting-" + index).hide();
+            }
+        });
+
+        /* 签约费率失去焦点事件*/
+        $(".tradeFee").blur(function(){
+            var agentNum = $("#agentNum").val();
+            var fee = $(this).val();
+            var index = $(this).attr("data-index");
+            var channelNum = $("#channelNum-"+index).val();
+            $.ajax({
+                url:"/a/operate/agent/checkRate",
+                type:"post",
+                dataType:"json",
+                data:{
+                    agentNum:agentNum,
+                    channelNum:channelNum
+                },
+                success:function(data){
+                    if(data.success == 'true'){
+                        var rate = data.agentFee.rate*100;
+                        if(fee < rate){
+                            $("#tradeFee_label_" + index).html("输入费率不能低于代理商签约费率！");
+                            flag = false;
+                        }else{
+                            $("#tradeFee_label_" + index).html("");
+                        }
+                    }
+                }
+            });
+        });
+        /* T0费率失去焦点事件*/
+        $(".settleFee").blur(function(){
+            var agentNum = $("#agentNum").val();
+            var fee = $(this).val();
+            var index = $(this).attr("data-index");
+            var channelNum = $("#channelNum-"+index).val();
+            $.ajax({
+                url:"/a/operate/agent/checkRate",
+                type:"post",
+                dataType:"json",
+                data:{
+                    agentNum:agentNum,
+                    channelNum:channelNum
+                },
+                success:function(data){
+                    if(data.success == 'true'){
+                        var rate = data.agentSettleFee.settleRate*100;
+                        if(fee < rate){
+                            $("#settleFee_label_" + index).html("输入费率不能低于代理商T0费率！");
+                            flag = false;
+                        }else{
+                            $("#settleFee_label_" + index).html("");
+                        }
+                    }
+                }
+            });
+        });
+        /* 单笔加收失去焦点事件*/
+        $(".fixedFee").blur(function(){
+            var agentNum = $("#agentNum").val();
+            var fee = $(this).val();
+            var index = $(this).attr("data-index");
+            var channelNum = $("#channelNum-"+index).val();
+            $.ajax({
+                url:"/a/operate/agent/checkRate",
+                type:"post",
+                dataType:"json",
+                data:{
+                    agentNum:agentNum,
+                    channelNum:channelNum
+                },
+                success:function(data){
+                    if(data.success == 'true'){
+                        var fixedFee = data.agentSettleFee.fixedFee;
+                        if(fee*100 < fixedFee){
+                            $("#fixedFee_label_" + index).html("单笔加收不能低于代理商单笔加收");
+                            flag = false;
+                        }else{
+                            $("#fixedFee_label_" + index).html("");
+                        }
+                    }
+                }
+            });
+        });
+    })
+
+    function checkSign(){
+        var flag = true;
+        $.each($("select[class*='channelStatus']"),function(index,data){
+            var agentNum = $("#agentNum").val();
+            var index = $(this).attr("data-index");
+            var channelNum = $("#channelNum-"+index).val();
+            var channelStatus = $(this).val();
+            var fee = $("#tradeFee-"+index).val();
+            var settleFee = $("#settleFee-"+index).val();
+            var fixed = $("#fixedFee-"+index).val();
+            var t0Status = $("#t0StatusSel-"+index).val();
+            console.log("fee:"+fee);
+            if(channelStatus == "Y"){
+                //获取代理商签约费率
+                $.ajax({
+                    type:"post",
+                    url:"/a/operate/agent/checkRate",
+                    dataType : "json",
+                    async: false,
+                    data: {
+                        agentNum:agentNum,
+                        channelNum:channelNum
+                    },
+                    success:function(data){
+                        if(data.success == 'true'){
+
+                            var rate = data.agentFee.rate*100;
+                            console.log("rate:"+rate);
+                            if(fee < rate){
+                                $("#tradeFee_label_" + index).html("输入费率不能低于代理商签约费率！");
+                                flag = false;
+                            }else{
+                                $("#tradeFee_label_" + index).html("");
+                            }
+                            if(t0Status=="Y"){
+
+                                var settleRate = data.agentSettleFee.settleRate*100;
+                                var fixedFee = data.agentSettleFee.fixedFee;
+                                if(settleFee < settleRate){
+                                    $("#settleFee_label_" + index).html("输入费率不能低于代理商T0费率！");
+                                    flag = false;
+                                }else{
+                                    $("#settleFee_label_" + index).html("");
+                                }
+                                if(fixed*100 < fixedFee){
+                                    $("#fixedFee_label_" + index).html("单笔加收不能低于代理商单笔加收");
+                                    flag = false;
+                                }else{
+                                    $("#fixedFee_label_" + index).html("");
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }) ;
+        return flag;
+    }
+    $("#cardCity").change(function(){
+        var bankName = $("#bankNameSel").val();
+        var City=$("#cardCity").val();
+        var Province = $("#cardProvinceSel").val();
+        $.post("findByBankName",{bankName:bankName,city:City,province:Province},function(data){
+            $.each(data,function (i,bank) {
+                var $option="<option  value='"+bank.bankSubName+"'>"+bank.bankSubName+"</option>";
+                $("#cardBranchSel").append($option);
+            })
+        })
+    });
+
+    $("#cardBranchSel").change(function () {
+        var bankNo=$("#cardBranchSel").val();
+        $("#bankNo").removeAttr('readonly');
+        $.post("findBankNo",{bankSubName:bankNo},function (data) {
+            $("#bankNo").val(data);
+        })
+        $("#bankNo").attr('readonly',"readonly");
+
+    });
+</script>
+
+<script type="text/javascript">//<!-- 无框架时，左上角显示菜单图标按钮。
+if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
+    $("body").prepend("<i id=\"btnMenu\" class=\"icon-th-list\" style=\"cursor:pointer;float:right;margin:10px;\"></i><div id=\"menuContent\"></div>");
+    $("#btnMenu").click(function(){
+        top.$.jBox('get:/a/sys/menu/treeselect;JSESSIONID=5820d85e952a431e9732ce111db7d1f8', {title:'选择菜单', buttons:{'关闭':true}, width:300, height: 350, top:10});
+        //if ($("#menuContent").html()==""){$.get("/a/sys/menu/treeselect", function(data){$("#menuContent").html(data);});}else{$("#menuContent").toggle(100);}
+    });
+}//-->
+</script>
+</body>
+</html>

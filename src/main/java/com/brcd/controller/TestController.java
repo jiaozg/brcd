@@ -13,4 +13,9 @@ public class TestController {
     public String gotoPay(){
         return "merchant/login";
     }
+
+    @RequestMapping("gotoaddCommercial")
+    public String gotoaddCommercial(){
+        return "menu/commercial/noLoginaddCommercial";
+    }
 }
