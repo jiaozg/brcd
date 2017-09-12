@@ -33,7 +33,6 @@ public class Upload {
 	private String IMAGEPATH;//#ftp图片服务器的url
 	/**
 	 * 单文件上传
-	 * @param
 	 * @param file （文件）
 	 * @return newName （文件名）
 	 * @throws Exception
