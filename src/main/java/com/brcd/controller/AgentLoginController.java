@@ -50,18 +50,18 @@ public class AgentLoginController {
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
-            boolean exists = redisTemplate.hasKey("agentLogin");
+           boolean exists = redisTemplate.hasKey("agentLogin");
             if (agentLogin != null) {
-                if (exists == true) {
+               if (exists == true) {
                     TbAgent agentLogin1 = (TbAgent) session.getAttribute("agentLogin");
                     session.setAttribute("agentLogin", agentLogin1);
                 } else {
                     session.setAttribute("agentLogin", agentLogin);
                 }
-                System.err.println(session.getAttribute("agentLogin"));
+               System.err.println(session.getAttribute("agentLogin"));
                 return "home/home";
             }
-        }
+       }
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
     }

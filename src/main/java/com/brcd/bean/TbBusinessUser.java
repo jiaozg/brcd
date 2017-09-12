@@ -28,6 +28,8 @@ public class TbBusinessUser {
 
     private String contactPhone;
 
+    private String passWord;
+
     private String contactMail;
 
     private String servicePhone;

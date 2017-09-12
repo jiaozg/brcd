@@ -110,7 +110,7 @@ SELECT * FROM tb_business_user us INNER JOIN  tb_business bus ON us.business_uid
         INSERT INTO tb_business_user(business_uid, affiliation_agent, business_user_type,
         manage_name, business_username, legal_people_name,
         legal_people_identity_card, contact_people,
-        contact_phone, contact_mail, service_phone,
+        password,contact_phone,contact_mail, service_phone,
         manage_address, manage_province, manage_city,
         manage_district, business_license_no, register_address,
         identity_card_front, identity_card_reverse,
@@ -119,7 +119,7 @@ SELECT * FROM tb_business_user us INNER JOIN  tb_business bus ON us.business_uid
         start_time, end_time, business_user_key)
         VALUES (#{businessUid}, #{affiliationAgent}, #{businessUserType},
         #{manageName}, #{businessUsername}, #{legalPeopleName},
-        #{legalPeopleIdentityCard}, #{contactPeople},
+        #{legalPeopleIdentityCard}, #{contactPeople},#{passWord},
         #{contactPhone}, #{contactMail}, #{servicePhone},
         #{manageAddress}, #{manageProvince}, #{manageCity},
         #{manageDistrict}, #{businessLicenseNo}, #{registerAddress},
