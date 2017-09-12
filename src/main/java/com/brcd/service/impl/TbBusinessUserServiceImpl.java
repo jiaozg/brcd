@@ -4,6 +4,7 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.util.IDUtils;
+import com.brcd.common.util.MD5Util;
 import com.brcd.common.util.Upload;
 import com.brcd.mapper.TbBankcardInfoMapper;
 import com.brcd.mapper.TbBusinessMapper;
@@ -75,6 +76,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        //将MD5加密商户密码
+        if (tbBusinessUser.getPassWord() != null && tbBusinessUser.getPassWord() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassWord());
+            tbBusinessUser.setPassWord(md5Encode);
         }
         tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
     }
