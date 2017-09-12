@@ -48,8 +48,6 @@ public class TbBusinessUserController {
     private BankService bankService;
     @Autowired
     private TbAreaDictionaryService tbAreaDictionaryService;
-
-
     /*
     * 时间格式的转换
     */
@@ -157,6 +155,7 @@ public class TbBusinessUserController {
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
         TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);
+        System.out.println(business);
         model.addAttribute("businessUser",business);
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
