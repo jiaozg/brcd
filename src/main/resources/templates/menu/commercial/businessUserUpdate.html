@@ -34,8 +34,6 @@
     <script src="../../../static/static/common/jeesite.js" type="text/javascript"
     th:src="@{../static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-
-
     <meta name="decorator" content="default"/>
     <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css"
     th:href="@{../static/jquery-ui/ui.css}">
@@ -864,7 +862,7 @@
 </ul><br/>
 <form id="inputForm" onsubmit="toSubmit()" class="form-horizontal" action="updateTbBusinessUser" method="post" enctype="multipart/form-data">
 
-    <input id="id" name="businessUid" type="hidden" value="10"/>
+    <input id="id" name="businessUid" th:value="${businessUser.businessUid}" type="hidden" value="10"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
     <h6>商户基本信息</h6>
@@ -1043,6 +1041,7 @@
     <h6>业务信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
     <div class="control-group">
+        <input type="hidden" name="tbBusiness.businessUid" th:value="${businessUser.businessUid}">
         <label class="control-label">通道费率设置：</label>
         <div id="tabs">
             <ul>
@@ -1319,9 +1318,10 @@
         <tr>
             <td>
                 <div class="control-group">
+                    <input type="hidden" name="tbBankcardInfo.businessUid" th:value="${businessUser.businessUid}">
                     <label class="control-label">账户类型 ：</label>
                     <div class="controls">
-                        <select id="accountTypeHidden" name="tbBankCardInfo.bankcardType" class="input-xlarge ">
+                        <select id="accountTypeHidden" name="tbBankcardInfo.bankcardType" class="input-xlarge ">
                             <option value="COMPANY">公司账户</option>
                             <option value="PERSONAL" selected="selected">个人账户</option>
                         </select>
@@ -1333,7 +1333,7 @@
                 <div class="control-group">
                     <label class="control-label">开户户名：</label>
                     <div class="controls">
-                        <input id="accountNameHidden" name="tbBankCardInfo.bankcardName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
+                        <input id="accountNameHidden" name="tbBankcardInfo.bankcardName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1344,7 +1344,7 @@
                 <div class="control-group">
                     <label class="control-label">开户卡号：</label>
                     <div class="controls">
-                        <input id="bankCardInfo.bankCard" name="tbBankCardInfo.bankcardNum" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
+                        <input id="bankCardInfo.bankCard" name="tbBankcardInfo.bankcardNum" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1353,7 +1353,7 @@
                 <div class="control-group">
                     <label class="control-label">开户行名称：</label>
                     <div class="controls">
-                        <select id="bankNameSel" name="tbBankCardInfo.bankName" class="input-xlarge required">
+                        <select id="bankNameSel" name="tbBankcardInfo.bankName" class="input-xlarge required">
                             <option value="">--请选择银行--</option>
 
                             <option th:value="${bank}" th:text="${bank}" value="农业银行" th:each="bank:${bankNameList}">农业银行</option>
@@ -1368,7 +1368,7 @@
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
-                        <select id="cardProvinceSel" name="tbBankCardInfo.bankProvince" class="input-xlarge required">
+                        <select id="cardProvinceSel" name="tbBankcardInfo.bankProvince" class="input-xlarge required">
                             <option value="">--请选择省--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1381,7 +1381,7 @@
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
 
-                        <select id="cardCitySel" name="tbBankCardInfo.bankCity" class="input-xlarge required">
+                        <select id="cardCitySel" name="tbBankcardInfo.bankCity" class="input-xlarge required">
                             <option value="">--请选择城市--</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1394,7 +1394,7 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
 
-                    <select id="cardBranchSel" name="tbBankCardInfo.bankDetailed" class="input-xlarge required">
+                    <select id="cardBranchSel" name="tbBankcardInfo.bankDetailed" class="input-xlarge required">
                         <option value="">--请选择支行--</option>
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1404,7 +1404,7 @@
                 <div class="control-group">
                     <label class="control-label">联行号：</label>
                     <div class="controls">
-                        <input id="bankNo"  name="tbBankCardInfo.bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
+                        <input id="bankNo"  name="tbBankcardInfo.bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
