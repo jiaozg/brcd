@@ -10,5 +10,5 @@ public class TbWechatTrade {
     private Integer tradeId;
     private String tradeName;
     private String tradeType;
-    private String tradeCode;
+    private Integer tradeCode;
 }
