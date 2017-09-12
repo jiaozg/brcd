@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 public class AgentInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+        System.err.println("---拦截器---");
         String url = request.getRequestURI();
         HttpSession session = request.getSession();
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
@@ -20,6 +21,14 @@ public class AgentInterceptor implements HandlerInterceptor {
             return true;
         }
         if (url.indexOf("AgentLogin") > -1) {
+            return true;
+        }if (url.indexOf("goToIndex") > -1) {
+            return true;
+        }if (url.indexOf("scan_param") > -1) {
+            return true;
+        }if (url.indexOf("scan") > -1) {
+            return true;
+        }if (url.indexOf("scan_qrcode") > -1) {
             return true;
         }
         if (agentLogin == null) {
