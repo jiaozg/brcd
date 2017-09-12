@@ -165,8 +165,7 @@
              }
              });
              return this.optional(element) || isPass;
-             }, "请检查所属代理商，输入费率不能低于代理商签约费率！"); */
-
+             }, "请检查所属代理商，输入费率不能低于代理商签约费率！");*/
             //form 提交验证事件
             $("#inputForm").validate({
                 submitHandler: function(form){
@@ -753,7 +752,7 @@
         </tr>
         <tr>
             <td><div class="control-group">
-                <label class="control-label">联系电话：</label>
+                <label class="control-label">手机号：</label>
                 <div class="controls">
                     <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -768,6 +767,15 @@
                     </div>
                 </div>
             </td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">商户密码：</label>
+                <div class="controls">
+                    <input id="passWord" name="passWord" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
         </tr>
         <tr>
             <td>
