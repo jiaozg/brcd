@@ -77,7 +77,9 @@
 <form id="searchForm" class="breadcrumb form-search" th:action="@{/businessUser/query}" action="#" method="get">
     <input id="pageNo" type="hidden" name="currentPage" th:value="${#request.getAttribute('currentPage')}"/>
      <!--   <input id="operate" name="operate" type="hidden" value="detail"/>-->
-    <input id="agentId" name="affiliationAgent" type="hidden"th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+
+    <input id="agentId" name="affiliationAgent" type="hidden" th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+
     <ul class="ul-form">
         <li><label>商户编号：</label>
             <input id="customerNum" name="businessUid" th:value="${history.businessUid}" class="input-medium" type="text" value="" maxlength="32"/>
@@ -172,10 +174,13 @@
         <td th:text="${shang.businessUserType}">个体商户</td>
         <td th:text="${shang.legalPeopleName}">张明盟</td>
         <td th:text="${shang.manageName}">张明盟小卖部</td>
-        <td th:if="${shang.businessUserStatus==0}">待审核</td>
-        <td th:if="${shang.businessUserStatus==1}">审核通过</td>
-        <td th:if="${shang.businessUserStatus==2}">审核拒绝</td>
-        <td th:if="${shang.businessUserStatus==null || shang.businessUserStatus==''}"></td>
+
+        <td>
+            <span th:if="${shang.businessUserStatus==0}">待审核</span>
+            <span th:if="${shang.businessUserStatus==1}">审合通过</span>
+            <span th:if="${shang.businessUserStatus==2}">审核拒绝</span>
+        </td>
+
         <td>
             <a href="javascript:void(0);" onclick="showApikey(this)">查看密钥</a>
             <span style="display:none;" th:text="${shang.businessUserKey}">
