@@ -56,6 +56,7 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
+    private String password;
 
     private Integer businessUserStatus;
 

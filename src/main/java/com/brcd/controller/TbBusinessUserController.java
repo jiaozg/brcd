@@ -225,4 +225,24 @@ public class TbBusinessUserController {
     public String findBankNo(String bankSubName){
         return bankService.findBankNo(bankSubName);
     }
+
+    /**
+     * 跳转到商户登录页面
+     */
+    @RequestMapping("/goToBusinessLogin")
+    public String goToBusinessLogin(){
+        return "/merchat/login";
+    }
+
+    /**
+     * 商户登录
+     */
+    @RequestMapping("/loginBusiness")
+    public String loginBusiness(TbBusinessUser tbBusinessUser){
+        boolean b = tbBusinessUserService.loginBusinessUser(tbBusinessUser);
+        if(b == true){
+            return "redirect:/wechat/scan_param";
+        }
+        return "/merchat/login";
+    }
 }

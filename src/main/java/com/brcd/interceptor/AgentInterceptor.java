@@ -30,6 +30,8 @@ public class AgentInterceptor implements HandlerInterceptor {
             return true;
         }if (url.indexOf("scan_qrcode") > -1) {
             return true;
+        }if (url.indexOf("loginBusiness") > -1) {
+            return true;
         }
         if (agentLogin == null) {
             request.getRequestDispatcher("toAgentLogin").forward(request, response);

@@ -54,14 +54,14 @@ public class WechatController {
         String key = Constant.BRCB_KEY;
         String service_type = Constant.BRCB_SERVICE_TYPE_SCANNED;
         String appid = "";
-        String mch_id = Constant.BRCB_MCH_ID;
+        String mch_id = Constant.BRCB_MCH_ID;//商户ID
         String out_trade_no = RandomUtil.getOrderNum(Constant.ORDER_PREFIX);
         String device_info = "SN1234567890098765";
         String body = "Ipad_mini_16G_白色";
         String detail = null;
         String attach = "北京分店";
         String fee_type = Constant.BRCB_FEE_TYPE;
-        String total_fee = String.valueOf(1);
+        String total_fee = String.valueOf(1);//支付金额
         String spbill_create_ip = null;
         try {
             spbill_create_ip = InetAddress.getLocalHost().getHostAddress();
@@ -81,7 +81,7 @@ public class WechatController {
         request.setAttribute("key", key);
         request.setAttribute("scan", scannedRequest);
         log.info("===> scannedResponse: {}", JSONUtil.toJSONString(scannedRequest));
-        return "wechat/scan/scan_param";
+        return "merchat/shoukuan";
     }
 
     /**
@@ -101,8 +101,9 @@ public class WechatController {
         String body = request.getParameter("body");
         String detail = request.getParameter("detail");
         String attach = request.getParameter("attach");
-        String fee_type = request.getParameter("fee_type");
-        String total_fee = String.valueOf(1);
+        String fee_type =String.valueOf(request.getParameter("fee_type"));
+
+        String total_fee = request.getParameter("total_fee");
         String spbill_create_ip = request.getParameter("spbill_create_ip");
         String notify_url = Constant.BRCB_NOTIFY_URL;
         String time_start = request.getParameter("time_start");

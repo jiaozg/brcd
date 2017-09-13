@@ -113,7 +113,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
     }
 
+    @Override
+    public boolean loginBusinessUser(TbBusinessUser tbBusinessUser) {
 
+        TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
+        if(BusinessUser != null){
+            return true;
+        }
+        return false;
+    }
 
 
 }

@@ -23,4 +23,9 @@ public interface TbBusinessUserMapper {
     void insertBusinessUser(TbBusinessUser businessUser);
 
     List<TbBusinessUser> query(TbBusinessUser businessUser);
+
+    /**
+     * 商户登录
+     */
+    TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser);
 }

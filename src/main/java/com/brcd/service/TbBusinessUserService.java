@@ -27,4 +27,8 @@ public interface TbBusinessUserService {
      */
     void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
 
+    /**
+     * 商户登录
+     */
+    boolean loginBusinessUser(TbBusinessUser tbBusinessUser);
 }

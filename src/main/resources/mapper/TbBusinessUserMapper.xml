@@ -98,4 +98,8 @@
             and contact_phone = #{contactPhone}
         </if>
     </select>
+    <!--商户登录-->
+    <select id="loginBusinessUser" resultType="com.brcd.bean.TbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user WHERE contact_phone=#{contactPhone} AND password=#{password}
+    </select>
 </mapper>
