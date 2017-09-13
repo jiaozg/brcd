@@ -28,10 +28,15 @@ public interface TbBusinessUserService {
     void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
 
     /**
-     * 根据主键查询商户
+     * 商户登录
+     */
+    boolean loginBusinessUser(TbBusinessUser tbBusinessUser);
+
+     /* 根据主键查询商户
      * @param businessUid
      * @return
      */
     TbBusinessUser findByBusinessUid(String businessUid);
+
 
 }
