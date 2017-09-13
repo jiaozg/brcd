@@ -62,10 +62,6 @@
         #{startTime}, #{endTime}, #{businessUserKey})
     </insert>
 
-    <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
-        <id column="business_uid" property="businessUid"></id>
-        <result column="manage_name" property="manageName"></result>
-    </resultMap>
 
     <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
         SELECT * FROM tb_business_user b,tb_agent a where b.affiliation_agent = a.agent_number and a.agent_number = #{affiliationAgent}
@@ -93,5 +89,8 @@
         <if test="contactPhone != null and contactPhone != ''">
             and contact_phone = #{contactPhone}
         </if>
+    </select>
+    <select id="">
+        
     </select>
 </mapper>

@@ -139,6 +139,14 @@ public class TbBusinessUserController {
         ex.exportExcel(headers, list, out);
         out.close();
     }
+    @RequestMapping("/detail")
+    public ModelAndView detail(Integer id){
+
+        TbBusinessUser byBusinessUid = tbBusinessUserService.findByBusinessUid(id);
+
+
+        return null;
+    }
 
     @RequestMapping("toManage")
     public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
