@@ -4,10 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
 <resultMap id="findUser" type="com.brcd.bean.TbBusinessUser">
-    <id column="us.business_uid" property="businessUid"></id>
+    <id column="business_uid" property="businessUid"></id>
     <result column="affiliation_agent" property="affiliationAgent"></result>
     <result column="business_user_type" property="businessUserType"></result>
     <result column="manage_name" property="manageName"></result>
+    <result property="businessLicensePicture" column="business_license_picture"></result>
     <result column="business_username" property="businessUsername"></result>
     <result column="legal_people_name" property="legalPeopleName"></result>
     <result column="legal_people_identity_card" property="legalPeopleIdentityCard"></result>
@@ -42,7 +43,7 @@
         <result column="ali_industry" property="aliIndustry"></result>
         <result column="ali_type" property="aliType"></result>
         <result column="alipay_num" property="alipayNum"></result>
-        <result column="bus.business_uid" property="businessUid"></result>
+        <result column="business_uid" property="businessUid"></result>
     </association>
     <association property="tbBankcardInfo" javaType="com.brcd.bean.TbBankcardInfo">
         <id property="bank_id" column="bankId"></id>
@@ -54,7 +55,7 @@
         <result column="bank_city" property="bankCity"></result>
         <result column="bank_detailed" property="bankDetailed"></result>
         <result column="band_contact" property="bandContact"></result>
-        <result column="bak.business_uid" property="businessUid"></result>
+        <result column="business_uid" property="businessUid"></result>
     </association>
 </resultMap>
 <!--修改商户信息-->
@@ -102,7 +103,7 @@
     WHERE business_uid=#{businessUid}
 
 </update>
-    <select id="findByBusinessUid" parameterType="java.lang.Integer" resultMap="findUser">
+    <select id="findByBusinessUid" parameterType="java.lang.String" resultMap="findUser">
 SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=bus.business_uid LEFT JOIN tb_bankcard_info bak ON us.business_uid=bak.business_uid WHERE us.business_uid=#{businessUid}
     </select>
     <!--添加商户信息-->
@@ -129,10 +130,6 @@ SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=
         #{startTime}, #{endTime}, #{businessUserKey})
     </insert>
 
-    <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
-        <id column="business_uid" property="businessUid"></id>
-        <result column="manage_name" property="manageName"></result>
-    </resultMap>
 
     <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
         SELECT * FROM tb_business_user b,tb_agent a where b.affiliation_agent = a.agent_number and a.agent_number = #{affiliationAgent}
@@ -160,5 +157,9 @@ SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=
         <if test="contactPhone != null and contactPhone != ''">
             and contact_phone = #{contactPhone}
         </if>
+    </select>
+    <!--商户登录-->
+    <select id="loginBusinessUser" resultType="com.brcd.bean.TbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user WHERE contact_phone=#{contactPhone} AND password=#{password}
     </select>
 </mapper>

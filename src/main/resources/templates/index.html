@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>农商行二维码测试首页</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/404/cmstop-error.css"
+          th:href="@{/static/css/404/cmstop-error.css}"
+          media="all">
+</head>
+<body class="body-bg">
+<div align="center">
+    <h1 style="margin-top: 100px;">农商行微信测试</h1>
+    <br/>
+
+    <h1 style="margin-top: 5px;"><a href="/wechat/scan_param" th:href="@{/wechat/scan_param}">微信-扫码测试</a></h1>
+    <br/>
+
+    <h1 style="margin-top: 5px;"><a href="/wechat/micro_param"  th:href="@{/wechat/scan}" >微信-刷卡(小额)支付测试</a></h1>
+    <br/>
+
+    <h1 style="margin-top: 5px;"><a href="/wechat/createWechatQrcodeUrl">微信-公众号支付测试</a></h1>
+    <br/>
+
+    <h1 style="margin-top: 5px;"><a href="/wechat/orderquery_param">微信-订单查询</a></h1>
+    <br/>
+    <hr/>
+    <h1 style="margin-top: 5px;"><a href="/createAYardToPay">一码付测试</a></h1>
+    <br/>
+</div>
+</body>
+</html>
