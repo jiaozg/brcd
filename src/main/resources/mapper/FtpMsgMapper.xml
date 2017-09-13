@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.FtpMsgMapper">
+
+    <select id="getFtpMsg" resultType="FtpMsg">
+        SELECT * FROM tb_properties;
+    </select>
+    <select id="checkFtpUserName" parameterType="FtpMsg" resultType="FtpMsg">
+          SELECT * FROM tb_properties WHERE ftp_userName=#{ftpUserName}
+    </select>
+    <select id="checkFtpPassword" parameterType="FtpMsg" resultType="FtpMsg">
+        SELECT * FROM tb_properties WHERE ftp_password=#{ftpPassword}
+    </select>
+    <update id="updateFtpUserNamePwd" parameterType="FtpMsg">
+        UPDATE tb_properties SET ftp_userName=#{ftpUserName},ftp_password=#{ftpPassword} WHERE pid=#{pid}
+    </update>
+</mapper>
