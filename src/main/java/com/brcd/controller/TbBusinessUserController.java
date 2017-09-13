@@ -141,6 +141,19 @@ public class TbBusinessUserController {
         ex.exportExcel(headers, list, out);
         out.close();
     }
+    @RequestMapping("/detail")
+    public ModelAndView detail(String id){
+        TbBusinessUser byBusinessUid = tbBusinessUserService.findByBusinessUid(id);
+        if(byBusinessUid.getTbBankcardInfo()==null){
+            byBusinessUid.setTbBankcardInfo(new TbBankcardInfo());
+        }
+        if(byBusinessUid.getTbBusiness() == null){
+            byBusinessUid.setTbBusiness(new TbBusiness());
+        }
+        ModelAndView mv = new ModelAndView("menu/commercial/shanghuxiangqing.html");
+        mv.addObject("shang",byBusinessUid);
+        return mv;
+    }
 
     @RequestMapping("toManage")
     public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
@@ -151,7 +164,9 @@ public class TbBusinessUserController {
      * @return
      */
     @RequestMapping("toUpdate")
+
     public String toUpdate(Model model ,Integer businessUid){
+
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
         TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);

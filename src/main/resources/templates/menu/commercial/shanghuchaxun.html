@@ -77,7 +77,9 @@
 <form id="searchForm" class="breadcrumb form-search" th:action="@{/businessUser/query}" action="#" method="get">
     <input id="pageNo" type="hidden" name="currentPage" th:value="${#request.getAttribute('currentPage')}"/>
      <!--   <input id="operate" name="operate" type="hidden" value="detail"/>-->
-    <input id="agentId" name="affiliationAgent" type="hidden"th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+
+    <input id="agentId" name="affiliationAgent" type="hidden" th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+
     <ul class="ul-form">
         <li><label>商户编号：</label>
             <input id="customerNum" name="businessUid" th:value="${history.businessUid}" class="input-medium" type="text" value="" maxlength="32"/>
@@ -85,8 +87,8 @@
         <li style="margin-left: 60px;"><label>商户类型：</label>
             <select id="customerType" name="businessUserType"  style="width:155px;" class="input-medium">
                 <option value="" >--请选择商户类型--</option>
-                <option value="企业商户" th:selected="${history.businessUserType=='企业商户'}">企业商户</option>
-                <option value="个人商户" th:selected="${history.businessUserType=='个人商户'}">个人商户</option>
+                <option value="ENTERPRISE" th:selected="${history.businessUserType=='ENTERPRISE'}">企业商户</option>
+                <option value="PERSONAL" th:selected="${history.businessUserType=='PERSONAL'}">个人商户</option>
             </select>
         </li>
         <li style="margin-left: 60px;"><label>法人姓名：</label>
@@ -169,13 +171,19 @@
         <td>
             <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:text="${shang.businessUid}">C149549272476110416</a>
         </td>
-        <td th:text="${shang.businessUserType}">个体商户</td>
+        <td >
+            <span th:if="${shang.businessUserType == 'ENTERPRISE'}">企业商户</span>
+            <span th:if="${shang.businessUserType == 'PERSONAL'}">个人商户</span>
+        </td>
         <td th:text="${shang.legalPeopleName}">张明盟</td>
         <td th:text="${shang.manageName}">张明盟小卖部</td>
-        <td th:if="${shang.businessUserStatus==0}">待审核</td>
-        <td th:if="${shang.businessUserStatus==1}">审核通过</td>
-        <td th:if="${shang.businessUserStatus==2}">审核拒绝</td>
-        <td th:if="${shang.businessUserStatus==null || shang.businessUserStatus==''}"></td>
+
+        <td>
+            <span th:if="${shang.businessUserStatus==0}">待审核</span>
+            <span th:if="${shang.businessUserStatus==1}">审合通过</span>
+            <span th:if="${shang.businessUserStatus==2}">审核拒绝</span>
+        </td>
+
         <td>
             <a href="javascript:void(0);" onclick="showApikey(this)">查看密钥</a>
             <span style="display:none;" th:text="${shang.businessUserKey}">
@@ -186,7 +194,7 @@
         <td th:text="${#dates.format(shang.startTime, 'yyyy-MM-dd')}">2017-05-23 06:38:44</td>
 
         <td>
-            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" >详情</a>/
+            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:href="@{/businessUser/detail(id=${shang.businessUid})}">详情</a>/
             <a href="#" th:href="@{toUpdate(businessUid=${shang.businessUid})}">修改</a>
         </td>
     </tr>
@@ -198,7 +206,7 @@
     <li><a href="#" onclick="page('p')" disabled="true">&#171; 上一页</a></li>
     <li class="active"><a href="javascript:" th:text="${#request.getAttribute('currentPage')}">1</a></li>
     <li ><a href="#" onclick="page('n')">下一页 &#187;</a></li>
-    <li class="disabled controls"><a href="javascript:">共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页，跳转至 <input id="skipPage" type="text"/> 页</a></li>
+    <li class="disabled controls"><a href="javascript:">共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页，跳转至 <input id="skipPage" type="number"/> 页</a></li>
     <li><a class="btn" href="#" onclick="skip()">GO</a></li>
 </ul>
     <div style="clear:both;"></div></div>
