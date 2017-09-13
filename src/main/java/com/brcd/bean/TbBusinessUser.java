@@ -34,11 +34,11 @@ public class TbBusinessUser {
 
     private String manageAddress;
 
-    private String manageProvince;
+    private Integer manageProvince;
 
-    private String manageCity;
+    private Integer manageCity;
 
-    private String manageDistrict;
+    private Integer manageDistrict;
 
     private String businessLicenseNo;
 

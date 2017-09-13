@@ -28,4 +28,15 @@ public class TbAreaDictionaryController {
     public List<TbAreaDictionary> findByAreaOde(Integer areaCode){
         return tbAreaDictionaryService.findByAreaOde(areaCode);
     }
+
+    /**
+     * 根据省名称查询市
+     * @param areaName
+     * @return
+     */
+    @RequestMapping("findByAreaName")
+    @ResponseBody
+    public List<TbAreaDictionary> findByAreaName(String areaName){
+        return tbAreaDictionaryService.findByUpAreaName(areaName);
+    }
 }

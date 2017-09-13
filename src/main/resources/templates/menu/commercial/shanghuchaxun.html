@@ -115,14 +115,14 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-                <input name="startTime"th:value="${#dates.format(history.startTime, 'yyyy-MM-dd')}"  class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+                <input name="startTime"type="text" th:value="${#dates.format(history.startTime, 'yyyy-MM-dd')}"  class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
         </li>
         <li style="margin-left: 60px;">
             <label>结束时间：</label>
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input name="endTime" th:value="${#dates.format(history.endTime, 'yyyy-MM-dd')}" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input name="endTime" type="text" th:value="${#dates.format(history.endTime, 'yyyy-MM-dd')}" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
         </li>
 
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
