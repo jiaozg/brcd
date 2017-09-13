@@ -148,6 +148,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("toUpdate")
     public String toUpdate(Model model ,Integer businessUid){
+        System.out.println("商户修改"+businessUid+"====================");
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
         TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);

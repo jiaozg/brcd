@@ -103,7 +103,7 @@
 
 </update>
     <select id="findByBusinessUid" parameterType="java.lang.Integer" resultMap="findUser">
-SELECT * FROM tb_business_user us INNER JOIN  tb_business bus ON us.business_uid=bus.business_uid INNER JOIN tb_bankcard_info bak ON us.business_uid=bak.business_uid WHERE us.business_uid=#{businessUid}
+SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=bus.business_uid LEFT JOIN tb_bankcard_info bak ON us.business_uid=bak.business_uid WHERE us.business_uid=#{businessUid}
     </select>
     <!--添加商户信息-->
     <insert id="insertBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
