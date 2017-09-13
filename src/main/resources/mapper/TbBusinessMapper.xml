@@ -24,17 +24,15 @@
 UPDATE tb_business SET
 wechat_pay=#{wechatPay},
 wechat_rate=#{wechatRate},
-wechat_t0=#{wechatT0},
 wechat_industry=#{wechatIndustry},
 wechat_type=#{wechatType},
 wechat_num=#{wechatNum},
 alipay=#{alipay},
 ali_rate=#{aliRate},
-ali_t0=#{aliT0},
 ali_industry=#{aliIndustry},
 ali_type=#{aliType},
-alipay_num=#{alipayNum},
-WHERE business_id=#{businessId}
+alipay_num=#{alipayNum}
+WHERE business_uid=#{businessUid}
 </update>
 
 </mapper>

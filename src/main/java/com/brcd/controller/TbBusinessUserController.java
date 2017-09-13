@@ -8,13 +8,10 @@ import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.util.Upload;
-import com.brcd.service.BankService;
+import com.brcd.service.*;
 
 import com.brcd.common.util.ExportExcel;
 import com.brcd.service.BankService;
-import com.brcd.service.TbBankcardInfoService;
-import com.brcd.service.TbBusinessService;
-import com.brcd.service.TbBusinessUserService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,22 +38,6 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
-
-    @Value("${FTP_ADDRESS}")
-    private String FTP_ADDRESS;//IP地址
-    @Value("${FTP_PORT}")
-    private Integer FTP_PORT;//端口号
-    @Value("${FTP_USERNAME}")
-    private String FTP_USERNAME;//用户名
-    @Value("${FTP_PASSWORD}")
-    private String FTP_PASSWORD;//密码
-    @Value("${FTP_BASE_PATH}")
-    private String FTP_BASE_PATH;//ftp的图片服务器根路径
-    @Value("${IMAGE_BASE_URL}")
-    private String IMAGE_BASE_URL;//#ftp图片服务器的url
-    @Value("${IMAGEPATH}")
-    private String IMAGEPATH;//#ftp图片服务器的url
-
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
@@ -66,8 +47,7 @@ public class TbBusinessUserController {
     @Autowired
     private BankService bankService;
     @Autowired
-    private Upload upload;
-
+    private TbAreaDictionaryService tbAreaDictionaryService;
     /*
     * 时间格式的转换
     */
@@ -108,10 +88,6 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
-       if(tbBusinessUser == null){
-           tbBusinessUser = new TbBusinessUser();
-       }
-        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -163,13 +139,21 @@ public class TbBusinessUserController {
     }
 
     @RequestMapping("toManage")
-    public String shanghu(){
-        System.out.println("进入方法================");
-        return "menu/commercial/shanghuxinxifguanli.html";}
+    public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
 
-
+    /**
+     * 进入商户修改页面
+     * @param model
+     * @return
+     */
     @RequestMapping("toUpdate")
-    public String toUpdate(Model model){
+    public String toUpdate(Model model ,Integer businessUid){
+        System.out.println("商户修改"+businessUid+"====================");
+        List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
+        model.addAttribute("provinceList",addrList);
+        TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);
+        System.out.println(business);
+        model.addAttribute("businessUser",business);
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/businessUserUpdate.html";}
@@ -180,30 +164,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
-        try {
-            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
-            tbBusinessUser.setBankCardFront(bankCardFront);
-            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
-            tbBusinessUser.setIdentityCardFront(identityCardFront);
-            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
-            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
-            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
-            tbBusinessUser.setIdentityCardHand(identityCardHand);
-            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
-                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
-                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
-                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
-                tbBusinessUser.setDoorPicture(doorPicture);
-                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
-                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
         return "menu/commercial/shanghuxinxifguanli.html";
 
 

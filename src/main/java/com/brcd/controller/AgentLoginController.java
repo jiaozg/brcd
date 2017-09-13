@@ -1,10 +1,12 @@
 
 package com.brcd.controller;
 
+import com.brcd.bean.FtpMsg;
 import com.brcd.bean.TbAgent;
 import com.brcd.common.util.DateUtil;
 import com.brcd.common.util.MD5Util;
 import com.brcd.service.AgentLoginService;
+import com.brcd.service.FtpMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,15 +35,13 @@ public class AgentLoginController {
 
     @RequestMapping("toAgentLogin")
     public String toAgentLogin() {
-        System.out.println("-------到登陆的界面------");
         return "login";
     }
 
     //退出登录
     @RequestMapping("AgentExit")
     public String AgentExit(HttpSession session) {
-//        server.session.timeout;
-//        session.invalidate();
+//        session.removeAttribute("agentLogin");
         return "login";
     }
 
@@ -50,18 +50,18 @@ public class AgentLoginController {
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
-            boolean exists = redisTemplate.hasKey("agentLogin");
+           boolean exists = redisTemplate.hasKey("agentLogin");
             if (agentLogin != null) {
-                if (exists == true) {
+               if (exists == true) {
                     TbAgent agentLogin1 = (TbAgent) session.getAttribute("agentLogin");
                     session.setAttribute("agentLogin", agentLogin1);
                 } else {
                     session.setAttribute("agentLogin", agentLogin);
                 }
-                System.err.println(session.getAttribute("agentLogin"));
+               System.err.println(session.getAttribute("agentLogin"));
                 return "home/home";
             }
-        }
+       }
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
     }
