@@ -219,13 +219,19 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}"
+                                <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}"
+                                   target="mainFrame">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    修改密码
+                                </a>
+                            </li>
+                                <li>
+                                    <a href="../user/updateFtpPwd.html" th:href="@{'/toUpdateFtpPwd'}"
                                        target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
-                                        修改密码
+                                        修改FTP密码
                                     </a>
                                 </li>
-
                             </ul>
                             <div class="pad5A button-pane button-pane-alt text-center">
                                 <a href="/a/logout" th:href="@{AgentExit}"
