@@ -6,11 +6,11 @@ import lombok.Data;
 public class TbBusiness {
     private Integer businessId;
 
-    private Integer wechatPay;
+    private String wechatPay="N";
 
     private Double wechatRate;
 
-    private Integer wechatT0;
+    private Integer wechatT0=0;
 
     private String wechatIndustry;
 
@@ -18,11 +18,11 @@ public class TbBusiness {
 
     private String wechatNum;
 
-    private Integer alipay;
+    private String alipay="N";
 
     private Double aliRate;
 
-    private Integer aliT0;
+    private Integer aliT0=0;
 
     private String aliIndustry;
 
@@ -30,11 +30,7 @@ public class TbBusiness {
 
     private String alipayNum;
 
-
     private String businessUid;
 
-    private volatile String wechatPayYN;
-
-    private volatile String alipayYN;
 
 }

@@ -16,6 +16,8 @@ public class TbBusinessUser {
 
     private String manageName;
 
+    private String password;
+
     private String businessUsername;
 
     private String legalPeopleName;
@@ -64,9 +66,15 @@ public class TbBusinessUser {
 
     private String businessUserKey;
 
+
     private  TbAgent tbAgent;
 
+
+
     private TbBankcardInfo tbBankcardInfo;
+
+
+    private String passWord;
 
     private volatile MultipartFile identityCardFrontImg;
 
@@ -80,11 +88,13 @@ public class TbBusinessUser {
 
     private volatile MultipartFile doorPictureImg;
 
-    private  TbBusiness tbBusiness;
+
+
+
 
     private volatile MultipartFile registerLicensePictureImg;
 
-    
+
 
     
 

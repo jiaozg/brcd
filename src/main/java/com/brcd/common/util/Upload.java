@@ -33,23 +33,26 @@ public class Upload {
 	private String IMAGEPATH;//#ftp图片服务器的url
 	/**
 	 * 单文件上传
-	 * @param request
 	 * @param file （文件）
 	 * @return newName （文件名）
 	 * @throws Exception
 	 */
-	public  String getUpload(HttpServletRequest request,
-			MultipartFile file) throws Exception {
+	public  String getUpload(MultipartFile file) throws Exception {
 		String newName="";
-		if (file != null) {
+		boolean result=false;
+		if (file.getOriginalFilename() != null) {
 			String oldName = file.getOriginalFilename();//取出原始文件名
 			newName= IDUtils.genItemId();//随机生成一个毫秒数
 			if (oldName.indexOf(".") != -1) {
 				newName = newName + oldName.substring(oldName.indexOf("."));
-				boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
+				 result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
 			}
 		}
-		return newName;
+		if(result) {
+			System.out.println("http://" + FTP_ADDRESS + "/" + newName);
+			return "http://" + FTP_ADDRESS + "/" + newName;
+		}
+		return null;
 	}
 
 

@@ -7,13 +7,15 @@ import lombok.Data;
  */
 @Data
 public class TbAreaDictionary {
-    private String arceName;
+    private Integer areaId;
 
-    private Integer arceCode;
+    private String areaName;
 
-    private String upArceName;
+    private Integer areaCode;
 
-    private Integer upArceOde;
+    private String upAreaName;
+
+    private Integer upAreaOde;
 
 
 }

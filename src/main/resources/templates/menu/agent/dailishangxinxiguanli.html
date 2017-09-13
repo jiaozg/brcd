@@ -107,7 +107,8 @@
 <script>
     function choose_agent(){
         var pram='status:no;directories:yes;help:no;scroll: no;dialogWidth:400px;dialogHeight:300px;dialogLeft:600px;dialogTop:300px;';
-       var inner = window.showModalDialog("toSelectAgent",null,pram);
+       var inner = window.showModalDialog("select.html",null,pram);
+       alert('输入了：'+inner);
     }
 </script>
 <form id="searchForm" class="breadcrumb form-search" action="/brcd/agent/getAgent" method="get">

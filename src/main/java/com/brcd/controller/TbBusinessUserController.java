@@ -1,15 +1,17 @@
 package com.brcd.controller;
 
 
+
+import com.brcd.bean.*;
 import com.brcd.bean.Bank;
 import com.brcd.bean.TbBankcardInfo;
 import com.brcd.bean.TbBusiness;
 import com.brcd.bean.TbBusinessUser;
-import com.brcd.service.BankService;
+import com.brcd.common.util.Upload;
+import com.brcd.service.*;
+
 import com.brcd.common.util.ExportExcel;
-import com.brcd.service.TbBankcardInfoService;
-import com.brcd.service.TbBusinessService;
-import com.brcd.service.TbBusinessUserService;
+import com.brcd.service.BankService;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,22 +38,6 @@ import java.util.List;
 @Controller
 @RequestMapping("businessUser")
 public class TbBusinessUserController {
-
-    @Value("${FTP_ADDRESS}")
-    private String FTP_ADDRESS;//IP地址
-    @Value("${FTP_PORT}")
-    private Integer FTP_PORT;//端口号
-    @Value("${FTP_USERNAME}")
-    private String FTP_USERNAME;//用户名
-    @Value("${FTP_PASSWORD}")
-    private String FTP_PASSWORD;//密码
-    @Value("${FTP_BASE_PATH}")
-    private String FTP_BASE_PATH;//ftp的图片服务器根路径
-    @Value("${IMAGE_BASE_URL}")
-    private String IMAGE_BASE_URL;//#ftp图片服务器的url
-    @Value("${IMAGEPATH}")
-    private String IMAGEPATH;//#ftp图片服务器的url
-
     @Autowired
     private TbBusinessUserService tbBusinessUserService;
     @Autowired
@@ -60,7 +46,8 @@ public class TbBusinessUserController {
     private TbBusinessService tbBusinessService;
     @Autowired
     private BankService bankService;
-
+    @Autowired
+    private TbAreaDictionaryService tbAreaDictionaryService;
     /*
     * 时间格式的转换
     */
@@ -74,9 +61,11 @@ public class TbBusinessUserController {
      * 跳转到添加商户页面
      */
     @RequestMapping("/goToInsertBusinessUser")
-    public String goToIsert(Model model){
+    public String goToIsert(Model model,HttpSession session){
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        model.addAttribute("agentLogin",agentLogin);
         return "menu/commercial/addCommercial";
     }
 
@@ -84,10 +73,8 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
-
-
+    public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
         return "redirect:/businessUser/query";
     }
 
@@ -101,10 +88,6 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
-       if(tbBusinessUser == null){
-           tbBusinessUser = new TbBusinessUser();
-       }
-        tbBusinessUser.setAffiliationAgent("代理商");
 
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
@@ -156,13 +139,21 @@ public class TbBusinessUserController {
     }
 
     @RequestMapping("toManage")
-    public String shanghu(){
-        return "menu/commercial/shanghuxinxifguanli.html";
-    }
+    public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
 
-
+    /**
+     * 进入商户修改页面
+     * @param model
+     * @return
+     */
     @RequestMapping("toUpdate")
-    public String toUpdate(Model model){
+    public String toUpdate(Model model ,Integer businessUid){
+        System.out.println("商户修改"+businessUid+"====================");
+        List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
+        model.addAttribute("provinceList",addrList);
+        TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);
+        System.out.println(business);
+        model.addAttribute("businessUser",business);
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/businessUserUpdate.html";}
@@ -174,13 +165,11 @@ public class TbBusinessUserController {
     @RequestMapping("updateTbBusinessUser")
     public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-      /*  tbBusinessService.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoService.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());*/
         return "menu/commercial/shanghuxinxifguanli.html";
 
 
     }
-
+  
     /**
      * 根据大行名称、省、市查询该条件下的支行
      * @param bank
@@ -197,5 +186,4 @@ public class TbBusinessUserController {
     public String findBankNo(String bankSubName){
         return bankService.findBankNo(bankSubName);
     }
-
 }

@@ -1,9 +1,11 @@
 package com.brcd.controller;
 
+import com.brcd.bean.FtpMsg;
 import com.brcd.bean.TbAgent;
 import com.brcd.common.util.FtpUtil;
 import com.brcd.common.util.IDUtils;
 import com.brcd.common.util.MD5Util;
+import com.brcd.service.FtpMsgService;
 import com.brcd.service.PersonageMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,31 +27,19 @@ import java.io.PrintWriter;
  */
 @Controller
 public class PersonageMessageController {
-    @Value("${FTP_ADDRESS}")
-    private String FTP_ADDRESS;//IP地址
-    @Value("${FTP_PORT}")
-    private Integer FTP_PORT;//端口号
-    @Value("${FTP_USERNAME}")
-    private String FTP_USERNAME;//用户名
-    @Value("${FTP_PASSWORD}")
-    private String FTP_PASSWORD;//密码
-    @Value("${FTP_BASE_PATH}")
-    private String FTP_BASE_PATH;//ftp的图片服务器根路径
-    @Value("${IMAGE_BASE_URL}")
-    private String IMAGE_BASE_URL;//#ftp图片服务器的url
-    @Value("${IMAGEPATH}")
-    private String IMAGEPATH;//#ftp图片服务器的url
+
 
     @Autowired
     private PersonageMessageService personageMessageService;
 
+    @Autowired
+    private FtpMsgService ftpMsgService;
 
     //查询出来登录用户的信息
     @RequestMapping("toPersonageMessage")
     public String PersonageMessage(Model model, HttpSession session) {
         TbAgent agent = (TbAgent) session.getAttribute("agentLogin");
         TbAgent queryAgentMsg = personageMessageService.queryAgentMsg(agent);
-        System.out.println(queryAgentMsg);
         model.addAttribute("agentMsg", queryAgentMsg);
         return "user/personageMessage";
     }
@@ -57,14 +47,15 @@ public class PersonageMessageController {
     //实现修改保存
     @RequestMapping("save")
     public String save(TbAgent tbAgent, MultipartFile headSculptureFile, HttpSession session) throws IOException {
+        FtpMsg ftpMsg = ftpMsgService.getFtpMsg();
         if (headSculptureFile != null) {
             String oldName = headSculptureFile.getOriginalFilename();//取出原始文件名
             String newName = IDUtils.genItemId();//随机生成一个毫秒数
             if (oldName.indexOf(".") != -1) {
                 newName = newName + oldName.substring(oldName.indexOf("."));
-                boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, headSculptureFile.getInputStream());
+                boolean result = FtpUtil.uploadFile(ftpMsg.getFtpAddress(), ftpMsg.getFtpPort(), ftpMsg.getFtpUserName(), ftpMsg.getFtpPassword(), ftpMsg.getFtpBasePath(), ftpMsg.getFtpImagePath(), newName, headSculptureFile.getInputStream());
                 if (result == true) {
-                    tbAgent.setHeadSculpture(IMAGE_BASE_URL + IMAGEPATH + newName);//获取图片路径
+                    tbAgent.setHeadSculpture(ftpMsg.getFtpImageBaseUrl() + ftpMsg.getFtpImagePath() + newName);//获取图片路径
                 }
             }
         }
@@ -80,9 +71,9 @@ public class PersonageMessageController {
         return "user/updatePwd";
     }
 
+
     @RequestMapping("updatePassword")//实现修改
     public String updatePassword(TbAgent tbAgent, HttpSession session) {
-
         personageMessageService.updatePassword(tbAgent);
         System.out.println(tbAgent);
         session.removeAttribute("agentLogin");
@@ -102,5 +93,44 @@ public class PersonageMessageController {
             writer.print("false");
         }
         writer.flush();
+    }
+
+    //到修改FTP密码界面
+    @RequestMapping("toUpdateFtpPwd")
+    public String toUpdateFtpPwd(HttpSession session, Model model) {
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        FtpMsg ftpMsg = ftpMsgService.getFtpMsg();
+        if (agentLogin.getAgentGrade() != null && agentLogin.getAgentGrade() == 0) {
+            model.addAttribute("ftpMsg", ftpMsg);
+            return "user/updateFtpPwdError";
+        }
+        model.addAttribute("ftpMsg", ftpMsg);
+        return "user/updateFtpPwd";
+    }
+
+    //验证checkFtpPwd密码是否一致
+    @RequestMapping("checkFtpPwd")
+    @ResponseBody
+    public void checkFtpPwd(FtpMsg ftpMsg, HttpServletResponse response) throws Exception {
+        PrintWriter writer = response.getWriter();
+        System.err.println(ftpMsg);
+        FtpMsg checkFtpUserName = ftpMsgService.checkFtpUserName(ftpMsg);
+        FtpMsg checkFtpPassword = ftpMsgService.checkFtpPassword(ftpMsg);
+        if (checkFtpUserName != null) {
+            writer.print("true");
+        }
+        if (checkFtpPassword != null) {
+            writer.print("true");
+        }
+        System.err.println("-----------checkFtpPwd---------");
+        writer.flush();
+    }
+
+    //修改FTp密码
+    @RequestMapping("updateFtpPassword")//到修改界面
+    public String updateFtpPassword(FtpMsg ftpMsg) {
+        System.out.println("修改的FTP ："+ftpMsg);
+        ftpMsgService.updateFtpUserNamePwd(ftpMsg);
+        return "login";
     }
 }

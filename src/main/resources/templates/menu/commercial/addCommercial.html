@@ -30,6 +30,10 @@
     <meta name="decorator" content="default"/>
     <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css" th:href="@{/static/jquery-ui/ui.css}">
     <script src="../../../static/static/jquery-ui/ui.js" th:src="@{/static/jquery-ui/ui.js}"></script>
+    <style type="text/css">
+        ol {list-style: none;}
+    </style>
+
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -161,8 +165,7 @@
              }
              });
              return this.optional(element) || isPass;
-             }, "请检查所属代理商，输入费率不能低于代理商签约费率！"); */
-
+             }, "请检查所属代理商，输入费率不能低于代理商签约费率！");*/
             //form 提交验证事件
             $("#inputForm").validate({
                 submitHandler: function(form){
@@ -657,7 +660,7 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="/a/operate/customer/brcbCustomer/form?id=">商户信息添加</a></li>
 </ul><br/>
-<form id="inputForm" class="form-horizontal" action="/brcd/businessUser/insertBusinessUser" method="post">
+<form id="inputForm" class="form-horizontal" enctype="multipart/form-data" action="/brcd/businessUser/insertBusinessUser" method="post">
     <input id="id" name="id" type="hidden" value=""/>
     <input id="agentNum" name="agentNum" type="hidden" value="A148110054952010852"/>
 
@@ -686,8 +689,8 @@
             <td><div class="control-group">
                 <label class="control-label">所属代理商：</label>
                 <div class="controls">
-                    <input type="text" name="affiliationAgent" value="代理商">
-                   <!-- <span>北京艺之彩广告有限公司</span>-->
+                    <input type="hidden" name="affiliationAgent" th:value="${agentLogin.agentNumber}">
+                    <span th:text="${agentLogin.agentFullName}"></span>
                 </div>
             </div>
             </td>
@@ -749,7 +752,7 @@
         </tr>
         <tr>
             <td><div class="control-group">
-                <label class="control-label">联系电话：</label>
+                <label class="control-label">手机号：</label>
                 <div class="controls">
                     <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
@@ -764,6 +767,15 @@
                     </div>
                 </div>
             </td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">商户密码：</label>
+                <div class="controls">
+                    <input id="passWord" name="passWord" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div></td>
         </tr>
         <tr>
             <td>
@@ -894,7 +906,7 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-1" name="wechatPayYN" data-index="1" class="input-xlarge channelStatus">
+                        <select id="channelStatus-1" name="wechatPay" data-index="1" class="input-xlarge channelStatus">
                             <option value="Y" >开通</option>
                             <option  value="N" selected="selected">不开通</option>
                         </select>
@@ -1158,7 +1170,7 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-3" name="alipayYN" data-index="3" class="input-xlarge channelStatus">
+                        <select id="channelStatus-3" name="alipay" data-index="3" class="input-xlarge channelStatus">
                             <option value="Y">开通</option>
                             <option  value="N" selected="selected">不开通</option>
                         </select>
@@ -1364,92 +1376,22 @@
     <h6>商户资料信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
 
-   <table>
+    <table>
         <tr>
             <td>
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <input id="rightID" name="identityCardFront" style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="rightID"  style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file1" name="identityCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="rightIDPreview">
+                            <li>
+                                <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:1;padding:3px;">
+                            </li>
+                        </ol>
+                        <a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;
+                        <a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="rightIDPreview"></ol><a href="javascript:" onclick="rightIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightIDDelAll();" class="btn">清除</a>
-
-                        <script type="text/javascript">
-                            function rightIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightIDSelectAction&thumbFunc=rightIDThumbSelectAction&cb=rightIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function rightIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightID").val(url);//
-                                rightIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightIDCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function rightIDDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#rightID").val($("#rightID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightIDPreview();
-                            }
-                            function rightIDDelAll(){
-                                $("#rightID").val("");
-                                rightIDPreview();
-                            }
-                            function rightIDPreview(){
-                                var li, urls = $("#rightID").val().split("|");
-                                $("#rightIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightIDDel(this);\">×</a></li>";
-                                        $("#rightIDPreview").append(li);
-                                    }
-                                }
-                                if ($("#rightIDPreview").text() == ""){
-                                    $("#rightIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            rightIDPreview();
-                        </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1458,85 +1400,12 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <input id="reservedID" name="identityCardReverse" style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="reservedID"  style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file2" name="identityCardReverseImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="reservedIDPreview"> <li>
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="reservedIDPreview"></ol><a href="javascript:" onclick="reservedIDFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="reservedIDDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function reservedIDFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=reservedIDSelectAction&thumbFunc=reservedIDThumbSelectAction&cb=reservedIDCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function reservedIDSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function reservedIDThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#reservedID").val(url);//
-                                reservedIDPreview();
-                                //top.$.jBox.close();
-                            }
-                            function reservedIDCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function reservedIDDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#reservedID").val($("#reservedID").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                reservedIDPreview();
-                            }
-                            function reservedIDDelAll(){
-                                $("#reservedID").val("");
-                                reservedIDPreview();
-                            }
-                            function reservedIDPreview(){
-                                var li, urls = $("#reservedID").val().split("|");
-                                $("#reservedIDPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"reservedIDDel(this);\">×</a></li>";
-                                        $("#reservedIDPreview").append(li);
-                                    }
-                                }
-                                if ($("#reservedIDPreview").text() == ""){
-                                    $("#reservedIDPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            reservedIDPreview();
-                        </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1547,85 +1416,12 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <input id="IDWithHand" name="identityCardHand" style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="IDWithHand"  style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file3" name="identityCardHandImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="IDWithHandPreview"> <li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="IDWithHandPreview"></ol><a href="javascript:" onclick="IDWithHandFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="IDWithHandDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function IDWithHandFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=IDWithHandSelectAction&thumbFunc=IDWithHandThumbSelectAction&cb=IDWithHandCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function IDWithHandSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
-                                //top.$.jBox.close();
-                            }
-                            function IDWithHandThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#IDWithHand").val(url);//
-                                IDWithHandPreview();
-                                //top.$.jBox.close();
-                            }
-                            function IDWithHandCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function IDWithHandDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#IDWithHand").val($("#IDWithHand").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                IDWithHandPreview();
-                            }
-                            function IDWithHandDelAll(){
-                                $("#IDWithHand").val("");
-                                IDWithHandPreview();
-                            }
-                            function IDWithHandPreview(){
-                                var li, urls = $("#IDWithHand").val().split("|");
-                                $("#IDWithHandPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"IDWithHandDel(this);\">×</a></li>";
-                                        $("#IDWithHandPreview").append(li);
-                                    }
-                                }
-                                if ($("#IDWithHandPreview").text() == ""){
-                                    $("#IDWithHandPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            IDWithHandPreview();
-                        </script>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -1634,85 +1430,12 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" name="bankCardFront" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input id="rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file4"  name="bankCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="rightBankCardPreview"> <li>
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="rightBankCardPreview"></ol><a href="javascript:" onclick="rightBankCardFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="rightBankCardDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function rightBankCardFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=rightBankCardSelectAction&thumbFunc=rightBankCardThumbSelectAction&cb=rightBankCardCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function rightBankCardSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightBankCardThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#rightBankCard").val(url);//
-                                rightBankCardPreview();
-                                //top.$.jBox.close();
-                            }
-                            function rightBankCardCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function rightBankCardDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#rightBankCard").val($("#rightBankCard").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                rightBankCardPreview();
-                            }
-                            function rightBankCardDelAll(){
-                                $("#rightBankCard").val("");
-                                rightBankCardPreview();
-                            }
-                            function rightBankCardPreview(){
-                                var li, urls = $("#rightBankCard").val().split("|");
-                                $("#rightBankCardPreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"rightBankCardDel(this);\">×</a></li>";
-                                        $("#rightBankCardPreview").append(li);
-                                    }
-                                }
-                                if ($("#rightBankCardPreview").text() == ""){
-                                    $("#rightBankCardPreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            rightBankCardPreview();
-                        </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1723,85 +1446,12 @@
                 <div class="control-group">
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
-                        <input id="licenseImage" name="businessLicensePicture" style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input id="licenseImage"  style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file5" name="businessLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="licenseImagePreview"> <li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="licenseImagePreview"></ol><a href="javascript:" onclick="licenseImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="licenseImageDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function licenseImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=licenseImageSelectAction&thumbFunc=licenseImageThumbSelectAction&cb=licenseImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function licenseImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function licenseImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#licenseImage").val(url);//
-                                licenseImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function licenseImageCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function licenseImageDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#licenseImage").val($("#licenseImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                licenseImagePreview();
-                            }
-                            function licenseImageDelAll(){
-                                $("#licenseImage").val("");
-                                licenseImagePreview();
-                            }
-                            function licenseImagePreview(){
-                                var li, urls = $("#licenseImage").val().split("|");
-                                $("#licenseImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"licenseImageDel(this);\">×</a></li>";
-                                        $("#licenseImagePreview").append(li);
-                                    }
-                                }
-                                if ($("#licenseImagePreview").text() == ""){
-                                    $("#licenseImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            licenseImagePreview();
-                        </script>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1810,85 +1460,12 @@
                 <div class="control-group">
                     <label class="control-label">门头照：</label>
                     <div class="controls">
-                        <input id="doorHeadImage" name="doorPicture" style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="doorHeadImage"  style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file6" name="doorPictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="doorHeadImagePreview" ><li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="doorHeadImagePreview"></ol><a href="javascript:" onclick="doorHeadImageFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="doorHeadImageDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function doorHeadImageFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=doorHeadImageSelectAction&thumbFunc=doorHeadImageThumbSelectAction&cb=doorHeadImageCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function doorHeadImageSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function doorHeadImageThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#doorHeadImage").val(url);//
-                                doorHeadImagePreview();
-                                //top.$.jBox.close();
-                            }
-                            function doorHeadImageCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function doorHeadImageDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#doorHeadImage").val($("#doorHeadImage").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                doorHeadImagePreview();
-                            }
-                            function doorHeadImageDelAll(){
-                                $("#doorHeadImage").val("");
-                                doorHeadImagePreview();
-                            }
-                            function doorHeadImagePreview(){
-                                var li, urls = $("#doorHeadImage").val().split("|");
-                                $("#doorHeadImagePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"doorHeadImageDel(this);\">×</a></li>";
-                                        $("#doorHeadImagePreview").append(li);
-                                    }
-                                }
-                                if ($("#doorHeadImagePreview").text() == ""){
-                                    $("#doorHeadImagePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            doorHeadImagePreview();
-                        </script>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -1897,85 +1474,13 @@
                 <div class="control-group">
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
-                        <input id="accountLicence" name="registerLicensePicture" style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="accountLicence"  style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input type="file" id="file7" name="registerLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
+                        <ol id="accountLicencePreview"><li >
+                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                        </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        <ol id="accountLicencePreview"></ol><a href="javascript:" onclick="accountLicenceFinderOpen();" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="accountLicenceDelAll();" class="btn">清除</a>
-                        <script type="text/javascript">
-                            function accountLicenceFinderOpen(){//
-                                var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);
-                                var url = "/static/ckfinder/ckfinder.html?type=images&start=images:/customer/"+year+"/"+month+
-                                    "/&action=js&func=accountLicenceSelectAction&thumbFunc=accountLicenceThumbSelectAction&cb=accountLicenceCallback&dts=0&sm=0";
-                                windowOpen(url,"文件管理",1000,700);
-                                //top.$.jBox("iframe:"+url+"&pwMf=1", {title: "文件管理", width: 1000, height: 500, buttons:{'关闭': true}});
-                            }
-                            function accountLicenceSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){//
-                                    url += files[i].getUrl();//
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
-                                //top.$.jBox.close();
-                            }
-                            function accountLicenceThumbSelectAction(fileUrl, data, allFiles){
-                                var url="", files=ckfinderAPI.getSelectedFiles();
-                                for(var i=0; i<files.length; i++){
-                                    url += files[i].getThumbnailUrl();
-                                    if (i<files.length-1) url+="|";
-                                }//
-                                $("#accountLicence").val(url);//
-                                accountLicencePreview();
-                                //top.$.jBox.close();
-                            }
-                            function accountLicenceCallback(api){
-                                ckfinderAPI = api;
-                            }
-                            function accountLicenceDel(obj){
-                                var url = $(obj).prev().attr("url");
-                                $("#accountLicence").val($("#accountLicence").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));
-                                accountLicencePreview();
-                            }
-                            function accountLicenceDelAll(){
-                                $("#accountLicence").val("");
-                                accountLicencePreview();
-                            }
-                            function accountLicencePreview(){
-                                var li, urls = $("#accountLicence").val().split("|");
-                                $("#accountLicencePreview").children().remove();
-                                for (var i=0; i<urls.length; i++){
-                                    if (urls[i]!=""){//
-                                        li = "<li><img class='imgList' src=\""+urls[i]+"\" url=\""+urls[i]+"\" style=\"max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;\">";//
-                                        li += "&nbsp;&nbsp;<a href=\"javascript:\" onclick=\"accountLicenceDel(this);\">×</a></li>";
-                                        $("#accountLicencePreview").append(li);
-                                    }
-                                }
-                                if ($("#accountLicencePreview").text() == ""){
-                                    $("#accountLicencePreview").html("<li style='list-style:none;padding-top:5px;'>无</li>");
-                                }
-                            }
-                            accountLicencePreview();
-                        </script>
+                        <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
@@ -1987,6 +1492,79 @@
         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
     </div>
 </form>
+<script type="text/javascript">
+    $(function(){
+        $(".imgList").click(function(){
+            window.top.dialog('img',$(this).attr("url"));
+        });
+    });
+    $("input[type='file']").change(function () {
+        var isFile = this.files[0];
+        var file = $(this).val();
+
+        var fileName = getFileName(file);
+        $(this).prev().removeAttr("readonly");
+        $(this).prev().val(fileName);
+        var image=$(this);
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.readAsDataURL(isFile);
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                image.next().children().children().attr('src',e.target.result);
+            };
+        }
+
+
+        $(this).prev().attr("readonly","readonly");
+    })
+    function getFileName(o){
+        var pos=o.lastIndexOf("\\");
+        return o.substring(pos+1);
+    }
+    function addImg(o){
+        $(o).prevAll("input[type='file']").trigger('click');
+    }
+    function clearImg(o){
+        $(o).prevAll("input[type='text']").removeAttr("readonly");
+        $(o).prevAll("input[type='text']").val("");
+        $(o).prevAll("input[type='text']").attr("readonly","readonly");
+        $(o).prevAll("input[type='file']").removeAttr("value");
+        $(o).prevAll("ol").children().children().attr("src","");
+        /* $(o).parent().html(" " +
+         "<input id='rightID' name='identityCardFrontImg' style='width:139px;' placeholder='请选择身份证正面照片' axlength='255' class='input-xlarge required' readonly='readonly' type='text' value=''/>"
+         +"<input type='file' id='file1'  style='filter:alpha(opacity=0);opacity:0;width: 0;height: 0;'/>"
+         +"<ol id='rightIDPreview'>"
+         +"<li >"
+         +"<img  class='imgList' src='' url='' style='max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;'>"
+         +"</li>"
+         +"</ol>"
+         +"<a href='javascript:'  class='btn' onclick='addImg(this)'>选择</a>&nbsp;"
+         +"<a href='javascript:' onclick='clearImg();' class='btn'>清除</a>"
+         +"<span class='help-inline'><font color='red'>*</font> </span>");*/
+
+    }
+    <!--显示照片-->
+    /*$(function () {
+     $("input [type='file']").change(function () {
+     var file = this.files[0];
+     if (window.FileReader) {
+     var reader = new FileReader();
+     reader.readAsDataURL(file);
+     //监听文件读取结束后事件
+     reader.onloadend = function (e) {
+     showXY(e.target.result, file.fileName);
+     };
+     }
+     });
+     });
+     function showXY(source) {
+     $("#nameImage").val("");
+     $("#nameImagePreview").text(" ");
+     var img = document.getElementById("loc_img");
+     img.src = source;
+     }*/
+</script>
 <script type="text/javascript">
     $(function(){
         $("#tabs").tabs();
