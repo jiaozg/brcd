@@ -26,8 +26,6 @@ public class TbBusinessUser {
 
     private String contactPhone;
 
-    private String passWord;
-
     private String contactMail;
 
     private String servicePhone;
@@ -77,7 +75,7 @@ public class TbBusinessUser {
 
     private TbBankcardInfo tbBankcardInfo;
 
-
+    private String passWord;
 
     private volatile MultipartFile identityCardFrontImg;
 
