@@ -138,12 +138,17 @@ public class TbBusinessUserController {
         out.close();
     }
     @RequestMapping("/detail")
-    public ModelAndView detail(Integer id){
-
+    public ModelAndView detail(String id){
         TbBusinessUser byBusinessUid = tbBusinessUserService.findByBusinessUid(id);
-
-
-        return null;
+        if(byBusinessUid.getTbBankcardInfo()==null){
+            byBusinessUid.setTbBankcardInfo(new TbBankcardInfo());
+        }
+        if(byBusinessUid.getTbBusiness() == null){
+            byBusinessUid.setTbBusiness(new TbBusiness());
+        }
+        ModelAndView mv = new ModelAndView("menu/commercial/shanghuxiangqing.html");
+        mv.addObject("shang",byBusinessUid);
+        return mv;
     }
 
     @RequestMapping("toManage")
@@ -155,7 +160,7 @@ public class TbBusinessUserController {
      * @return
      */
     @RequestMapping("toUpdate")
-    public String toUpdate(Model model ,Integer businessUid){
+    public String toUpdate(Model model ,String businessUid){
         System.out.println("商户修改"+businessUid+"====================");
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);

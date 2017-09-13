@@ -8,6 +8,7 @@
     <result column="affiliation_agent" property="affiliationAgent"></result>
     <result column="business_user_type" property="businessUserType"></result>
     <result column="manage_name" property="manageName"></result>
+    <result property="businessLicensePicture" column="business_license_picture"></result>
     <result column="business_username" property="businessUsername"></result>
     <result column="legal_people_name" property="legalPeopleName"></result>
     <result column="legal_people_identity_card" property="legalPeopleIdentityCard"></result>
@@ -102,7 +103,7 @@
     WHERE business_uid=#{businessUid}
 
 </update>
-    <select id="findByBusinessUid" parameterType="java.lang.Integer" resultMap="findUser">
+    <select id="findByBusinessUid" parameterType="java.lang.String" resultMap="findUser">
 SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=bus.business_uid LEFT JOIN tb_bankcard_info bak ON us.business_uid=bak.business_uid WHERE us.business_uid=#{businessUid}
     </select>
     <!--添加商户信息-->
@@ -156,8 +157,5 @@ SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=
         <if test="contactPhone != null and contactPhone != ''">
             and contact_phone = #{contactPhone}
         </if>
-    </select>
-    <select id="">
-        
     </select>
 </mapper>

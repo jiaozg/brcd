@@ -24,7 +24,7 @@ public interface TbBusinessUserMapper {
      * @param businessUid
      * @return
      */
-    TbBusinessUser findByBusinessUid(Integer businessUid);
+    TbBusinessUser findByBusinessUid(String businessUid);
 
     //添加商户信息
     void insertBusinessUser(TbBusinessUser businessUser);

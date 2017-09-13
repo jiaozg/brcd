@@ -32,6 +32,6 @@ public interface TbBusinessUserService {
      * @param businessUid
      * @return
      */
-    TbBusinessUser findByBusinessUid(Integer businessUid);
+    TbBusinessUser findByBusinessUid(String businessUid);
 
 }
