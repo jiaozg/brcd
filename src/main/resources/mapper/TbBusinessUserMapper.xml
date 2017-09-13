@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
 <resultMap id="findUser" type="com.brcd.bean.TbBusinessUser">
-    <id column="us.business_uid" property="businessUid"></id>
+    <id column="business_uid" property="businessUid"></id>
     <result column="affiliation_agent" property="affiliationAgent"></result>
     <result column="business_user_type" property="businessUserType"></result>
     <result column="manage_name" property="manageName"></result>
@@ -43,7 +43,7 @@
         <result column="ali_industry" property="aliIndustry"></result>
         <result column="ali_type" property="aliType"></result>
         <result column="alipay_num" property="alipayNum"></result>
-        <result column="bus.business_uid" property="businessUid"></result>
+        <result column="business_uid" property="businessUid"></result>
     </association>
     <association property="tbBankcardInfo" javaType="com.brcd.bean.TbBankcardInfo">
         <id property="bank_id" column="bankId"></id>
@@ -55,7 +55,7 @@
         <result column="bank_city" property="bankCity"></result>
         <result column="bank_detailed" property="bankDetailed"></result>
         <result column="band_contact" property="bandContact"></result>
-        <result column="bak.business_uid" property="businessUid"></result>
+        <result column="business_uid" property="businessUid"></result>
     </association>
 </resultMap>
 <!--修改商户信息-->

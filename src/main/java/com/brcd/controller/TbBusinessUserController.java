@@ -48,6 +48,10 @@ public class TbBusinessUserController {
     private BankService bankService;
     @Autowired
     private TbAreaDictionaryService tbAreaDictionaryService;
+    @Autowired
+    private TbWechatTradeService tbWechatTradeService;
+    @Autowired
+    private TbAlipayTradeService tbAlipayTradeService;
     /*
     * 时间格式的转换
     */
@@ -160,13 +164,33 @@ public class TbBusinessUserController {
      * @return
      */
     @RequestMapping("toUpdate")
-    public String toUpdate(Model model ,String businessUid){
-        System.out.println("商户修改"+businessUid+"====================");
+
+    public String toUpdate(Model model ,Integer businessUid){
+
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
         TbBusinessUser business = tbBusinessUserService.findByBusinessUid(businessUid);
-        System.out.println(business);
         model.addAttribute("businessUser",business);
+        List<TbAreaDictionary> cityList = tbAreaDictionaryService.findByAreaOde(business.getManageProvince());
+        model.addAttribute("cityList",cityList);
+        List<TbAreaDictionary> districtList = tbAreaDictionaryService.findByAreaOde(business.getManageCity());
+        model.addAttribute("districtList",districtList);
+        List<TbAreaDictionary> bankCityList = tbAreaDictionaryService.findByUpAreaName(business.getTbBankcardInfo().getBankProvince());
+        model.addAttribute("bankCityList",bankCityList);
+        Bank bank=new Bank();
+        bank.setProvince(business.getTbBankcardInfo().getBankProvince());
+        bank.setCity(business.getTbBankcardInfo().getBankCity());
+        bank.setBankName(business.getTbBankcardInfo().getBankName());
+        List<Bank> bankList = bankService.findByBankName(bank);
+        model.addAttribute("bankList",bankList);
+        List<TbAlipayTrade> alipayList = tbAlipayTradeService.getAlipayTrade();
+        model.addAttribute("alipayList",alipayList);
+        List<TbWechatTrade> wechatTradeList = tbWechatTradeService.getWechatTrade();
+        model.addAttribute("wechatTradeList",wechatTradeList);
+
+        for (Bank bankl : bankList){
+            System.out.println(bankl);
+        }
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
         return "menu/commercial/businessUserUpdate.html";}
@@ -176,9 +200,12 @@ public class TbBusinessUserController {
      *@return
      */
     @RequestMapping("updateTbBusinessUser")
-    public String updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
+    public ModelAndView updateTbBusinessUser(TbBusinessUser tbBusinessUser,HttpServletRequest request,HttpSession session) {
         tbBusinessUserService.updateTbBusinessUser(tbBusinessUser);
-        return "menu/commercial/shanghuxinxifguanli.html";
+        TbBusinessUser tb=new TbBusinessUser();
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
+        tb.setAffiliationAgent(agentLogin.getAgentNumber());
+        return query(request,session,tb,null);
 
 
     }
@@ -191,7 +218,6 @@ public class TbBusinessUserController {
     @RequestMapping("findByBankName")
     @ResponseBody
     public List<Bank> findByBankName(Bank bank){
-        System.out.println(bank.getProvince());
         return bankService.findByBankName(bank);
     }
     @RequestMapping("findBankNo")
