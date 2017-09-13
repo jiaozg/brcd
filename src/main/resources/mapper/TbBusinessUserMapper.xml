@@ -3,7 +3,61 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.TbBusinessUserMapper">
-
+<resultMap id="findUser" type="com.brcd.bean.TbBusinessUser">
+    <id column="business_uid" property="businessUid"></id>
+    <result column="affiliation_agent" property="affiliationAgent"></result>
+    <result column="business_user_type" property="businessUserType"></result>
+    <result column="manage_name" property="manageName"></result>
+    <result property="businessLicensePicture" column="business_license_picture"></result>
+    <result column="business_username" property="businessUsername"></result>
+    <result column="legal_people_name" property="legalPeopleName"></result>
+    <result column="legal_people_identity_card" property="legalPeopleIdentityCard"></result>
+    <result column="contact_people" property="contactPeople"></result>
+    <result column="password" property="password"></result>
+    <result column="contact_phone" property="contactPhone"></result>
+    <result column="contact_mail" property="contactMail"></result>
+    <result column="service_phone" property="servicePhone"></result>
+    <result column="manage_address" property="manageAddress"></result>
+    <result column="manage_province" property="manageProvince"></result>
+    <result column="manage_city" property="manageCity"></result>
+    <result column="manage_district" property="manageDistrict"></result>
+    <result column="business_license_no" property="businessLicenseNo"></result>
+    <result column="register_address" property="registerAddress"></result>
+    <result column="identity_card_front" property="identityCardFront"></result>
+    <result column="identity_card_reverse" property="identityCardReverse"></result>
+    <result column="identity_card_hand" property="identityCardHand"></result>
+    <result column="bank_card_front" property="bankCardFront"></result>
+    <result column="door_picture" property="doorPicture"></result>
+    <result column="register_license_picture" property="registerLicensePicture"></result>
+    <result column="business_user_status" property="businessUserStatus"></result>
+    <result column="business_user_key" property="businessUserKey"></result>
+    <association property="tbBusiness" javaType="com.brcd.bean.TbBusiness">
+        <id property="business_id" column="businessId"></id>
+        <result column="wechat_pay" property="wechatPay"></result>
+        <result column="wechat_rate" property="wechatRate"></result>
+        <result column="wechat_industry" property="wechatIndustry"></result>
+        <result column="wechat_type" property="wechatType"></result>
+        <result column="wechat_num" property="wechatNum"></result>
+        <result column="alipay" property="alipay"></result>
+        <result column="ali_rate" property="aliRate"></result>
+        <result column="ali_industry" property="aliIndustry"></result>
+        <result column="ali_type" property="aliType"></result>
+        <result column="alipay_num" property="alipayNum"></result>
+        <result column="business_uid" property="businessUid"></result>
+    </association>
+    <association property="tbBankcardInfo" javaType="com.brcd.bean.TbBankcardInfo">
+        <id property="bank_id" column="bankId"></id>
+        <result column="bankcard_type" property="bankcardType"></result>
+        <result column="bankcard_name" property="bankcardName"></result>
+        <result column="bankcard_num" property="bankcardNum"></result>
+        <result column="bank_name" property="bankName"></result>
+        <result column="bank_province" property="bankProvince"></result>
+        <result column="bank_city" property="bankCity"></result>
+        <result column="bank_detailed" property="bankDetailed"></result>
+        <result column="band_contact" property="bandContact"></result>
+        <result column="business_uid" property="businessUid"></result>
+    </association>
+</resultMap>
 <!--修改商户信息-->
 <update id="updateTbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
     UPDATE  tb_business_user SET
@@ -19,35 +73,45 @@
     manage_address=#{manageAddress},
     manage_province=#{manageProvince},
     manage_city=#{manageCity},
-    manage_district=#{manageDistrict},
-    identity_card_front=#{identityCardFront},
-    identity_card_reverse=#{identityCardReverse},
-    identity_card_hand=#{identityCardHand},
+    manage_district=#{manageDistrict}
+    <if test="identityCardFront!=null">,
+    identity_card_front=#{identityCardFront}
+    </if>
+    <if test="identityCardReverse!=null">,
+    identity_card_reverse=#{identityCardReverse}
+    </if>
+    <if test="identityCardHand!=null">,
+    identity_card_hand=#{identityCardHand}
+    </if>
+    <if test="bankCardFront!=null">,
     bank_card_front=#{bankCardFront}
-    <if test="business_user_type=='ENTERPRISE'">
-        ,
-        business_license_no=#{businessLicenseNo},
-        register_address=#{registerAddress},
-        business_license_picture=#{businessLicensePicture},
-        door_picture=#{doorPicture},
-        register_license_picture=#{registerLicensePicture}
+    </if>
+    <if test="businessUserType=='ENTERPRISE'">
+       ,business_license_no=#{businessLicenseNo}
+       ,register_address=#{registerAddress}
+
+        <if test="businessLicensePicture!=null">
+        ,business_license_picture=#{businessLicensePicture}
+        </if>
+        <if test="doorPicture!=null">
+        ,door_picture=#{doorPicture}
+        </if>
+        <if test="registerLicensePicture!=null">
+        ,register_license_picture=#{registerLicensePicture}
+        </if>
     </if>
     WHERE business_uid=#{businessUid}
 
 </update>
-<!--
-,
-   /* identity_card_front=#{identityCardFront},
-    identity_card_reverse=#{identityCardReverse},
-    identity_card_hand=#{identityCardHand},
-    bank_card_front=#{bankCardFront},*/
--->
+    <select id="findByBusinessUid" parameterType="java.lang.String" resultMap="findUser">
+SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=bus.business_uid LEFT JOIN tb_bankcard_info bak ON us.business_uid=bak.business_uid WHERE us.business_uid=#{businessUid}
+    </select>
     <!--添加商户信息-->
     <insert id="insertBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
         INSERT INTO tb_business_user(business_uid, affiliation_agent, business_user_type,
         manage_name, business_username, legal_people_name,
         legal_people_identity_card, contact_people,
-        contact_phone, contact_mail, service_phone,
+        password,contact_phone,contact_mail, service_phone,
         manage_address, manage_province, manage_city,
         manage_district, business_license_no, register_address,
         identity_card_front, identity_card_reverse,
@@ -56,7 +120,7 @@
         start_time, end_time, business_user_key)
         VALUES (#{businessUid}, #{affiliationAgent}, #{businessUserType},
         #{manageName}, #{businessUsername}, #{legalPeopleName},
-        #{legalPeopleIdentityCard}, #{contactPeople},
+        #{legalPeopleIdentityCard}, #{contactPeople},#{passWord},
         #{contactPhone}, #{contactMail}, #{servicePhone},
         #{manageAddress}, #{manageProvince}, #{manageCity},
         #{manageDistrict}, #{businessLicenseNo}, #{registerAddress},
@@ -66,10 +130,6 @@
         #{startTime}, #{endTime}, #{businessUserKey})
     </insert>
 
-    <resultMap id="businessUser" type="com.brcd.bean.TbBusinessUser">
-        <id column="business_uid" property="businessUid"></id>
-        <result column="manage_name" property="manageName"></result>
-    </resultMap>
 
     <select id="query" parameterType="com.brcd.bean.TbBusinessUser" resultType="com.brcd.bean.TbBusinessUser">
         SELECT * FROM tb_business_user b,tb_agent a where b.affiliation_agent = a.agent_number and a.agent_number = #{affiliationAgent}

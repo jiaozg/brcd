@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.TbAreaDictionaryMapper">
+    <!--查询省-->
+  <select id="findByareaId" parameterType="java.lang.Integer" resultType="com.brcd.bean.TbAreaDictionary">
+      SELECT area_code,up_area_name FROM tb_area_dictionary WHERE up_area_ode=#{upAreaOde}
+  </select>
+    <!--查询市-->
+  <select id="findByAreaOde" parameterType="java.lang.Integer" resultType="com.brcd.bean.TbAreaDictionary">
+SELECT area_code,up_area_name FROM tb_area_dictionary WHERE up_area_ode=#{areaCode}
+  </select>
+    <!--根据省名称查询市-->
+    <select id="findByUpAreaName" parameterType="java.lang.String" resultType="com.brcd.bean.TbAreaDictionary">
+SELECT area_code,up_area_name FROM tb_area_dictionary WHERE up_area_ode=(SELECT area_code FROM tb_area_dictionary WHERE up_area_Name=#{upAreaName})
+    </select>
+</mapper>

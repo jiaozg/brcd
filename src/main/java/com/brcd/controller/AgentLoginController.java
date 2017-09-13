@@ -1,11 +1,15 @@
 
 package com.brcd.controller;
 
+import com.brcd.bean.FtpMsg;
 import com.brcd.bean.TbAgent;
 import com.brcd.common.util.DateUtil;
 import com.brcd.common.util.MD5Util;
 import com.brcd.service.AgentLoginService;
+import com.brcd.service.FtpMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-
 
 /**
  * Created by 任彩雨 on 2017/9/5.
@@ -27,30 +30,38 @@ public class AgentLoginController {
     @Autowired
     private AgentLoginService agentLoginService;
 
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
+
     @RequestMapping("toAgentLogin")
     public String toAgentLogin() {
-        System.out.println("-------到登陆的界面------");
         return "login";
     }
 
     //退出登录
     @RequestMapping("AgentExit")
     public String AgentExit(HttpSession session) {
-        session.invalidate();
+//        session.removeAttribute("agentLogin");
         return "login";
     }
 
     //登录
     @RequestMapping("AgentLogin")
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
-
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
+           boolean exists = redisTemplate.hasKey("agentLogin");
             if (agentLogin != null) {
-                session.setAttribute("agentLogin", agentLogin);
+               if (exists == true) {
+                    TbAgent agentLogin1 = (TbAgent) session.getAttribute("agentLogin");
+                    session.setAttribute("agentLogin", agentLogin1);
+                } else {
+                    session.setAttribute("agentLogin", agentLogin);
+                }
+               System.err.println(session.getAttribute("agentLogin"));
                 return "home/home";
             }
-        }
+       }
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
     }

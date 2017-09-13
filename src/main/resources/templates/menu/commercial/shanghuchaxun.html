@@ -26,45 +26,46 @@
     <meta name="decorator" content="default"/>
     <script>
         $(function () {
-            $("#btnSubmit").click(function(){
-                $("#pageNo").val(1);
-                $("#searchForm").submit();
+            $("#btnSubmit").click(function(){//点击提交按钮触发
+                $("#pageNo").val(1);//将页码重置为0
+                $("#searchForm").submit();//然后提交保单
             })
 
         })
         function exportExcel() {
-            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v,h,f) {
-                if(v=="ok"){
-                    alert(1111);
-                    $("#searchForm").attr("action","/brcd/businessUser/exportExcel");
-                    $("#searchForm").submit();
+            top.$.jBox.confirm("确定要导出用户数据么","系统提示",function (v) {
+                if(v=="ok"){//点击确认进入if
+                    $("#searchForm").attr("action","/brcd/businessUser/exportExcel");//修改action
+                    $("#searchForm").submit();//表单提交
+                    $("#searchForm").attr("action","/brcd/businessUser/query");//修改action
                 }
             })
         }
         function skip() {
-            if($("#skipPage").val() > $("#pageCount").text()){
-                $("#skipPage").val($("#pageCount").text())
+
+            if(parseInt($("#skipPage").val()) > parseInt($("#pageCount").text())){//如果要跳转的页大于最大的页码 例如最多只有5页 你输入7 想要跳到7页
+                $("#skipPage").val(parseInt($("#pageCount").text()))//则会跳转到最后一页
             }
-            if($("#skipPage").val() <= 0){
-                $("#skipPage").val(1)
+            if(parseInt($("#skipPage").val()) <= 0){//如果用户输入0页 甚至负页 触发
+                $("#skipPage").val(1);//设置为跳转到第一页
             }
-            $("#pageNo").val($("#skipPage").val());
-            $("#searchForm").submit();
+            $("#pageNo").val($("#skipPage").val());//设置要跳转页
+            $("#searchForm").submit();//提交表单,开始跳转
         }
-        function showApikey(ele){
+        function showApikey(ele){//显示密钥
             $(ele).css("display","none");
             $(ele).next().css("display","block");
         }
-        function page(s){
-            var pageCount =  $("#pageCount").text();
+        function page(s){//分页
+            var pageCount =  $("#pageCount").text();//这是总页码
 
-            if(s == "n" && parseInt($("#pageNo").val()) < pageCount ){
-                $("#pageNo").val(parseInt($("#pageNo").val())+1);
+            if(s == "n" && parseInt($("#pageNo").val()) < pageCount ){//点击下一页并且当前页小于总页数
+                $("#pageNo").val(parseInt($("#pageNo").val())+1);//当前页加一
             }
-            if(s == "p" && parseInt($("#pageNo").val()) > 1){
-                $("#pageNo").val(parseInt($("#pageNo").val())-1);
+            if(s == "p" && parseInt($("#pageNo").val()) > 1){//点击上一页并且当前页大于第一页
+                $("#pageNo").val(parseInt($("#pageNo").val())-1);//当前页减一
             }
-            $("#searchForm").submit();
+            $("#searchForm").submit();//表单提交
             return false;
         }
     </script>
@@ -76,7 +77,9 @@
 <form id="searchForm" class="breadcrumb form-search" th:action="@{/businessUser/query}" action="#" method="get">
     <input id="pageNo" type="hidden" name="currentPage" th:value="${#request.getAttribute('currentPage')}"/>
      <!--   <input id="operate" name="operate" type="hidden" value="detail"/>-->
-    <input id="agentId" name="affiliationAgent" type="hidden" value="21564546514"/>
+
+    <input id="agentId" name="affiliationAgent" type="hidden" th:value="${session.agentLogin.agentNumber}" value="21564546514"/>
+
     <ul class="ul-form">
         <li><label>商户编号：</label>
             <input id="customerNum" name="businessUid" th:value="${history.businessUid}" class="input-medium" type="text" value="" maxlength="32"/>
@@ -84,8 +87,8 @@
         <li style="margin-left: 60px;"><label>商户类型：</label>
             <select id="customerType" name="businessUserType"  style="width:155px;" class="input-medium">
                 <option value="" >--请选择商户类型--</option>
-                <option value="企业商户" th:selected="${history.businessUserType=='企业商户'}">企业商户</option>
-                <option value="个人商户" th:selected="${history.businessUserType=='个人商户'}">个人商户</option>
+                <option value="ENTERPRISE" th:selected="${history.businessUserType=='ENTERPRISE'}">企业商户</option>
+                <option value="PERSONAL" th:selected="${history.businessUserType=='PERSONAL'}">个人商户</option>
             </select>
         </li>
         <li style="margin-left: 60px;"><label>法人姓名：</label>
@@ -114,14 +117,14 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-                <input name="startTime"th:value="${#dates.format(history.startTime, 'yyyy-MM-dd')}"  class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+                <input name="startTime"type="text" th:value="${#dates.format(history.startTime, 'yyyy-MM-dd')}"  class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
         </li>
         <li style="margin-left: 60px;">
             <label>结束时间：</label>
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:143px;position: relative;"
                    value=""
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>-->
-            <input name="endTime" th:value="${#dates.format(history.endTime, 'yyyy-MM-dd')}" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input name="endTime" type="text" th:value="${#dates.format(history.endTime, 'yyyy-MM-dd')}" class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
         </li>
 
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
@@ -168,12 +171,19 @@
         <td>
             <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:text="${shang.businessUid}">C149549272476110416</a>
         </td>
-        <td th:text="${shang.businessUserType}">个体商户</td>
+        <td >
+            <span th:if="${shang.businessUserType == 'ENTERPRISE'}">企业商户</span>
+            <span th:if="${shang.businessUserType == 'PERSONAL'}">个人商户</span>
+        </td>
         <td th:text="${shang.legalPeopleName}">张明盟</td>
         <td th:text="${shang.manageName}">张明盟小卖部</td>
-        <td th:if="${shang.businessUserStatus==0}">待审核</td>
-        <td th:if="${shang.businessUserStatus==1}">审核通过</td>
-        <td th:if="${shang.businessUserStatus==2}">审核拒绝</td>
+
+        <td>
+            <span th:if="${shang.businessUserStatus==0}">待审核</span>
+            <span th:if="${shang.businessUserStatus==1}">审合通过</span>
+            <span th:if="${shang.businessUserStatus==2}">审核拒绝</span>
+        </td>
+
         <td>
             <a href="javascript:void(0);" onclick="showApikey(this)">查看密钥</a>
             <span style="display:none;" th:text="${shang.businessUserKey}">
@@ -184,7 +194,8 @@
         <td th:text="${#dates.format(shang.startTime, 'yyyy-MM-dd')}">2017-05-23 06:38:44</td>
 
         <td>
-            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709">详情</a>
+            <a href="/a/operate/customer/brcbCustomer/detailForm?id=534709" th:href="@{/businessUser/detail(id=${shang.businessUid})}">详情</a>/
+            <a href="#" th:href="@{toUpdate(businessUid=${shang.businessUid})}">修改</a>
         </td>
     </tr>
 
@@ -195,7 +206,7 @@
     <li><a href="#" onclick="page('p')" disabled="true">&#171; 上一页</a></li>
     <li class="active"><a href="javascript:" th:text="${#request.getAttribute('currentPage')}">1</a></li>
     <li ><a href="#" onclick="page('n')">下一页 &#187;</a></li>
-    <li class="disabled controls"><a href="javascript:">共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页，跳转至 <input id="skipPage" type="text"/> 页</a></li>
+    <li class="disabled controls"><a href="javascript:">共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页，跳转至 <input id="skipPage" type="number"/> 页</a></li>
     <li><a class="btn" href="#" onclick="skip()">GO</a></li>
 </ul>
     <div style="clear:both;"></div></div>

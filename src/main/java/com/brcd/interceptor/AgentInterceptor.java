@@ -17,10 +17,10 @@ public class AgentInterceptor implements HandlerInterceptor {
         String url = request.getRequestURI();
         HttpSession session = request.getSession();
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
-        if (url.indexOf("toAgentLogin") > -1) {
+        if (url.indexOf("toAgentLogin") >= -1) {
             return true;
         }
-        if (url.indexOf("AgentLogin") > -1) {
+        if (url.indexOf("AgentLogin") >= -1) {
             return true;
         }if (url.indexOf("goToIndex") > -1) {
             return true;

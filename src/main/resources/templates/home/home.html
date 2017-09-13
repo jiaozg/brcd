@@ -219,13 +219,19 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}"
+                                <a href="../user/updatePwd.html" th:href="@{'/toUpdatePassword'}"
+                                   target="mainFrame">
+                                    <i class="glyph-icon float-right icon-caret-right"></i>
+                                    修改密码
+                                </a>
+                            </li>
+                                <li>
+                                    <a href="../user/updateFtpPwd.html" th:href="@{'/toUpdateFtpPwd'}"
                                        target="mainFrame">
                                         <i class="glyph-icon float-right icon-caret-right"></i>
-                                        修改密码
+                                        修改FTP密码
                                     </a>
                                 </li>
-
                             </ul>
                             <div class="pad5A button-pane button-pane-alt text-center">
                                 <a href="/a/logout" th:href="@{AgentExit}"
@@ -275,13 +281,13 @@
                         <div class="sidebar-submenu" pid="4be70e41a232454ebd120c94e1f0b50b">
                             <ul>
                                 <li class="leaf " pid="b8d6153f760d4de3b59883c84ff92e98">
-                                    <a style="padding-left:30px;" href="../menu/agent/agentInfo.html" title="代理商信息"
+                                    <a style="padding-left:30px;" href="../brcd/agent/getAgent" title="代理商信息"
                                        target="mainFrame">
                                         <i class="glyph-icon icon-circle-arrow-right" style="color:#cc0001;"></i>
                                         <span>代理商信息</span></a>
                                 </li>
                                 <li class="leaf " pid="b8d6153f760d4de3b59883c84ff92e98">
-                                    <a style="padding-left:30px;" href="../menu/agent/adddailishang.html    "
+                                    <a style="padding-left:30px;" href="../brcd/agent/initToken"
                                        title="代理商信息" target="mainFrame">
                                         <i class="glyph-icon icon-circle-arrow-right" style="color:#cc0001;"></i>
                                         <span>添加代理商</span></a>
@@ -367,16 +373,17 @@
                             <i class="glyph-icon icon-cog" style="color:#cc0001;"></i>
                             <span>商户管理</span>
                         </a>
+                        <!-添加代理-->
                         <div class="sidebar-submenu" pid="144c98b73d0c4e15b0d764f3bcbdd889">
                             <ul>
-                                <li class="leaf " pid="b968aea48b9e49a7aed21f16281a039f">
-                                    <a style="padding-left:30px;" th:href="@{/businessUser/query}" href="../menu/commercial/shanghuchaxun.html"
+                              <!--  <li class="leaf " pid="b968aea48b9e49a7aed21f16281a039f">
+                                    <a style="padding-left:30px;" th:href="@{/businessUser/query(affiliationAgent=${session.agentLogin.agentNumber})}" href="../menu/commercial/shanghuchaxun.html"
                                        title="商户查询" target="mainFrame">
                                         <i class="glyph-icon icon-reorder" style="color:#cc0001;"></i>
                                         <span>商户查询</span></a>
-                                </li>
+                                </li>-->
                                 <li class="leaf " pid="b968aea48b9e49a7aed21f16281a039f">
-                                    <a style="padding-left:30px;"  href="../menu/commercial/shanghuxinxifguanli.html" th:href="@{/businessUser/toManage}"
+                                    <a style="padding-left:30px;"  href="../menu/commercial/shanghuxinxifguanli.html" th:href="@{/businessUser/query(affiliationAgent=${session.agentLogin.agentNumber})}"
                                        title="商户信息管理" target="mainFrame">
                                         <i class="glyph-icon icon-cog" style="color:#cc0001;"></i>
                                         <span>商户信息管理</span></a>
@@ -468,7 +475,7 @@
                     </li>
                     <li>
                     </li>
-<!--                    <li>
+                    <li>
                         <a href="#" title="对账管理">
                             <i class="glyph-icon icon-circle-arrow-right" style="color:#cc0001;"></i>
                             <span>对账管理</span>
@@ -484,7 +491,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>-->
+                    </li>
                     <li>
                     </li>
                     <li>

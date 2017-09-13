@@ -19,6 +19,13 @@ public interface TbBusinessUserMapper {
      */
     void updateTbBusinessUser(TbBusinessUser tbBusinessUser);
 
+    /**
+     * 根据主键查询商户
+     * @param businessUid
+     * @return
+     */
+    TbBusinessUser findByBusinessUid(String businessUid);
+
     //添加商户信息
     void insertBusinessUser(TbBusinessUser businessUser);
 

@@ -34,8 +34,6 @@
     <script src="../../../static/static/common/jeesite.js" type="text/javascript"
     th:src="@{../static/common/jeesite.js}"></script>
     <script type="text/javascript">var ctx = '/a', ctxStatic='/static';</script>
-
-
     <meta name="decorator" content="default"/>
     <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css"
     th:href="@{../static/jquery-ui/ui.css}">
@@ -45,6 +43,42 @@
     th:src="@{../static/jquery-tmpl/template.js}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#channelStatus-1").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/wechatTrade/findWechatTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, wechatTrades) {
+                                var $option = '<option  value='+wechatTrades.tradeName+'>'+wechatTrades.tradeName+'</option>';
+                                $('#channelBusinessType-1').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-3').prop("disabled", true);
+                }else{
+                    $('#channelStatus-3').prop("disabled", false);
+                }
+            })
+            $("#channelStatus-3").change(function () {
+                if($(this).val()=="Y"){
+                    $.ajax({
+                        type:"get",
+                        url:"/brcd/AlipayTrade/findAlipayTrade",
+                        dataType : "json",
+                        success:function(data){
+                            $.each(data, function(i, alipayTrade) {
+                                var $option = '<option  value='+alipayTrade.firstType+'>'+alipayTrade.firstType+'</option>';
+                                $('#channelBusinessType-3').append($option);
+                            });
+                        }
+                    });
+                    $('#channelStatus-1').prop("disabled", true);
+                }else{
+                    $('#channelStatus-1').prop("disabled", false);
+                }
+            })
             //判断当前商户是否有信息变更在审核中
             $.ajax({
                 type:"post",
@@ -142,8 +176,8 @@
 
                 var businessAddress=$("#businessAddressSel").val();
                 var province=$("#provinceSel").val();
-                var city=$("#citySel").val();
-                var area=$("#areaSel").val();
+                var city=$("#city1").val();
+                var area=$("#district1").val();
                 if(channelStatus == 'Y'){
                     if(businessAddress==null || businessAddress==''){
                         window.top.openDialog('提示：开通支付宝经营地址不能为空');
@@ -469,7 +503,7 @@
                         }
                         //经营地区
                         $('#provinceSel').append($businessOption);
-                    });
+                   });
                 }
             });
 
@@ -828,7 +862,7 @@
 </ul><br/>
 <form id="inputForm" onsubmit="toSubmit()" class="form-horizontal" action="updateTbBusinessUser" method="post" enctype="multipart/form-data">
 
-    <input id="id" name="businessUid" type="hidden" value="10"/>
+    <input id="id" name="businessUid" th:value="${businessUser.businessUid}" type="hidden" value="10"/>
     <script type="text/javascript">top.$.jBox.closeTip();</script>
 
     <h6>商户基本信息</h6>
@@ -851,8 +885,8 @@
                 <label class="control-label">商户类型：</label>
                 <div class="controls">
                     <select id="customerTypeSel" name="businessUserType" class="input-xlarge required">
-                        <option value="ENTERPRISE">企业商户</option>
-                        <option value="PERSONAL" selected="selected">个体户</option>
+                        <option value="ENTERPRISE" th:selected="${businessUser.businessUserType=='ENTERPRISE'}">企业商户</option>
+                        <option value="PERSONAL" th:selected="${businessUser.businessUserType=='PERSONAL'}">个体户</option>
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
@@ -860,7 +894,7 @@
             <td><div class="control-group">
                 <label class="control-label">经营名称：</label>
                 <div class="controls">
-                    <input id="businessName" name="manageName" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="255"/>
+                    <input id="businessName" name="manageName" th:value="${businessUser.manageName}" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="255"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -870,14 +904,14 @@
             <td><div class="control-group">
                 <label class="control-label">商户名称：</label>
                 <div class="controls">
-                    <input id="customerName" name="businessUsername" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="50"/>
+                    <input id="customerName" name="businessUsername" th:value="${businessUser.businessUsername}" class="input-xlarge required" type="text" value="张明盟小卖部" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
             <td><div class="control-group">
                 <label class="control-label">法人姓名：</label>
                 <div class="controls">
-                    <input id="legalName" name="legalPeopleName" class="input-xlarge required" type="text" value="张明盟" maxlength="32"/>
+                    <input id="legalName" name="legalPeopleName" th:value="${businessUser.legalPeopleName}" class="input-xlarge required" type="text" value="张明盟" maxlength="32"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -887,7 +921,7 @@
                 <div class="control-group">
                     <label class="control-label">法人身份证：</label>
                     <div class="controls">
-                        <input id="legalId" name="legalPeopleIdentityCard" class="input-xlarge required isIdCardNo" type="text" value="130826199106117918" maxlength="32"/>
+                        <input id="legalId" name="legalPeopleIdentityCard" th:value="${businessUser.legalPeopleIdentityCard}" class="input-xlarge required isIdCardNo" type="text" value="130826199106117918" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -895,7 +929,7 @@
             <td><div class="control-group">
                 <label class="control-label">联系人：</label>
                 <div class="controls">
-                    <input id="contact" name="contactPeople" class="input-xlarge required" type="text" value="张明盟" maxlength="50"/>
+                    <input id="contact" name="contactPeople" th:value="${businessUser.contactPeople}" class="input-xlarge required" type="text" value="张明盟" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -904,7 +938,7 @@
             <td><div class="control-group">
                 <label class="control-label">联系电话：</label>
                 <div class="controls">
-                    <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="15720308087" maxlength="50"/>
+                    <input id="contactPhone" name="contactPhone" th:value="${businessUser.contactPhone}" class="input-xlarge required isMobile" type="text" value="15720308087" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -912,7 +946,7 @@
                 <div class="control-group">
                     <label class="control-label">联系邮箱：</label>
                     <div class="controls">
-                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" value="" maxlength="50"/>
+                        <input id="contactEmail" name="contactMail" th:value="${businessUser.contactMail}" class="input-xlarge email" type="text" value="" maxlength="50"/>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -922,7 +956,7 @@
             <td><div class="control-group">
                 <label class="control-label">客服电话：</label>
                 <div class="controls">
-                    <input id="servicePhone" name="servicePhone" class="input-xlarge telephone required " type="text" value="18410178782" maxlength="20"/>
+                    <input id="servicePhone" name="servicePhone" th:value="${businessUser.servicePhone}" class="input-xlarge telephone required " type="text" value="18410178782" maxlength="20"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
 
@@ -933,27 +967,28 @@
                 <div class="control-group">
                     <label class="control-label">经营地址：</label>
                     <div class="controls">
-                        <input id="businessAddressSel" name="manageAddress" class="input-xlarge" type="text" value="" maxlength="50"/>
+                        <input id="businessAddressSel" name="manageAddress" th:value="${businessUser.manageAddress}" class="input-xlarge" type="text" value="" maxlength="50"/>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr data-toggle="distpicker">
+        <tr>
 
             <td>
 
                 <div class="control-group">
                 <label class="control-label">经营省名称：</label>
                 <div class="controls">
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                    <select id="provinceSel"  name="manageProvince" class="input-xlarge required">
+                        <option  value=""  selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                        <option th:selected="${province.areaCode==businessUser.manageProvince}"  th:each="province:${provinceList}" th:text="${province.upAreaName}" th:value="${province.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
                     </select>
                 </div>
             </div>
                 <div class="control-group">
                     <label class="control-label" ></label>
                     <div class="controls">
-                      <li></li>
+                      <dl></dl>
                     </div>
                 </div>
             </td>
@@ -961,16 +996,18 @@
                 <div class="control-group">
                     <label class="control-label" >经营市名称：</label>
                     <div class="controls">
-                        <select id="city1" name="manageCity" class="input-xlarge">
+                        <select id="city1" name="manageCity" class="input-xlarge required">
                             <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                            <option th:selected="${city.areaCode==businessUser.manageCity}"  th:each="city:${cityList}" th:text="${city.upAreaName}" th:value="${city.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" >经营区名称：</label>
                     <div class="controls">
-                        <select id="district1" name="manageDistrict" class="input-xlarge">
+                        <select id="district1" name="manageDistrict" class="input-xlarge required">
                             <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                            <option th:selected="${district.areaCode==businessUser.manageDistrict}"  th:each="district:${districtList}" th:text="${district.upAreaName}" th:value="${district.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
                         </select>
                     </div>
 
@@ -988,7 +1025,7 @@
             <td><div class="control-group">
                 <label class="control-label">注册地址：</label>
                 <div class="controls">
-                    <input id="address" name="registerAddress" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="address" name="registerAddress" th:value="${businessUser.registerAddress}" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -996,7 +1033,7 @@
             <td><div class="control-group">
                 <label class="control-label">营业执照编号：</label>
                 <div class="controls">
-                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="licenseNo" name="businessLicenseNo" th:value="${businessUser.businessLicenseNo}" class="input-xlarge required" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -1006,6 +1043,7 @@
     <h6>业务信息</h6>
     <hr width="100%" style="border:1px solid #008fe2;"/>
     <div class="control-group">
+        <input type="hidden" name="tbBusiness.businessUid" th:value="${businessUser.businessUid}">
         <label class="control-label">通道费率设置：</label>
         <div id="tabs">
             <ul>
@@ -1029,9 +1067,9 @@
                 <div class="control-group">
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
-                        <select id="channelStatus-1" name="tbBusiness.wechatPay" data-index="1" class="input-xlarge channelStatus">
-                            <option value="Y"  >开通</option>
-                            <option value="N" selected="selected">不开通</option>
+                        <select  id="channelStatus-1" name="tbBusiness.wechatPay" data-index="1" class="input-xlarge channelStatus">
+                            <option th:selected="${businessUser.tbBusiness.wechatPay=='Y'}" value="Y" >开通</option>
+                            <option th:selected="${businessUser.tbBusiness.wechatPay=='N'}" value="N" selected="selected">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1042,7 +1080,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input name="tbBusiness.wechatRate" data-index = "1" value="" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-1">
+                                    <input name="tbBusiness.wechatRate" th:value="${businessUser.tbBusiness.wechatRate}" data-index = "1" value="" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-1">
 
                                     <span id="tradeFee_label_1" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1068,6 +1106,7 @@
                                     <div class="controls">
                                         <select id="channelBusinessType-1" name="tbBusiness.wechatIndustry" data-index="1" class="input-xlarge required">
                                             <option value="" selected="selected">--请选择经营行业--</option>
+                                            <option th:each="wechat:${wechatTradeList}" th:selected="${wechat.tradeName==businessUser.tbBusiness.wechatIndustry}" th:text="${wechat.tradeName}" th:value="${wechat.tradeName}"></option>
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
@@ -1083,8 +1122,8 @@
                                     <div class="controls">
                                         <select id="brcbChannelFeeList0.contactType" name="tbBusiness.wechatType" data-index="1" class="input-xlarge">
                                             <option value="" selected="selected">--请选择账号类型--</option>
-                                            <option value="type_wechatid">收款人微信号</option>
-                                            <option value="type_openid">收款人openId</option>
+                                            <option value="type_wechatid" th:selected="${businessUser.tbBusiness.wechatType=='type_wechatid'}">收款人微信号</option>
+                                            <option value="type_openid" th:selected="${businessUser.tbBusiness.wechatType=='type_openid'}">收款人openId</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1093,7 +1132,7 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号：</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.contactId" name="tbBusiness.wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
+                                        <input id="brcbChannelFeeList0.contactId" th:value="${businessUser.tbBusiness.wechatNum}" name="tbBusiness.wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
                                     </div>
                                 </div>
                             </td>
@@ -1169,8 +1208,8 @@
                     <label class="control-label">是否开通：</label>
                     <div class="controls">
                         <select id="channelStatus-3" name="tbBusiness.alipay" data-index="3" class="input-xlarge channelStatus">
-                            <option value="Y" >开通</option>
-                            <option value="N" selected="selected">不开通</option>
+                            <option value="Y" th:selected="${businessUser.tbBusiness.alipay=='Y'}" >开通</option>
+                            <option value="N" th:selected="${businessUser.tbBusiness.alipay=='N'}" selected="selected">不开通</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1181,7 +1220,7 @@
                             <td><div class="control-group">
                                 <label class="control-label">收款费率%：</label>
                                 <div class="controls">
-                                    <input name="tbBusiness.aliRate" data-index = "3" value="0.2500" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-3">
+                                    <input name="tbBusiness.aliRate" th:value="${businessUser.tbBusiness.aliRate}" data-index = "3" value="0.2500" type="text" htmlEscape="false" maxlength="7"  class="input-xlarge required number checkSign tradeFee" id="tradeFee-3">
 
                                     <span id="tradeFee_label_3" style="color:red;"></span>
                                     <span class="help-inline"><font color="red">*</font> </span>
@@ -1207,6 +1246,8 @@
                                     <div class="controls">
                                         <select id="channelBusinessType-3" name="tbBusiness.aliIndustry" data-index="3" class="input-xlarge required">
                                             <option value="">--请选择经营行业--</option>
+                                            <option th:selected="${alipay.firstType==businessUser.tbBusiness.aliType}" th:each="alipay:${alipayList}" th:value="${alipay.firstType}" th:text="${alipay.firstType}"></option>
+
                                         </select>
                                         <span class="help-inline"><font color="red">*</font> </span>
                                     </div>
@@ -1282,11 +1323,13 @@
         <tr>
             <td>
                 <div class="control-group">
+                    <input type="hidden" name="tbBankcardInfo.businessUid" th:value="${businessUser.businessUid}">
+                    <input type="hidden" id="bankCity" th:value="${businessUser.tbBankcardInfo.bankCity}">
                     <label class="control-label">账户类型 ：</label>
                     <div class="controls">
-                        <select id="accountTypeHidden" name="tbBankCardInfo.bankcardType" class="input-xlarge ">
-                            <option value="COMPANY">公司账户</option>
-                            <option value="PERSONAL" selected="selected">个人账户</option>
+                        <select id="accountTypeHidden" name="tbBankcardInfo.bankcardType" class="input-xlarge ">
+                            <option value="COMPANY" th:selected="${businessUser.tbBankcardInfo.bankcardType=='COMPANY'}">公司账户</option>
+                            <option value="PERSONAL" th:selected="${businessUser.tbBankcardInfo.bankcardType=='PERSONAL'}" selected="selected">个人账户</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1296,7 +1339,7 @@
                 <div class="control-group">
                     <label class="control-label">开户户名：</label>
                     <div class="controls">
-                        <input id="accountNameHidden" name="tbBankCardInfo.bankcardName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
+                        <input id="accountNameHidden" th:value="${businessUser.tbBankcardInfo.bankcardName}" name="tbBankcardInfo.bankcardName" class="input-xlarge required" type="text" value="张明盟" maxlength="100"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1307,7 +1350,7 @@
                 <div class="control-group">
                     <label class="control-label">开户卡号：</label>
                     <div class="controls">
-                        <input id="bankCardInfo.bankCard" name="tbBankCardInfo.bankcardNum" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
+                        <input id="bankCardInfo.bankCard" th:value="${businessUser.tbBankcardInfo.bankcardNum}" name="tbBankcardInfo.bankcardNum" class="input-xlarge required isBankCard" type="text" value="622908321066573415" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
@@ -1316,23 +1359,24 @@
                 <div class="control-group">
                     <label class="control-label">开户行名称：</label>
                     <div class="controls">
-                        <select id="bankNameSel" name="tbBankCardInfo.bankName" class="input-xlarge required">
+                        <select id="bankNameSel" name="tbBankcardInfo.bankName" class="input-xlarge required">
                             <option value="">--请选择银行--</option>
 
-                            <option th:value="${bank}" th:text="${bank}" value="农业银行" th:each="bank:${bankNameList}">农业银行</option>
+                            <option th:selected="${businessUser.tbBankcardInfo.bankName==bank}" th:value="${bank}" th:text="${bank}" value="农业银行" th:each="bank:${bankNameList}">农业银行</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
-        <tr data-toggle="distpicker">
+        <tr >
             <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
                     <div class="controls">
-                        <select id="cardProvinceSel" name="tbBankCardInfo.bankProvince" class="input-xlarge required">
+                        <select id="cardProvinceSel" name="tbBankcardInfo.bankProvince" class="input-xlarge required">
                             <option value="">--请选择省--</option>
+                            <option th:selected="${province.upAreaName==businessUser.tbBankcardInfo.bankProvince}"  th:each="province:${provinceList}" th:text="${province.upAreaName}" th:value="${province.upAreaName}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1344,8 +1388,10 @@
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
 
-                        <select id="cardCitySel" name="tbBankCardInfo.bankCity" class="input-xlarge required">
+                        <select id="cardCitySel" name="tbBankcardInfo.bankCity" class="input-xlarge required">
                             <option value="">--请选择城市--</option>
+                            <option th:selected="${city.upAreaName==businessUser.tbBankcardInfo.bankCity}"  th:each="city:${bankCityList}" th:text="${city.upAreaName}" th:value="${city.upAreaName}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
+
                         </select>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
@@ -1357,8 +1403,11 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
 
-                    <select id="cardBranchSel" name="tbBankCardInfo.bankDetailed" class="input-xlarge required">
+                    <select id="cardBranchSel"  name="tbBankcardInfo.bankDetailed" class="input-xlarge required">
                         <option value="">--请选择支行--</option>
+                        <option th:selected="${bank.bankSubName==businessUser.tbBankcardInfo.bankDetailed}"  th:each="bank:${bankList}" th:text="${bank.bankSubName}" th:value="${bank.bankSubName}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
+
+
                     </select>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
@@ -1367,24 +1416,26 @@
                 <div class="control-group">
                     <label class="control-label">联行号：</label>
                     <div class="controls">
-                        <input id="bankNo"  name="tbBankCardInfo.bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
+                        <input id="bankNo" th:value="${businessUser.tbBankcardInfo.bandContact}"  name="tbBankcardInfo.bandContact" placeholder="选择开户支行自动赋值" class="input-xlarge required number" readonly="readonly" type="text" value="309100003181" maxlength="32"/>
                         <span class="help-inline"><font color="red">*</font> </span>
                     </div>
                 </div>
             </td>
         </tr>
     </table>
+    <h6>商户资料信息</h6>
+    <hr width="100%" style="border:1px solid #008fe2;">
     <table>
         <tr>
             <td>
                 <div class="control-group">
                     <label class="control-label">身份证正面：</label>
                     <div class="controls">
-                        <input id="rightID"  style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input id="rightID"  style="width:139px;" placeholder="请选择身份证正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" th:value="${businessUser.identityCardFront}" value=""/>
                         <input type="file" id="file1" name="identityCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="rightIDPreview">
                             <li >
-                                <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                                <img  class="imgList" src="" url="" th:attr="src=${businessUser.identityCardFront}" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                             </li>
                         </ol>
                         <a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;
@@ -1398,10 +1449,10 @@
                 <div class="control-group">
                     <label class="control-label">身份证反面：</label>
                     <div class="controls">
-                        <input id="reservedID"  style="width:139px;" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input id="reservedID"  style="width:139px;" th:value="${businessUser.identityCardReverse}" placeholder="请选择身份证反面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file2" name="identityCardReverseImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="reservedIDPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList" src="" url="" th:attr="src=${businessUser.identityCardReverse}" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1414,10 +1465,10 @@
                 <div class="control-group">
                     <label class="control-label">手持身份证：</label>
                     <div class="controls">
-                        <input id="IDWithHand"  style="width:139px;" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input id="IDWithHand"  style="width:139px;" th:value="${businessUser.identityCardHand}" placeholder="请选择手持身份证照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file3" name="identityCardHandImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="IDWithHandPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList" src="" url="" th:attr="src=${businessUser.identityCardHand}" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
@@ -1428,10 +1479,10 @@
                 <div class="control-group">
                     <label class="control-label">银行卡正面：</label>
                     <div class="controls">
-                        <input id="rightBankCard" style="width:139px;" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
+                        <input id="rightBankCard" style="width:139px;" th:value="${businessUser.bankCardFront}" placeholder="请选择银行卡正面照片" axlength="255" class="input-xlarge required" readonly="readonly" type="text" value="/userfiles/ed62b086d4734fff9e09ef76831b3b83/images/customer/2017/05/%E6%99%AE%E4%BB%98%E5%AE%9D-%E5%BC%A0%E6%98%8E%E7%9B%9F-JAVA%E5%B7%A5%E7%A8%8B%E5%B8%88.png"/>
                         <input type="file" id="file4"  name="bankCardFrontImg"  style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="rightBankCardPreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList" src="" url="" th:attr="src=${businessUser.bankCardFront}" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1444,10 +1495,10 @@
                 <div class="control-group">
                     <label class="control-label">营业执照：</label>
                     <div class="controls">
-                        <input id="licenseImage"  style="width:139px;" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
+                        <input id="licenseImage"  style="width:139px;" th:value="${businessUser.businessLicensePicture}" placeholder="请选择营业执照照片" axlength="255" class="input-xlarge required " readonly="readonly" type="text" value=""/>
                         <input type="file" id="file5" name="businessLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="licenseImagePreview"> <li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList" src="" url="" th:attr="src=${businessUser.businessLicensePicture}" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this);" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1458,10 +1509,10 @@
                 <div class="control-group">
                     <label class="control-label">门头照：</label>
                     <div class="controls">
-                        <input id="doorHeadImage"  style="width:139px;" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="doorHeadImage"  style="width:139px;" th:value="${businessUser.doorPicture}" placeholder="请选择门头照照片" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
                         <input type="file" id="file6" name="doorPictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="doorHeadImagePreview"><li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList" src="" th:attr="src=${businessUser.doorPicture}" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
 
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
@@ -1472,10 +1523,10 @@
                 <div class="control-group">
                     <label class="control-label">开户许可证：</label>
                     <div class="controls">
-                        <input id="accountLicence"  style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
+                        <input id="accountLicence" th:value="${businessUser.registerLicensePicture}"  style="width:139px;" placeholder="请选择开户许可证" axlength="255" class="input-xlarge" readonly="readonly" type="text" value=""/>
                         <input type="file" id="file7" name="registerLicensePictureImg" style="filter:alpha(opacity=0);opacity:0;width: 0;height: 0;"/>
                         <ol id="accountLicencePreview"><li >
-                            <img  class="imgList" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
+                            <img  class="imgList"  th:attr="src=${businessUser.registerLicensePicture}" src="" url="" style="max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;">
                         </li></ol><a href="javascript:" onclick="addImg(this)" class="btn">选择</a>&nbsp;<a href="javascript:" onclick="clearImg(this)" class="btn">清除</a>
 
                         <span class="help-inline"><font color="red">*</font> </span>
@@ -1535,39 +1586,41 @@ function clearImg(o){
         $(o).prevAll("input[type='text']").attr("readonly","readonly");
         $(o).prevAll("input[type='file']").removeAttr("value");
         $(o).prevAll("ol").children().children().attr("src","");
-       /* $(o).parent().html(" " +
-            "<input id='rightID' name='identityCardFrontImg' style='width:139px;' placeholder='请选择身份证正面照片' axlength='255' class='input-xlarge required' readonly='readonly' type='text' value=''/>"
-            +"<input type='file' id='file1'  style='filter:alpha(opacity=0);opacity:0;width: 0;height: 0;'/>"
-            +"<ol id='rightIDPreview'>"
-            +"<li >"
-            +"<img  class='imgList' src='' url='' style='max-width:100px;max-height:100px;_height:100px;border:0;padding:3px;'>"
-            +"</li>"
-            +"</ol>"
-            +"<a href='javascript:'  class='btn' onclick='addImg(this)'>选择</a>&nbsp;"
-            +"<a href='javascript:' onclick='clearImg();' class='btn'>清除</a>"
-            +"<span class='help-inline'><font color='red'>*</font> </span>");*/
+
 
 }
-    <!--显示照片-->
-    /*$(function () {
-        $("input [type='file']").change(function () {
-            var file = this.files[0];
-            if (window.FileReader) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                //监听文件读取结束后事件
-                reader.onloadend = function (e) {
-                    showXY(e.target.result, file.fileName);
-                };
+    $("#provinceSel").change(function () {
+       var areaCode= $(this).val();
+       //$("#s2id_city1").children().children().get(0).html("--请选择市--");
+       $.post("../TbAreaDictionary/findByAreaOde",{areaCode:areaCode},function(data){
+           $("#city1").html("<option value='' selected='selected'>&#45;&#45;请选择市&#45;&#45;</option>")
+           $("#district1").html("<option value='' selected='selected'>&#45;&#45;请选择区&#45;&#45;</option>")
+            for (var i=0 ; i<data.length ; i++){
+                var $option = "<option value='"+data[i].areaCode+"'>"+data[i].upAreaName+"</option>";
+                $("#city1").append($option);
             }
-        });
-    });
-    function showXY(source) {
-        $("#nameImage").val("");
-        $("#nameImagePreview").text(" ");
-        var img = document.getElementById("loc_img");
-        img.src = source;
-    }*/
+       })
+    })
+    $("#city1").change(function () {
+        var areaCode= $(this).val();
+        $.post("../TbAreaDictionary/findByAreaOde",{areaCode:areaCode},function(data){
+            $("#district1").html("<option value='' selected='selected'>&#45;&#45;请选择区&#45;&#45;</option>")
+            for (var i=0 ; i<data.length ; i++){
+                var $option = "<option value='"+data[i].areaCode+"'>"+data[i].upAreaName+"</option>";
+                $("#district1").append($option);
+            }
+        })
+    })
+    $("#cardProvinceSel").change(function(){
+        var areaName=$(this).val();
+        $.post("../TbAreaDictionary/findByAreaName",{areaName:areaName},function(data){
+            $("#cardCitySel").html("<option value=\"\">--请选择城市--</option>");
+            for (var i=0 ; i<data.length ; i++ ){
+             var $potion="<option value='"+data[i].upAreaName+"'>"+data[i].upAreaName+"</option>"
+              $("#cardCitySel").append($potion)  ;
+            }
+        })
+    })
 </script>
 
 <script id="auditRecordTemplate" type="text/html">
@@ -1953,6 +2006,24 @@ if(!(self.frameElement && self.frameElement.tagName=="IFRAME")){
         var $html = $("html input[readonly='readonly']");
         $html.removeAttr("readonly")
     }
+    /*$(document).ready(function() {
+        alert("123")
+        var areaName = $("#cardProvinceSel").val();
+        var bankCity = $("#bankCity").val();
+        alert(bankCity)
+        $.post("../TbAreaDictionary/findByAreaName", {areaName: areaName}, function (data) {
+            $("#cardCitySel").html("<option value=''>--请选择城市--</option>")
+            for (var i=0 ; i<data.length ; i++ ){
+                if(bankCity==data[i].upAreaName){
+                    var  $potion= "<option value='"+data[i].upAreaName+"' selected='selected'>"+data[i].upAreaName+"</option>"
+                    $("#cardCitySel").append($potion)
+                }else {
+                var  $potion= "<option value='"+data[i].upAreaName+"'>"+data[i].upAreaName+"</option>"
+                    $("#cardCitySel").append($potion)
+                }
+            }
+        })
+    })*/
 </script>
 </body>
 </html>
