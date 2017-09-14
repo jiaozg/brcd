@@ -19,6 +19,9 @@
                <if test="agentNumber!=null and agentNumber!=''">
                    AND agent_number=#{agentNumber}
                </if>
+               <if test="agentNumber==null or agentNumber==''">
+                 AND superior_agency_id=#{id}
+             </if>
                <if test="null!=agentGrade and ''!=agentGrade">
                    AND agent_grade=#{agentGrade}
                </if>
@@ -144,17 +147,42 @@
         WHERE id=#{id}
     </update>
     <!--数据字典-->
-    <select id="lookUpWork" parameterType="java.lang.String" resultType="com.brcd.bean.Dd">
-         SELECT dict_key,dictdata_key,dictdata_code,dictdata_value FROM tb_dd
+    <select id="lookUpWork" parameterType="java.lang.String" resultType="com.brcd.bean.TbDictionary">
+         SELECT dict_key,dictdata_key,dictdata_code,dictdata_value FROM tb_dictionary
          <where>
              dictdata_key=#{dictDataKey}
          </where>
     </select>
     <!--分级查询-->
     <select id="classificationQuery" parameterType="java.lang.Long" resultType="com.brcd.bean.AgentTree">
-           SELECT id,superior_agency_id,agent_full_name FROM tb_agent
+           SELECT id AS id,superior_agency_id AS pid,agent_full_name AS name ,agent_number AS agentNumber FROM tb_agent
            <where>
                superior_agency_id=#{id}
            </where>
+    </select>
+    <!--查询所有省-->
+    <select id="getRegisterCardProvinces" resultType="com.brcd.bean.Bank">
+         SELECT DISTINCT province FROM tb_bank
+    </select>
+    <!--根据省查询市-->
+    <select id="getRegisterCardCity" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+          SELECT DISTINCT city FROM tb_bank
+          <where>
+              province=#{province}
+          </where>
+    </select>
+    <!--根据省、市查询支行-->
+    <select id="getSubBranchBank" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+        SELECT DISTINCT bank_sub_name FROM tb_bank
+        <where>
+            province=#{province} AND city=#{city}
+        </where>
+    </select>
+    <!--根据省、市、支行查询银联号-->
+    <select id="getUnionpayNo" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+        SELECT DISTINCT bank_no FROM tb_bank
+        <where>
+            province=#{province} AND city=#{city} AND bank_sub_name=#{bankSubName}
+        </where>
     </select>
 </mapper>

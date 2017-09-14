@@ -1,7 +1,8 @@
 package com.brcd.mapper;
 
 import com.brcd.bean.AgentTree;
-import com.brcd.bean.Dd;
+import com.brcd.bean.Bank;
+import com.brcd.bean.TbDictionary;
 import com.brcd.bean.TbAgent;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,7 +51,7 @@ public interface AgentMapper {
    * @param dictDataKey
    * @return
    */
-   List<Dd> lookUpWork(String dictDataKey);
+   List<TbDictionary> lookUpWork(String dictDataKey);
 
   /**
    * 分级查询
@@ -58,4 +59,32 @@ public interface AgentMapper {
    * @return
    */
    List<AgentTree> classificationQuery(Long pid);
+
+  /**
+   * 查询所有的省份
+   * @return
+   */
+   List<Bank> getRegisterCardProvinces();
+
+  /**
+   * 根据省查询市
+   * @param bank
+   * @return
+   */
+  List<Bank> getRegisterCardCity(Bank bank);
+
+  /**
+   * 根据省、市查询支行
+   * @param bank
+   * @return
+   */
+  List<Bank> getSubBranchBank(Bank bank);
+
+  /**
+   * 根据省、市、支行查询银联号
+   * @param bank
+   * @return
+   */
+
+  List<Bank> getUnionpayNo(Bank bank);
 }

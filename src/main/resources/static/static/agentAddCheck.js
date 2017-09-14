@@ -145,7 +145,7 @@ function checkmobilePhone(a) {
         var tt = $("#tyssb").val(false);return;
         
     }
-    var myreg = /^(((13[0-9]{1})|159|153)+\d{8})$/;
+    var myreg =/^1[34578]\d{9}$/;
     if(!myreg.test(a.value)){
         $("#mobilePhone").next().html("<font color='red'>手机号格式不正确</font> </span>");
         var tt = $("#tyssb").val(false);return;
@@ -185,33 +185,101 @@ function submitForm(){
    }
 }
 
-//获取支行
-function getzhihang() {
-    var p = $("#registerCardProvinces").val();
-    var s = $("#registerCardCity").val();
-    console.log(p+","+s);
-    //清空下拉框
-    $("#subBranchBank").html("");
-    $.post("getBankName",{"registerCardProvinces":p,"registerCardCity":s},function (data) {
-        for(var i=0;i,i<data.length;i++){
-            $("#subBranchBank").html(
-                $("#subBranchBank").html()+'<option value="'+data[i]+'">'+data[i]+'</option>'
+
+
+//获取省的下拉框
+
+$("#registerCardCity").html("<option value=\"\" selected='selected'>--请选择城市--</option></option>");
+$("#subBranchBank").html("<option value=\"\" selected='selected'>--请选择支行--</option></option>");
+$("#ub").val(0);
+var info='';
+            $.post("getRegisterCardProvinces", function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        if(i==0){
+                            var t = "<option value=\"" + d[i] + "\" selected='selected'>" + d[i] + "</option>";
+                        }
+                        else{
+                        var t = "<option value=\"" + d[i] + "\">" + d[i] + "</option>";
+                        }
+                        info = info + t;
+
+                    }
+
+                    $("#registerCardProvinces").html(info);
+                   $("#registerCardCity").selectpicker('refresh');
+                   $("#subBranchBank").selectpicker('refresh');
+                   $("#registerCardProvinces").selectpicker('refresh');
+                }
+            );
+
+//获取市的下拉框
+    $("#registerCardProvinces").change(
+        function () {
+            //清除市 支行 的下拉框的信息
+            var p = $("#registerCardProvinces option:selected").text();
+            $("#registerCardCity").html("<option value=\"\" selected='selected'>--请选择城市--</option></option>");
+            $("#subBranchBank").html("<option value=\"\" selected='selected'>--请选择支行--</option></option>");
+            $("#ub").val(0);
+            var info='';
+            $.post("getRegisterCardCity", {"province": p}, function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        if(i==0){
+                            var t = "<option value=\"" + d[i] + "\" selected='selected'>" + d[i] + "</option>";
+                        }
+                        else{
+                            var t = "<option value=\"" + d[i] + "\">" + d[i] + "</option>";
+                        }
+                        info = info + t;
+                    }
+                    $("#registerCardCity").html(info);
+                $("#registerCardCity").selectpicker('refresh');
+                $("#subBranchBank").selectpicker('refresh');
+                $("#registerCardProvinces").selectpicker('refresh');
+                }
             );
         }
-    });
-}
+    );
 
+//获取支行的下拉框
+    $("#registerCardCity").change(
+        function () {
+            //获取省 市 选择的
+            var p = $("#registerCardProvinces option:selected").text();
+            var r = $("#registerCardCity option:selected").text();
+            // 清除支行 的下拉框的信息
+            $("#subBranchBank").html("<option value=\"\" selected='selected'>--请选择支行--</option></option>");
+            $("#ub").val(0);
+            var info='';
+            $.post("getSubBranchBank", {"province": p, "city": r}, function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        if(i==0){
+                            var t = "<option value=\"" + d[i] + "\" selected='selected'>" + d[i] + "</option>";
+                        }
+                        else{
+                            var t = "<option value=\"" + d[i] + "\">" + d[i] + "</option>";
+                        }
+                        info = info + t;
+                    }
+                    $("#subBranchBank").html(info);
+                $("#registerCardCity").selectpicker('refresh');
+                $("#subBranchBank").selectpicker('refresh');
+                $("#registerCardProvinces").selectpicker('refresh');
+                }
+            );
+        }
+    );
 
 //获取银联号
-function getyinlian() {
-    var p = $("#registerCardProvinces").val();
-    var s = $("#registerCardCity").val();
-    var z = $("#subBranchBank").val();
-    console.log(p+","+s);
-    //清空下拉框
-    $("#registerAccountName").html("");
-    $.post("getUnionpayNo",{"registerCardProvinces":p,"registerCardCity":s,"subBranchBank":z},function (data) {
-         $("#unionBankNumber").html(data);
-         $("#ub").val(data);
-    });
-}
+    $("#subBranchBank").change(
+        function () {
+            var p = $("#registerCardProvinces option:selected").text();
+            var s = $("#registerCardCity option:selected").text();
+            var z = $("#subBranchBank option:selected").text();
+            //清空下拉框
+            $("#registerAccountName").html("");
+            $.post("getUnionpayNo", {"province": p, "city": s, "bankSubName": z}, function (data) {
+                $("#unionBankNumber").html(data);
+                $("#ub").val(data);
+            });
+        }
+    );

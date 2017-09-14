@@ -6,7 +6,8 @@
 
     <select id="AgentLogin" parameterType="TbAgent" resultType="TbAgent">
 
-      SELECT id,agent_number,agent_grade,agent_full_name,name,head_sculpture FROM tb_agent WHERE account=#{account} AND password=#{password}
+      SELECT id,agent_number,agent_grade,audit_status,agent_full_name,name,head_sculpture,superior_agency_id,rate  FROM tb_agent WHERE account=#{account} AND password=#{password}
+
     </select>
     <update id="updateDateIp" parameterType="TbAgent">
         UPDATE tb_agent SET last_ip=#{lastIp},last_login_time=#{lastLoginTime} where id=#{id};

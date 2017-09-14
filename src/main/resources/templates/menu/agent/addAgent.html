@@ -61,7 +61,7 @@
     <li class="active"><a href="#">填写代理商信息</a></li>
 </ul>
 <br />
-<form id="inputForm" class="form-horizontal" action="addAgent" method="post">
+<form id="inputForm" class="form-horizontal" action="/brcd/agent/addAgent" method="post">
     <input type="hidden" name="token" th:value="${session.token}">
 
     <table>
@@ -194,13 +194,15 @@
                 </div>
             </td>
         </tr>
-        <tr data-toggle="distpicker">
-            <td>
+        <tr >
+          <td>
                 <div class="control-group">
                     <label class="control-label">开卡省份：</label>
-                    <div class="controls" >
+                    <div class="controls">
                         <select name="registerCardProvinces" id="registerCardProvinces"
-                                class="input-xlarge"></select>
+                                class="input-xlarge required">
+                            <option value="">--请选择省份--</option>
+                        </select>
                     </div>
                 </div>
             </td>
@@ -210,8 +212,9 @@
                     <label class="control-label">开卡城市：</label>
                     <div class="controls">
                         <select name="registerCardCity" id="registerCardCity"
-                                onchange="getzhihang()"
-                                class="input-xlarge"></select>
+                                class="input-xlarge required">
+                            <option value="" selected="selected">--请选择城市--</option>
+                        </select>
                     </div>
                 </div>
             </td>
@@ -221,8 +224,8 @@
                 <label class="control-label">支行：</label>
                 <div class="controls">
                     <select name="subBranchBank" class="input-xlarge required"
-                            onchange="getyinlian()" id="subBranchBank">
-
+                            id="subBranchBank">
+                        <option value="" selected="selected">--请选择支行--</option>
                     </select>
                 </div>
             </div></td>
@@ -232,6 +235,7 @@
                     <div class="controls">
                         <span name="unionBankNumber" class="input-xlarge required"
                               id="unionBankNumber">
+                            该项选择后自动填写
                         </span>
                     </div>
                 </div>
@@ -484,4 +488,6 @@
 <button class="btn btn-primary" onclick="submitForm()">提交</button>
 <button class="btn" onclick="">返回</button>
 </body>
+<script src="../../../static/agentAddCheck.js"
+        th:src="@{/static/agentAddCheck.js}"></script>
 </html>

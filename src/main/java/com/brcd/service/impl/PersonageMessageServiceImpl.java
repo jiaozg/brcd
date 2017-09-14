@@ -15,30 +15,45 @@ public class PersonageMessageServiceImpl implements PersonageMessageService {
     @Autowired
     private PersonageMessageMapper personageMessageMapper;
 
-
+    //查询出来修的个人信息
     @Override
     public TbAgent queryAgentMsg(TbAgent tbAgent) {
-        TbAgent queryAgentMsg = personageMessageMapper.queryAgentMsg(tbAgent);
-        return queryAgentMsg;
+        if (tbAgent != null) {
+            TbAgent queryAgentMsg = personageMessageMapper.queryAgentMsg(tbAgent);
+            if (queryAgentMsg != null) {
+                return queryAgentMsg;
+            }
+        }
+        return null;
     }
 
+    //修改个人信息
     @Override
     public void updatePersonageMsg(TbAgent tbAgent) {
-        personageMessageMapper.updatePersonageMsg(tbAgent);
+        if (tbAgent != null) {
+            personageMessageMapper.updatePersonageMsg(tbAgent);
+        }
     }
 
+    //验证密码
     @Override
     public TbAgent checkPassword(TbAgent tbAgent) {
-        String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
-        tbAgent.setPassword(md5Encode);
-        TbAgent checkPassword = personageMessageMapper.checkPassword(tbAgent);
+        TbAgent checkPassword = null;
+        if (tbAgent.getPassword() != null && tbAgent.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
+            tbAgent.setPassword(md5Encode);
+        }
+        checkPassword = personageMessageMapper.checkPassword(tbAgent);
         return checkPassword;
     }
 
+    //修改密码
     @Override
     public void updatePassword(TbAgent tbAgent) {
-        String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
-        tbAgent.setPassword(md5Encode);
+        if (tbAgent != null && tbAgent.getPassword() != null && tbAgent.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbAgent.getPassword());
+            tbAgent.setPassword(md5Encode);
+        }
         personageMessageMapper.updatePassword(tbAgent);
     }
 }
