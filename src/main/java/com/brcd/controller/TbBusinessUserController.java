@@ -93,17 +93,18 @@ public class TbBusinessUserController {
     @RequestMapping("/query")
     public ModelAndView query(HttpServletRequest request,HttpSession session, TbBusinessUser tbBusinessUser, Integer currentPage) {
 
+        //共有多少条数据
         Integer listCount = tbBusinessUserService.query(tbBusinessUser).size();
 
         if(currentPage == null){
-            currentPage = 1;
+            currentPage = 1;//如果没有接收到页码的参数,就设置默认为0
         }
-        Integer pageSize =10;
+        Integer pageSize =10;//设置每页的条数
 
-        int pageCount =  listCount / pageSize + (listCount % pageSize != 0 ? 1 : 0);
+        int pageCount =  listCount / pageSize + (listCount % pageSize != 0 ? 1 : 0);//开始分页,计算总页码
 
-        PageHelper.startPage(currentPage, pageSize);
-        List<TbBusinessUser> query = tbBusinessUserService.query(tbBusinessUser);
+        PageHelper.startPage(currentPage, pageSize);//分页插件开始分页
+        List<TbBusinessUser> query = tbBusinessUserService.query(tbBusinessUser);//查询10条数据,想用于页面显示
         ModelAndView mv = new ModelAndView("menu/commercial/shanghuchaxun.html");
         mv.addObject("shangHu",query);
         mv.addObject("history",tbBusinessUser);
@@ -113,7 +114,9 @@ public class TbBusinessUserController {
         return mv;
     }
 
-
+    /*
+        导出到excel文档
+     */
     @RequestMapping("/exportExcel")
     public void exportExcel(TbBusinessUser tbBusinessUser, HttpServletRequest request, HttpServletResponse response)throws Exception{
 
@@ -141,6 +144,9 @@ public class TbBusinessUserController {
         ex.exportExcel(headers, list, out);
         out.close();
     }
+    /*
+        查询某一条数据的详细的信息
+     */
     @RequestMapping("/detail")
     public ModelAndView detail(String id){
         TbBusinessUser byBusinessUid = tbBusinessUserService.findByBusinessUid(id);
@@ -155,6 +161,8 @@ public class TbBusinessUserController {
         return mv;
     }
 
+
+
     @RequestMapping("toManage")
     public String shanghu(){ return "menu/commercial/shanghuxinxifguanli.html";}
 
@@ -165,7 +173,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("toUpdate")
 
-    public String toUpdate(Model model ,Integer businessUid){
+    public String toUpdate(Model model ,String businessUid){
 
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
