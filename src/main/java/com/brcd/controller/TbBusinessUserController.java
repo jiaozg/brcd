@@ -66,10 +66,13 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/goToInsertBusinessUser")
     public String goToIsert(Model model,HttpSession session){
+        List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
+        model.addAttribute("provinceList",addrList);
         List<String> bankNameList = bankService.findBankName();
         model.addAttribute("bankNameList",bankNameList);
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
         model.addAttribute("agentLogin",agentLogin);
+
         return "menu/commercial/addCommercial";
     }
 
@@ -77,8 +80,8 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
+    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
         return "redirect:/businessUser/query";
     }
 
@@ -165,7 +168,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("toUpdate")
 
-    public String toUpdate(Model model ,Integer businessUid){
+    public String toUpdate(Model model ,String businessUid){
 
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
@@ -231,18 +234,48 @@ public class TbBusinessUserController {
      */
     @RequestMapping("/goToBusinessLogin")
     public String goToBusinessLogin(){
-        return "/merchat/login";
+        return "merchat/login";
     }
 
     /**
      * 商户登录
      */
     @RequestMapping("/loginBusiness")
-    public String loginBusiness(TbBusinessUser tbBusinessUser){
-        boolean b = tbBusinessUserService.loginBusinessUser(tbBusinessUser);
-        if(b == true){
-            return "redirect:/wechat/scan_param";
+    public String loginBusiness(TbBusinessUser tbBusinessUser,HttpSession session, Model model){
+        System.err.println("------loginBusiness------"+tbBusinessUser);
+        if(tbBusinessUser != null){
+            TbBusinessUser BusinessUser = tbBusinessUserService.loginBusinessUser(tbBusinessUser);
+//           boolean exists = redisTemplate.hasKey("BusinessUser");
+            System.err.println("登录的用户----"+BusinessUser);
+            if (BusinessUser != null) {
+//               if (exists == true) {
+//                   TbBusinessUser BusinessUser1 = (TbBusinessUser) session.getAttribute("BusinessUser");
+//                    session.setAttribute("BusinessUser", BusinessUser1);
+//                } else {
+                session.setAttribute("BusinessUser", BusinessUser);
+//                }
+//               System.err.println(session.getAttribute("BusinessUser"));
+                return "redirect:/wechat/scan_param";
+            }
         }
+        model.addAttribute("errorMsg", "用户名或密码错误");
         return "/merchat/login";
     }
+
+    /**
+     * 验证手机号是否存在
+     */
+    @RequestMapping("/findBusinessUserBycontactPhone")
+    @ResponseBody
+    public String  findBusinessUserBycontactPhone(String contactPhone){
+        System.out.println("**************************************");
+        TbBusinessUser bycontactPhone = tbBusinessUserService.findBusinessUserBycontactPhone(contactPhone);
+        if(bycontactPhone != null){
+            System.out.println("1111111111111111111");
+            return "true";
+        }
+        return "false";
+    }
+
 }
+

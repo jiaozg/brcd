@@ -73,7 +73,7 @@ public class TbBusinessUser {
     private TbBankcardInfo tbBankcardInfo;
 
 
-//    private String passWord;
+
 
     private volatile MultipartFile identityCardFrontImg;
 
@@ -91,7 +91,7 @@ public class TbBusinessUser {
 
 
 
-    private String password;
+
 
 
 
