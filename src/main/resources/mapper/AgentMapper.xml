@@ -19,6 +19,9 @@
                <if test="agentNumber!=null and agentNumber!=''">
                    AND agent_number=#{agentNumber}
                </if>
+               <if test="agentNumber==null or agentNumber==''">
+                 AND superior_agency_id=#{id}
+             </if>
                <if test="null!=agentGrade and ''!=agentGrade">
                    AND agent_grade=#{agentGrade}
                </if>
@@ -73,7 +76,7 @@
             #{shareBenefit},
             #{whetherDredge},
             #{rate},
-            #{tAndOstatus},
+            #{tAndOStatus},
             #{superiorAgencyId},
             #{originalAgencyId},
             #{account},
@@ -95,27 +98,91 @@
 
     <!--添加代理商-->
     <insert id="addAgent" parameterType="com.brcd.bean.TbAgent">
-     INSERT INTO tb_agent <include refid="insertSql"/> VALUE (<include refid="valueSql"/>)
+     INSERT INTO tb_agent (<include refid="insertSql"/>) VALUES (<include refid="valueSql"/>)
     </insert>
     <!--修改代理商信息-->
     <update id="updateAgent" parameterType="com.brcd.bean.TbAgent">
      UPDATE tb_agent
         <set>
-            <if test="agentFullName!=null and agentFullName!=''">agent_full_name=#{agentFullName}</if>
-            <if test="agentContactPhone!=null and agentContactPhone!=''">agent_contact_phone=#{agentContactPhone}</if>
-            <if test="officiallyAccounts!=null and officiallyAccounts!=''">officially_Accounts=#{officiallyAccounts}</if>
-            <if test="businessArea!=null and businessArea!=''">business_Area=#{businessArea}</if>
-            <if test="accountType!=null and accountType!=''">account_type=#{accountType}</if>
-            <if test="registerCardNumber!=null and registerCardNumber!=''">register_card_number=#{registerCardNumber}</if>
-            <if test="registerCardProvinces!=null and registerCardProvinces=!''">register_card_provinces=#{registerCardProvinces}</if>
-            <if test="subBranchBank">sub_branch_bank=#{subBranchBank}</if>
-      <!--      <if test=""></if>
-            <if test=""></if>
-            <if test=""></if>
-            <if test=""></if>
-            <if test=""></if>
-            <if test=""></if>
-            <if test=""></if>-->
+            <if test="agentNumber!=null">agent_number=#{agentNumber},</if>
+            <if test="agentGrade!=null">agent_grade=#{agentGrade},</if>
+            <if test="agentFullName!=null and agentFullName!=''">agent_full_name=#{agentFullName},</if>
+            <if test="agentContactPhone!=null and agentContactPhone!=''">agent_contact_phone=#{agentContactPhone},</if>
+            <if test="officiallyAccounts!=null and officiallyAccounts!=''">officially_Accounts=#{officiallyAccounts},</if>
+            <if test="businessArea!=null and businessArea!=''">business_Area=#{businessArea},</if>
+            <if test="accountType!=null and accountType!=''">account_type=#{accountType},</if>
+            <if test="registerCardNumber!=null and registerCardNumber!=''">register_card_number=#{registerCardNumber},</if>
+            <if test="registerCardProvinces!=null and registerCardProvinces!=''">register_card_provinces=#{registerCardProvinces},</if>
+            <if test="subBranchBank!=null and subBranchBank!=''">sub_branch_bank=#{subBranchBank},</if>
+            <if test="secretKey!=null and secretKey!=''">secret_key=#{secretKey},</if>
+            <if test="shortName!=null and shortName!=''">short_name=#{shortName},</if>
+            <if test="auditStatus!=null">audit_status=#{auditStatus},</if>
+            <if test="registerBankName!=null and registerBankName!=''">register_bank_name=#{registerBankName},</if>
+            <if test="registerAccountName!=null and registerAccountName!=''">register_account_name=#{registerAccountName},</if>
+            <if test="registerCardCity!=null and registerCardCity!=''">register_card_city=#{registerCardCity},</if>
+            <if test="unionBankNumber!=null and unionBankNumber!=''">union_bank_number=#{unionBankNumber},</if>
+            <if test="intoPermissions!=null and intoPermissions!=''">into_permissions=#{intoPermissions},</if>
+            <if test="shareBenefit!=null and shareBenefit!=''">share_benefit=#{shareBenefit},</if>
+            <if test="whetherDredge!=null">whether_dredge=#{whetherDredge},</if>
+            <if test="rate!=null">rate=#{rate},</if>
+            <if test="tAndOStatus!=null and tAndOStatus!=''">t_and_o_status=#{tAndOStatus},</if>
+            <if test="superiorAgencyId!=null">superior_agency_id=#{superiorAgencyId},</if>
+            <if test="originalAgencyId!=null">original_agency_id=#{originalAgencyId},</if>
+            <if test="password!=null and password!=''">password=#{password},</if>
+            <if test="account!=null">account=#{account},</if>
+            <if test="lastIp!=null and lastIp!=''">last_ip={lastIp},</if>
+            <if test="lastLoginTime!=null and lastLoginTime!=''">last_login_time=#{lastLoginTime},</if>
+            <if test="role!=null and role!=''">role=#{role},</if>
+            <if test="userType!=null and userType!=''">user_type=#{userType},</if>
+            <if test="headSculpture!=null and headSculpture!=''">head_sculpture=#{headSculpture},</if>
+            <if test="companyAffiliation!=null and companyAffiliation!=''">company_affiliation=#{companyAffiliation},</if>
+            <if test="attributionDepartment!=null and attributionDepartment!=''">attribution_department=#{attributionDepartment},</if>
+            <if test="name!=null and name!=''">`name`=#{name},</if>
+            <if test="email!=null and email!=''">email=#{email},</if>
+            <if test="phone!=null and phone!=''">phone=#{phone},</if>
+            <if test="mobilePhone!=null and mobilePhone!=''">mobile_phone=#{mobilePhone},</if>
+            <if test="remark!=null and remark!=''">remark=#{remark},</if>
+            <if test="wOrAlipay!=null">w_or_alipay=#{wOrAlipay}</if>
         </set>
+        WHERE id=#{id}
     </update>
+    <!--数据字典-->
+    <select id="lookUpWork" parameterType="java.lang.String" resultType="com.brcd.bean.TbDictionary">
+         SELECT dict_key,dictdata_key,dictdata_code,dictdata_value FROM tb_dictionary
+         <where>
+             dictdata_key=#{dictDataKey}
+         </where>
+    </select>
+    <!--分级查询-->
+    <select id="classificationQuery" parameterType="java.lang.Long" resultType="com.brcd.bean.AgentTree">
+           SELECT id AS id,superior_agency_id AS pid,agent_full_name AS name ,agent_number AS agentNumber FROM tb_agent
+           <where>
+               superior_agency_id=#{id}
+           </where>
+    </select>
+    <!--查询所有省-->
+    <select id="getRegisterCardProvinces" resultType="com.brcd.bean.Bank">
+         SELECT DISTINCT province FROM tb_bank
+    </select>
+    <!--根据省查询市-->
+    <select id="getRegisterCardCity" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+          SELECT DISTINCT city FROM tb_bank
+          <where>
+              province=#{province}
+          </where>
+    </select>
+    <!--根据省、市查询支行-->
+    <select id="getSubBranchBank" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+        SELECT DISTINCT bank_sub_name FROM tb_bank
+        <where>
+            province=#{province} AND city=#{city}
+        </where>
+    </select>
+    <!--根据省、市、支行查询银联号-->
+    <select id="getUnionpayNo" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
+        SELECT DISTINCT bank_no FROM tb_bank
+        <where>
+            province=#{province} AND city=#{city} AND bank_sub_name=#{bankSubName}
+        </where>
+    </select>
 </mapper>
