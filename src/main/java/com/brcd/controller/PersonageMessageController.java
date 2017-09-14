@@ -38,7 +38,7 @@ public class PersonageMessageController {
     //查询出来登录用户的信息
     @RequestMapping("toPersonageMessage")
     public String PersonageMessage(Model model, HttpSession session) {
-        TbAgent agent = (TbAgent) session.getAttribute("agentLogin");
+        TbAgent agent = (TbAgent) session.getAttribute("agentLogin");//session取值
         TbAgent queryAgentMsg = personageMessageService.queryAgentMsg(agent);
         model.addAttribute("agentMsg", queryAgentMsg);
         return "user/personageMessage";
@@ -51,7 +51,7 @@ public class PersonageMessageController {
         if (headSculptureFile != null) {
             String oldName = headSculptureFile.getOriginalFilename();//取出原始文件名
             String newName = IDUtils.genItemId();//随机生成一个毫秒数
-            if (oldName.indexOf(".") != -1) {
+            if (oldName.indexOf(".") != -1) {//截取
                 newName = newName + oldName.substring(oldName.indexOf("."));
                 boolean result = FtpUtil.uploadFile(ftpMsg.getFtpAddress(), ftpMsg.getFtpPort(), ftpMsg.getFtpUserName(), ftpMsg.getFtpPassword(), ftpMsg.getFtpBasePath(), ftpMsg.getFtpImagePath(), newName, headSculptureFile.getInputStream());
                 if (result == true) {
@@ -66,17 +66,16 @@ public class PersonageMessageController {
     //修改密码
     @RequestMapping("toUpdatePassword")//到修改界面
     public String toUpdatePassword(HttpSession session, Model model) {
-        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
-        model.addAttribute("updatePwdMsg", agentLogin);
+        TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");//Session 中取值
+        model.addAttribute("updatePwdMsg", agentLogin);//需要的Id去修改存到Model里
         return "user/updatePwd";
     }
 
 
-    @RequestMapping("updatePassword")//实现修改
+    @RequestMapping("updatePassword")//实现修密码
     public String updatePassword(TbAgent tbAgent, HttpSession session) {
         personageMessageService.updatePassword(tbAgent);
-        System.out.println(tbAgent);
-        session.removeAttribute("agentLogin");
+        session.removeAttribute("agentLogin");//修改完密码将Session注销
         return "login";
     }
 
@@ -100,7 +99,7 @@ public class PersonageMessageController {
     public String toUpdateFtpPwd(HttpSession session, Model model) {
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
         FtpMsg ftpMsg = ftpMsgService.getFtpMsg();
-        if (agentLogin.getAgentGrade() != null && agentLogin.getAgentGrade() == 0) {
+        if (agentLogin.getAgentGrade() != null && agentLogin.getAgentGrade() != 0) {//如果不是超级管理员不允许修改
             model.addAttribute("ftpMsg", ftpMsg);
             return "user/updateFtpPwdError";
         }
@@ -113,7 +112,6 @@ public class PersonageMessageController {
     @ResponseBody
     public void checkFtpPwd(FtpMsg ftpMsg, HttpServletResponse response) throws Exception {
         PrintWriter writer = response.getWriter();
-        System.err.println(ftpMsg);
         FtpMsg checkFtpUserName = ftpMsgService.checkFtpUserName(ftpMsg);
         FtpMsg checkFtpPassword = ftpMsgService.checkFtpPassword(ftpMsg);
         if (checkFtpUserName != null) {
@@ -122,14 +120,12 @@ public class PersonageMessageController {
         if (checkFtpPassword != null) {
             writer.print("true");
         }
-        System.err.println("-----------checkFtpPwd---------");
         writer.flush();
     }
 
     //修改FTp密码
     @RequestMapping("updateFtpPassword")//到修改界面
     public String updateFtpPassword(FtpMsg ftpMsg) {
-        System.out.println("修改的FTP ："+ftpMsg);
         ftpMsgService.updateFtpUserNamePwd(ftpMsg);
         return "login";
     }
