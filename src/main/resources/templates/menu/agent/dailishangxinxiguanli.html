@@ -35,9 +35,6 @@
             th:src="@{/static/common/jeesite.js}"></script>
     <meta name="decorator" content="default"/>
     <script type="text/javascript">
-        $(document).ready(function() {
-
-        });
         $(function(){
             Date.prototype.Format = function(fmt){
                 var o = {
@@ -95,20 +92,66 @@
         }
 
     </script>
+    <link rel="stylesheet" href="../../../static/select/css/demo.css" type="text/css"
+          th:href="@{../../brcd/select/css/demo.css}">
+    <link rel="stylesheet" href="../../../static/select/css/zTreeStyle/zTreeStyle.css" type="text/css"
+          th:href="@{../../brcd/select/css/zTreeStyle/zTreeStyle.css}">
+    <!--    <script type="text/javascript" src="../../../static/select/js/jquery-1.4.4.min.js"
+                th:src="@{../../brcd/select/js/jquery-1.4.4.min.js}"></script>-->
+    <script type="text/javascript" src="../../../static/select/js/jquery.ztree.core.js"
+            th:src="@{../../brcd/select/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript">
+        var setting = {
+            async: {
+                enable: true,
+                type: "post",
+                url: "./classificationQuery",
+                autoParam:["id", "pid"]
+            },
+            view: {
+                showLine: false,
+                showIcon: false
+            }
 
+        };
+        $(document).ready(function(){
+            $.fn.zTree.init($("#ztree"), setting);
+        });
+    </script>
 </head>
 <body>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    按组织选择
+                </h4>
+            </div>
+            <div class="modal-body">
+                <ul id="ztree" class="ztree"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <ul class="nav nav-tabs">
     <li class="active"><a href="javascript:void(0)">所属代理商信息列表</a></li>
 </ul>
-<li class="btns"><input class="btn btn-primary" type="button" value="按组织选择"
-                        onclick="choose_agent()"/></li>
+
 <script>
     function choose_agent(){
-        var pram='status:no;directories:yes;help:no;scroll: no;dialogWidth:400px;dialogHeight:300px;dialogLeft:600px;dialogTop:300px;';
-       var inner = window.showModalDialog("select.html",null,pram);
-       alert('输入了：'+inner);
+
+        var pram='status:no;directories:yes;help:no;scroll: no;dialogWidth:300px;dialogHeight:300px;dialogLeft:600px;dialogTop:300px;';
+        var inner = window.showModalDialog("toSelectAgent",null,pram);
     }
 </script>
 <form id="searchForm" class="breadcrumb form-search" action="/brcd/agent/getAgent" method="get">
@@ -127,8 +170,8 @@
             </select>-->
            <select id="customerType" name="agentGrade" style="width:155px;" class="input-medium">
                <option value="" selected="selected">&#45;&#45;请选择等级&#45;&#45;</option>
-               <option  th:each="x:${grade}" th:value="${x.dj}" th:text="${x.yi}"
-                         th:attr="selected=${x.dj==showBack.agentGrade}"></option>
+               <option  th:each="x:${grade}" th:value="${x.dictDataCode}" th:text="${x.dictDataValue}"
+                         th:attr="selected=${x.dictDataCode==showBack.agentGrade}"></option>
             </select>
         </li>
         <li><label>商户电话：</label>
@@ -148,12 +191,16 @@
             </select>-->
            <select id="customerStatus" name="auditStatus" style="width:155px;" class="input-medium">
                <option value="" selected="selected">&#45;&#45;审核状态&#45;&#45;</option>
-               <option  th:each="x:${status}" th:value="${x.dj}" th:text="${x.yi}"
-                         th:attr="selected=${x.dj == showBack.auditStatus}"></option>
+               <option  th:each="x:${status}" th:value="${x.dictDataCode}" th:text="${x.dictDataValue}"
+                         th:attr="selected=${x.dictDataCode == showBack.auditStatus}"></option>
             </select>
         </li>
         <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
         <li class="btns"><input class="btn btn-primary" type="button" value="导出excel" onclick="exportExcel()"/></li>
+        <li>
+            <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">按组织结构选择
+            </button>
+        </li>
         <li class="clearfix"></li>
     </ul>
 </form>
@@ -192,7 +239,10 @@
                 <a th:href="@{/agent/findAgentById(id=${agent.id})}">详细</a>
             </span>|
             <span class="glyphicon glyphicon-cog">
-                <a th:href="@{/agent/findAgentById(id=${agent.id})}">编辑</a>
+                <a th:href="@{/agent/showBack(id=${agent.id})}">编辑</a>
+            </span>|
+            <span class="glyphicon glyphicon-cog">
+                <a th:href="@{/businessUser/query(affiliationAgent=${agent.agentNumber})}">查询商户</a>
             </span>
         </td>
     </tr>
@@ -204,7 +254,8 @@
 <input type="hidden" id="num" th:value="${total}">
 <input type="hidden" id="pageNum" th:value="${pages}">
 <input type="hidden" id="pageNo1" th:value="${pageNo}">
-<div class="pagination"><ul>
+<div class="pagination" style="float: right;right: 60px;"><ul>
+
     <li class="btns"><input class="btn btn-primary" type="button" value="首页" onclick="pageSplit('s')"/></li>
     <li class="btns"><input class="btn btn-primary" type="button" value="&#171; 上一页" onclick="pageSplit('u')"/></li>
     <li class="btns"><input class="btn btn-primary" type="button" value="下一页 &#187;" onclick="pageSplit('d')"/></li>
