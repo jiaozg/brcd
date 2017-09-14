@@ -21,4 +21,11 @@ public interface TbAreaDictionaryService {
      * @return
      */
     List<TbAreaDictionary> findByAreaOde(Integer areaCode);
+
+    /**
+     * 根据省名称查询市
+     * @param upAreaName
+     * @return
+     */
+    List<TbAreaDictionary> findByUpAreaName(String upAreaName);
 }

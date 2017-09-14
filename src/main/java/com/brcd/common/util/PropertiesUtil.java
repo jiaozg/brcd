@@ -20,7 +20,7 @@ public class PropertiesUtil {
 
     private final static Logger log = LoggerFactory.getLogger(PropertiesUtil.class);
     private static ResourceBundle rb;
-    private final static String path = "brcb";
+    private final static String path = "application";
 
     static {
         try {

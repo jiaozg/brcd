@@ -113,7 +113,18 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     }
 
     @Override
-    public TbBusinessUser findByBusinessUid(Integer businessUid) {
+    public boolean loginBusinessUser(TbBusinessUser tbBusinessUser) {
+
+        TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
+        if(BusinessUser != null){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public TbBusinessUser findByBusinessUid(String businessUid) {
         return tbBusinessUserMapper.findByBusinessUid(businessUid);
     }
     public TbBusinessUser upload(TbBusinessUser tbBusinessUser){

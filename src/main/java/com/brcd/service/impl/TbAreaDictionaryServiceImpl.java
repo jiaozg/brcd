@@ -25,4 +25,9 @@ public class TbAreaDictionaryServiceImpl implements TbAreaDictionaryService{
     public List<TbAreaDictionary> findByAreaOde(Integer areaCode) {
         return tbAreaDictionaryMapper.findByAreaOde(areaCode);
     }
+
+    @Override
+    public List<TbAreaDictionary> findByUpAreaName(String upAreaName) {
+        return tbAreaDictionaryMapper.findByUpAreaName(upAreaName);
+    }
 }
