@@ -13,9 +13,9 @@ import javax.validation.constraints.Pattern;
 使用lombok
  */
 @Data
-public class TbAgent implements Serializable {
+public class TbAgent implements Serializable{
 
-    private Long id;
+    private  Long id;
 
     private String agentNumber;
 
@@ -30,7 +30,7 @@ public class TbAgent implements Serializable {
     private String businessArea;
 
     private String accountType;
-    @Pattern(regexp = "/^([1-9]{1})(\\d{14}|\\d{18})$/", message = "卡号格式不符")
+    @Pattern(regexp = "/^([1-9]{1})(\\d{14}|\\d{18})$/",message = "卡号格式不符")
     private String registerCardNumber;
 
     private String registerCardProvinces;
@@ -89,16 +89,16 @@ public class TbAgent implements Serializable {
     private String attributionDepartment;//归属部门
 
     private String name;
-    @Pattern(regexp = "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/", message = "邮箱格式不符")
+    @Pattern(regexp = "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/",message = "邮箱格式不符")
     private String email;
 
     private String phone;//电话
 
     private String mobilePhone;//手机号
 
-    private String remark;
+    private String remark;  //备注
 
 
-    private Integer wOrAilpay;
+    private Integer wOrAlipay; //微信或支付宝
 
 }

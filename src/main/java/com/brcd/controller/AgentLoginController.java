@@ -33,6 +33,7 @@ public class AgentLoginController {
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
+    //到登录界面
     @RequestMapping("toAgentLogin")
     public String toAgentLogin() {
         return "login";
@@ -41,7 +42,7 @@ public class AgentLoginController {
     //退出登录
     @RequestMapping("AgentExit")
     public String AgentExit(HttpSession session) {
-//        session.removeAttribute("agentLogin");
+        session.removeAttribute("agentLogin");//退出的时候注销Session
         return "login";
     }
 
@@ -50,25 +51,28 @@ public class AgentLoginController {
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
-          boolean exists = redisTemplate.hasKey("agentLogin");
+            boolean exists = redisTemplate.hasKey("agentLogin");//判断Redis中是否有数据
             if (agentLogin != null) {
-              if (exists == true) {
-                   TbAgent agentLogin1 = (TbAgent) session.getAttribute("agentLogin");
+                if (agentLogin.getAuditStatus() != 1) {//审核状态=1才是审核通过状态
+                    model.addAttribute("errorMsg", "审核状态未通过");
+                    return "login";
+                }
+                if (exists == true) {//Redis中是否有Session的值
+                    TbAgent agentLogin1 = (TbAgent) session.getAttribute("agentLogin");//取出来Redis中的Session值
                     session.setAttribute("agentLogin", agentLogin1);
                 } else {
                     session.setAttribute("agentLogin", agentLogin);
-               }
-              System.err.println(session.getAttribute("agentLogin"));
+                }
                 return "home/home";
-          }
-       }
+            }
+        }
+
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
     }
 
     @RequestMapping("/{url}")//当请求找不到对应额Url的时候就会执行这个方法
     public String url(@PathVariable("url") String url) {
-        System.out.print(url + "---");
         return "home/" + url;
     }
 
