@@ -1,9 +1,6 @@
 package com.brcd.service;
 
-import com.brcd.bean.AgentTree;
-import com.brcd.bean.Bank;
-import com.brcd.bean.TbDictionary;
-import com.brcd.bean.TbAgent;
+import com.brcd.bean.*;
 import com.github.pagehelper.Page;
 
 import javax.servlet.http.HttpSession;
@@ -84,4 +81,11 @@ public interface AgentService {
      */
 
     List<String> getUnionpayNo(Bank bank);
+
+    /**
+     * 导出数据
+     * @param agent
+     * @return
+     */
+    List<ExportAgent> getAgentForExl(TbAgent agent);
 }
