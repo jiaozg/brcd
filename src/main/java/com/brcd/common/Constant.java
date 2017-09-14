@@ -1,5 +1,7 @@
 package com.brcd.common;
 
+import com.brcd.common.util.PropertiesUtil;
+
 public class Constant {
     /**
      * 订单号前缀
@@ -21,34 +23,33 @@ public class Constant {
      * FAIL
      */
     public static String FAIL = "FAIL";
-//    /**
-//     * 加密key
-//     */
-//    public static String BRCB_KEY = PropertiesUtil.getString("brcb.key");
-//    /**
-//     * 商户号
-//     */
-//    public static String BRCB_MCH_ID = PropertiesUtil.getString("brcb.mch_id");
-//    /**
-//     * 请求网关
-//     */
-//    public static String BRCB_GATEWAY_URL = PropertiesUtil.getString("brcb.gateway.url");
-//    /**
-//     * 进件
-//     */
-//    public static String BRCB_CUSTOMER_REPORT_URL = PropertiesUtil.getString("brcb.customer.report.url");
-//    /**
-//     * 后台回调地址
-//     */
-//    public static String BRCB_NOTIFY_URL = PropertiesUtil.getString("brcb.notify.url");
-//    /**
-//     * 前端结果地址
-//     */
-//    public static String BRCB_CALLBACK_URL = PropertiesUtil.getString("brcb.callback.url");
-//    /**
-//     * 域名
-//     */
-//    public static String DOMAIN_NAME = PropertiesUtil.getString("domain.name");
+  /**
+     * 加密key
+    */
+   public static String BRCB_KEY = PropertiesUtil.getString("brcb.key");
+    /**
+     * 商户号
+    */
+    public static String BRCB_MCH_ID = PropertiesUtil.getString("brcb.mch_id");
+    /**
+     * 请求网关
+     */
+  public static String BRCB_GATEWAY_URL = PropertiesUtil.getString("brcb.gateway.url");
+    /**
+     * 进件
+     */
+  public static String BRCB_CUSTOMER_REPORT_URL = PropertiesUtil.getString("brcb.customer.report.url");
+    /**
+     * 后台回调地址
+  public static String BRCB_NOTIFY_URL = PropertiesUtil.getString("brcb.notify.url");
+    /**
+    * 前端结果地址
+     */
+  public static String BRCB_CALLBACK_URL = PropertiesUtil.getString("brcb.callback.url");
+   /**
+     * 域名
+    */
+   public static String DOMAIN_NAME = PropertiesUtil.getString("domain.name");
     /**
      * 请求类型
      */
