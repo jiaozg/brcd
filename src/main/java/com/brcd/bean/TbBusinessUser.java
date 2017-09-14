@@ -91,7 +91,7 @@ public class TbBusinessUser {
 
 
 
-    private String password;
+    //private String password;
 
 
 
