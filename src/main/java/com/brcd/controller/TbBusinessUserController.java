@@ -165,7 +165,7 @@ public class TbBusinessUserController {
      */
     @RequestMapping("toUpdate")
 
-    public String toUpdate(Model model ,Integer businessUid){
+    public String toUpdate(Model model ,String businessUid){
 
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
         model.addAttribute("provinceList",addrList);
