@@ -11,6 +11,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
@@ -22,18 +23,20 @@ import java.util.List;
  * Created by 韩明泽 on 2017/9/5.
  */
 @Service
-@Transactional
+
 public class AgentServiceImpl implements AgentService{
     @Autowired
     private AgentMapper agentMapper;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<TbAgent> findAll() {
 
         return agentMapper.findAll();
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public Page<TbAgent> getAgent(TbAgent agent, int pageNo, int pageSize, HttpSession session) {
         //调用分页插件
         PageHelper.startPage(pageNo,pageSize);
@@ -46,16 +49,19 @@ public class AgentServiceImpl implements AgentService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public TbAgent findAgentById(Long id) {
         return agentMapper.findAgentById(id);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,readOnly = false)
     public void addAgent(TbAgent agent) {
 
        agentMapper.addAgent(agent);
     }
     @Override
+    @Transactional(propagation = Propagation.REQUIRED,readOnly = false)
     public void updateAgent(TbAgent agent) {
         if(agent!=null&&agent.getPassword()!=null&&!agent.getPassword().equals("")){
             agent.setPassword(MD5Util.MD5Encode(agent.getPassword()));
@@ -64,17 +70,20 @@ public class AgentServiceImpl implements AgentService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<TbDictionary> lookUpWork(String dictDataKey) {
         return agentMapper.lookUpWork(dictDataKey);
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<AgentTree> classificationQuery(Long id) {
         List<AgentTree> list=agentMapper.classificationQuery(id);
         return list;
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<String> getRegisterCardProvinces() {
         List<Bank> result=agentMapper.getRegisterCardProvinces();
         List<String> provinces=new ArrayList<>();
@@ -87,6 +96,7 @@ public class AgentServiceImpl implements AgentService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<String> getRegisterCardCity(Bank bank) {
         List<Bank> result=agentMapper.getRegisterCardCity(bank);
         List<String> cities=new ArrayList<>();
@@ -99,6 +109,7 @@ public class AgentServiceImpl implements AgentService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<String> getSubBranchBank(Bank bank) {
         List<Bank> result=agentMapper.getSubBranchBank(bank);
         List<String> bankSubNames=new ArrayList<>();
@@ -111,6 +122,7 @@ public class AgentServiceImpl implements AgentService{
     }
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS,readOnly = true)
     public List<String> getUnionpayNo(Bank bank) {
         List<Bank> result=agentMapper.getUnionpayNo(bank);
         List<String> unionpayNos=new ArrayList<>();

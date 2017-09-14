@@ -115,8 +115,7 @@ public class AgentController {
                   return "/error/error";
               }
               //校验费率添加是否合理
-
-            if(loginAgent.getRate()==null||agent.getRate()<loginAgent.getRate()) {
+            if(agent.getRate()==null||agent.getRate()<loginAgent.getRate()) {
                 //返回添加页面
                 return "/menu/agent/addAgent";
               }
