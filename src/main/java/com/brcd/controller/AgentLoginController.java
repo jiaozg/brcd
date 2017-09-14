@@ -66,6 +66,7 @@ public class AgentLoginController {
                 return "home/home";
             }
         }
+
         model.addAttribute("errorMsg", "用户名或密码错误");
         return "login";
     }

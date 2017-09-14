@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.brcd.mapper.BankMapper">
    <select id="findBankName" resultType="java.lang.String">
-       SELECT bank_name FROM bank GROUP BY bank_name
+       SELECT bank_name FROM tb_bank GROUP BY bank_name
    </select>
     <select id="findByBankName" parameterType="com.brcd.bean.Bank" resultType="com.brcd.bean.Bank">
-        SELECT bank_no,bank_sub_name FROM bank WHERE bank_name=#{bankName} AND province=#{province}
+        SELECT bank_no,bank_sub_name FROM tb_bank WHERE bank_name=#{bankName} AND province=#{province}
         <if test="province!='北京市' and province!='天津市'">
             AND city=#{city}
         </if>
     </select>
     <select id="findBankNo" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT bank_no FROM bank WHERE bank_sub_name=#{bankSubName}
+        SELECT bank_no FROM tb_bank WHERE bank_sub_name=#{bankSubName}
     </select>
 </mapper>
