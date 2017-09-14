@@ -58,31 +58,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         insertBankcardInfo(bankcardInfo);
         tbBusinessUser.setStartTime(new Date());
         tbBusinessUser.setEndTime(new Date());
-        try {
-            String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
-            tbBusinessUser.setBankCardFront(bankCardFront);
-            String identityCardFront = this.upload.getUpload(tbBusinessUser.getIdentityCardFrontImg());
-            tbBusinessUser.setIdentityCardFront(identityCardFront);
-            String identityCardReverse = this.upload.getUpload(tbBusinessUser.getIdentityCardReverseImg());
-            tbBusinessUser.setIdentityCardReverse(identityCardReverse);
-            String identityCardHand = this.upload.getUpload(tbBusinessUser.getIdentityCardHandImg());
-            tbBusinessUser.setIdentityCardHand(identityCardHand);
-            if(tbBusinessUser.getBusinessUserType().equals("ENTERPRISE")) {
-                String businessLicensePicture = this.upload.getUpload(tbBusinessUser.getBusinessLicensePictureImg());
-                tbBusinessUser.setBusinessLicensePicture(businessLicensePicture);
-                String doorPicture = this.upload.getUpload(tbBusinessUser.getDoorPictureImg());
-                tbBusinessUser.setDoorPicture(doorPicture);
-                String registerLicensePicture = this.upload.getUpload(tbBusinessUser.getRegisterLicensePictureImg());
-                tbBusinessUser.setRegisterLicensePicture(registerLicensePicture);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        tbBusinessUser=upload(tbBusinessUser);
         //将MD5加密商户密码
-        if (tbBusinessUser.getPassWord() != null && tbBusinessUser.getPassWord() != "") {
-            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassWord());
-            tbBusinessUser.setPassWord(md5Encode);
+        if (tbBusinessUser.getPassword() != null && tbBusinessUser.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassword());
+            tbBusinessUser.setPassword(md5Encode);
         }
         tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
     }
@@ -124,6 +104,30 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         /**
          * 上传省份证等图片信息
          */
+        tbBusinessUser= upload(tbBusinessUser);
+        tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
+        tbBusinessMapper.updateTbBusiness(tbBusinessUser.getTbBusiness());
+        tbBankcardInfoMapper.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
+
+
+    }
+
+    @Override
+    public boolean loginBusinessUser(TbBusinessUser tbBusinessUser) {
+
+        TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
+        if(BusinessUser != null){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public TbBusinessUser findByBusinessUid(String businessUid) {
+        return tbBusinessUserMapper.findByBusinessUid(businessUid);
+    }
+    public TbBusinessUser upload(TbBusinessUser tbBusinessUser){
         try {
             String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
             tbBusinessUser.setBankCardFront(bankCardFront);
@@ -145,17 +149,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
-        System.out.println(tbBusinessUser.getTbBusiness()+"===============================");
-        tbBusinessMapper.updateTbBusiness(tbBusinessUser.getTbBusiness());
-        tbBankcardInfoMapper.updateTbBankcardInfo(tbBusinessUser.getTbBankcardInfo());
-
-
-    }
-
-    @Override
-    public TbBusinessUser findByBusinessUid(Integer businessUid) {
-        return tbBusinessUserMapper.findByBusinessUid(businessUid);
+        return tbBusinessUser;
     }
 }
 

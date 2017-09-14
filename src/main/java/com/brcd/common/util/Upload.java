@@ -39,16 +39,20 @@ public class Upload {
 	 */
 	public  String getUpload(MultipartFile file) throws Exception {
 		String newName="";
-		if (file != null) {
+		boolean result=false;
+		if (file.getOriginalFilename() != null) {
 			String oldName = file.getOriginalFilename();//取出原始文件名
 			newName= IDUtils.genItemId();//随机生成一个毫秒数
 			if (oldName.indexOf(".") != -1) {
 				newName = newName + oldName.substring(oldName.indexOf("."));
-				boolean result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
+				 result = FtpUtil.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_PATH, IMAGEPATH, newName, file.getInputStream());
 			}
 		}
-        System.out.println("http://"+FTP_ADDRESS+"/"+newName);
-        return "http://"+FTP_ADDRESS+"/"+newName;
+		if(result) {
+			System.out.println("http://" + FTP_ADDRESS + "/" + newName);
+			return "http://" + FTP_ADDRESS + "/" + newName;
+		}
+		return null;
 	}
 
 

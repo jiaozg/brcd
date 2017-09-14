@@ -26,19 +26,17 @@ public class TbBusinessUser {
 
     private String contactPhone;
 
-    private String passWord;
-
     private String contactMail;
 
     private String servicePhone;
 
     private String manageAddress;
 
-    private String manageProvince;
+    private Integer manageProvince;
 
-    private String manageCity;
+    private Integer manageCity;
 
-    private String manageDistrict;
+    private Integer manageDistrict;
 
     private String businessLicenseNo;
 
@@ -58,6 +56,7 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
+    private String password;
 
     private Integer businessUserStatus;
 
@@ -67,17 +66,14 @@ public class TbBusinessUser {
 
     private String businessUserKey;
 
-    private Integer businessId;
     private  TbAgent tbAgent;
-    private Integer bankId;
 
-
-
-
+    private  TbBusiness tbBusiness;
 
     private TbBankcardInfo tbBankcardInfo;
 
 
+//    private String passWord;
 
     private volatile MultipartFile identityCardFrontImg;
 
@@ -91,16 +87,11 @@ public class TbBusinessUser {
 
     private volatile MultipartFile doorPictureImg;
 
-
-
-
-    private  TbBusiness tbBusiness;
-
     private volatile MultipartFile registerLicensePictureImg;
 
 
 
-    
+    private String password;
 
 
 
