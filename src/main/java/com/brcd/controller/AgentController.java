@@ -106,6 +106,7 @@ public class AgentController {
                   agent.setSuperiorAgencyId(loginAgent.getSuperiorAgencyId()); //设置上级代理商id
                   agent.setOriginalAgencyId(IDUtils.getLongAgencyId());//设置本代理id
                   agent.setAgentNumber(AccountUtil.getRandomString(3)+IDUtils.genItemId());  //设置代理商编号
+                  agent.setSecretKey(IDUtils.genItemId()+AccountUtil.getRandomString(6));//设置密钥
                   agent.setAccount(AccountUtil.getRandomString(15));//设置账号
                   agent.setPassword(MD5Util.MD5Encode(agent.getPassword()));//密码加密
               }
