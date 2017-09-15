@@ -6,13 +6,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
-@Configuration
+//@Configuration
 public class AgentContextConfig extends WebMvcConfigurerAdapter {
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AgentInterceptor()).addPathPatterns("*/
-/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new AgentInterceptor()).addPathPatterns("/**");
+//    }
 }
 

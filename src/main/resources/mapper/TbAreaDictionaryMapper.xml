@@ -8,7 +8,7 @@
       SELECT area_code,up_area_name FROM tb_area_dictionary WHERE up_area_ode=#{upAreaOde}
   </select>
     <!--查询市-->
-  <select id="findByAreaOde" parameterType="java.lang.Integer" resultType="com.brcd.bean.TbAreaDictionary">
+  <select id="findByAreaOde" parameterType="java.lang.String" resultType="com.brcd.bean.TbAreaDictionary">
 SELECT area_code,up_area_name FROM tb_area_dictionary WHERE up_area_ode=#{areaCode}
   </select>
     <!--根据省名称查询市-->

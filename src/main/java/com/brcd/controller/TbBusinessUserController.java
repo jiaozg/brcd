@@ -74,7 +74,7 @@ public class TbBusinessUserController {
     @RequestMapping("/insertBusinessUser")
     public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
-        return "redirect:/businessUser/query";
+        return "home/home";
     }
 
     /**
@@ -167,7 +167,6 @@ public class TbBusinessUserController {
      * @return
      */
     @RequestMapping("toUpdate")
-
     public String toUpdate(Model model ,String businessUid){
 
         List<TbAreaDictionary> addrList = tbAreaDictionaryService.findByareaId();
@@ -259,7 +258,7 @@ public class TbBusinessUserController {
             }
         }
         model.addAttribute("errorMsg", "用户名或密码错误");
-        return "/merchant/login";
+        return "/merchat/login";
     }
 
     /**
