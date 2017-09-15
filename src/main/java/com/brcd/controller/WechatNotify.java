@@ -33,7 +33,7 @@ public class WechatNotify {
     @ResponseBody
     @RequestMapping("/wechatNotify")
     public String brcbWechatCallBack(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("111111111111111111111111111111");
+
         // step 1 定义返回
         String result = "SUCCESS";
 

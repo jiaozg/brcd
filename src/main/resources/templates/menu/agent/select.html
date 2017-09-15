@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>按组织结构选择</title>
+    <base target="_self">
+   	<link rel="stylesheet" href="../../../static/select/css/demo.css" type="text/css"
+    th:href="@{../../brcd/select/css/demo.css}">
+	<link rel="stylesheet" href="../../../static/select/css/zTreeStyle/zTreeStyle.css" type="text/css"
+    th:href="@{../../brcd/select/css/zTreeStyle/zTreeStyle.css}">
+	<script type="text/javascript" src="../../../static/select/js/jquery-1.4.4.min.js"
+    th:src="@{../../brcd/select/js/jquery-1.4.4.min.js}"></script>
+	<script type="text/javascript" src="../../../static/select/js/jquery.ztree.core.js"
+    th:src="@{../../brcd/select/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript">
+        var setting = {
+            async: {
+                enable: true,
+                type: "post",
+                url: "./classificationQuery",
+                autoParam:["id", "pid"]
+            }
+        };
+        $(document).ready(function(){
+            $.fn.zTree.init($("#ztree"), setting);
+        });
+    </script>
+</head>
+
+<body>
+<h3 style="color: #00B83F;">按结构选择代理商</h3>
+<ul id="ztree" class="ztree"></ul>
+</body>
+</html>

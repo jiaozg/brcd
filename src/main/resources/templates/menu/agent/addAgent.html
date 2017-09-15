@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html style="overflow-x:auto;overflow-y:auto;" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>添加代理商</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" /><meta name="author" content="http://jeesite.com/"/>
+    <meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=8,IE=9,IE=10" />
+    <meta http-equiv="Expires" content="0"><meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <script src="../../../static/static/jquery/jquery-1.8.3.min.js" type="text/javascript"
+            th:src="@{/static/jquery/jquery-1.8.3.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css" type="text/css" rel="stylesheet"
+            th:href="@{/static/bootstrap/2.3.1/css_cerulean/bootstrap.min.css}"/>
+    <script src="../../../static/static/bootstrap/2.3.1/js/bootstrap.min.js" type="text/javascript"
+            th:src="@{/static/bootstrap/2.3.1/js/bootstrap.min.js}"></script>
+    <link href="../../../static/static/bootstrap/2.3.1/awesome/font-awesome.min.css" type="text/css" rel="stylesheet"
+          th:href="@{/static/bootstrap/2.3.1/awesome/font-awesome.min.css}"/>
+    <link href="../../../static/static/jquery-select2/3.4/select2.min.css" rel="stylesheet"
+          th:href="@{/static/jquery-select2/3.4/select2.min.css}"/>
+    <script src="../../../static/static/jquery-select2/3.4/select2.min.js" type="text/javascript"
+            th:src="@{/static/jquery-select2/3.4/select2.min.js}"></script>
+    <link href="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet"
+          th:href="@{/static/jquery-validation/1.11.0/jquery.validate.min.css}"/>
+    <script src="../../../static/static/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"
+            th:src="@{/static/jquery-validation/1.11.0/jquery.validate.min.js}"></script>
+    <link href="../../../static/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet"
+          th:href="@{/static/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css}"/>
+    <script src="../../../static/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js" type="text/javascript"
+            th:src="@{/static/jquery-jbox/2.3/jquery.jBox-2.3.min.js}"></script>
+    <script src="../../../static/static/My97DatePicker/WdatePicker.js" type="text/javascript"
+            th:src="@{/static/My97DatePicker/WdatePicker.js}"></script>
+    <script src="../../../static/static/common/mustache.min.js" type="text/javascript"
+            th:src="@{/static/common/mustache.min.js}"></script>
+    <link href="../../../static/static/common/jeesite.css" type="text/css" rel="stylesheet"
+          th:href="@{/static/common/jeesite.css}"/>
+    <script src="../../../static/static/common/jeesite.js" type="text/javascript"
+            th:src="@{/static/common/jeesite.js}"></script>
+    <meta name="decorator" content="default" />
+    <link rel="stylesheet" href="../../../static/static/jquery-ui/ui.css"
+          th:href="@{/static/jquery-ui/ui.css}">
+    <script src="../../../static/static/jquery-ui/ui.js"
+            th:src="@{/static/jquery-ui/ui.js}"></script>
+    <script src="../../../static/distpicker.data.js"
+            th:src="@{/static/distpicker.data.js}"></script>
+    <script src="../../../static/distpicker.js"
+            th:src="@{/static/distpicker.js}"></script>
+    <script src="../../../static/main.js"
+            th:src="@{/static/main.js}"></script>
+    <script src="../../../static/agentAddCheck.js"
+            th:src="@{/static/agentAddCheck.js}"></script>
+    <style>
+        /* Loading Spinner */
+        .spinner{margin:0;width:70px;height:18px;margin:-35px 0 0 -9px;position:absolute;top:50%;left:50%;text-align:center}.spinner > div{width:18px;height:18px;background-color:#333;border-radius:100%;display:inline-block;-webkit-animation:bouncedelay 1.4s infinite ease-in-out;animation:bouncedelay 1.4s infinite ease-in-out;-webkit-animation-fill-mode:both;animation-fill-mode:both}.spinner .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.spinner .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bouncedelay{0%,80%,100%{-webkit-transform:scale(0.0)}40%{-webkit-transform:scale(1.0)}}@keyframes bouncedelay{0%,80%,100%{transform:scale(0.0);-webkit-transform:scale(0.0)}40%{transform:scale(1.0);-webkit-transform:scale(1.0)}}
+    </style>
+    <script type="text/javascript">
+    </script>
+
+</head>
+<body>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#">填写代理商信息</a></li>
+</ul>
+<br />
+<form id="inputForm" class="form-horizontal" action="/brcd/agent/addAgent" method="post">
+    <input type="hidden" name="token" th:value="${session.token}">
+
+    <table>
+        <h6>代理商信息</h6>
+        <hr width="100%" style="border:1px solid #008fe2;"/>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">代理商全称：</label>
+                <div class="controls">
+                    <input id="agentFullName" name="agentFullName"  onblur="checkAgentFullName(this)"
+                           class="input-xlarge" type="text" value="" maxlength="32"/>
+                    <span class="help-inline"><font color="red">*</font> </span>
+                </div>
+            </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商简称：</label>
+                    <div class="controls">
+                        <input id="shortName" name="shortName" onblur="checkshortName(this)"
+                               class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商联系电话：</label>
+                    <div class="controls">
+                        <input id="agentContactPhone" onblur="checkagentContactPhone(this)"
+                               name="agentContactPhone" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商邮箱：</label>
+                    <div class="controls">
+                        <input id="email" name="email" onblur="checkemail(this)"
+                               class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商公众号：</label>
+                    <div class="controls">
+                        <input id="officiallyAccounts" onblur="checkofficiallyAccounts(this)"
+                               name="officiallyAccounts" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">审核状态：</label>
+                    <div class="controls">
+                        <select  name="auditStatus" class="input-xlarge required">
+                            <option value="0">未审核</option>
+                            <option value="1">审核通过</option>
+                            <option value="2">审核未通过</option>
+                        </select>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商业务区域范围：</label>
+                    <div class="controls">
+                        <input id="businessArea" name="businessArea" onblur="checkbusinessArea(this)"
+                               class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">账户类型 ：</label>
+                    <div class="controls">
+
+                        <select name="accountType" class="input-xlarge required">
+                            <option value="公司账户">公司账户</option>
+                            <option value="个人账户">个人账户</option>
+                        </select>
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户户名：</label>
+                    <div class="controls">
+                        <input id="registerBankName" onblur="checkregisterBankName(this)"
+                               name="registerBankName" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户卡号：</label>
+                    <div class="controls">
+                        <input id="registerCardNumber" onblur="checkregisterCardNumber(this)"
+                               name="registerCardNumber" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开户行名称：</label>
+                    <div class="controls">
+                        <input id="registerAccountName" onblur="checkregisterAccountName(this)"
+                               name="registerAccountName" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr >
+          <td>
+                <div class="control-group">
+                    <label class="control-label">开卡省份：</label>
+                    <div class="controls">
+                        <select name="registerCardProvinces" id="registerCardProvinces"
+                                class="input-xlarge required">
+                            <option value="">--请选择省份--</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <div class="control-group">
+                    <label class="control-label">开卡城市：</label>
+                    <div class="controls">
+                        <select name="registerCardCity" id="registerCardCity"
+                                class="input-xlarge required">
+                            <option value="" selected="selected">--请选择城市--</option>
+                        </select>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="control-group">
+                <label class="control-label">支行：</label>
+                <div class="controls">
+                    <select name="subBranchBank" class="input-xlarge required"
+                            id="subBranchBank">
+                        <option value="" selected="selected">--请选择支行--</option>
+                    </select>
+                </div>
+            </div></td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">联行号：</label>
+                    <div class="controls">
+                        <span name="unionBankNumber" class="input-xlarge required"
+                              id="unionBankNumber">
+                            该项选择后自动填写
+                        </span>
+                    </div>
+                </div>
+                <input type="hidden" id="ub" name="unionBankNumber" value=""/>
+            </td>
+        </tr>
+
+
+
+
+
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">用户类型 ：</label>
+                    <div class="controls">
+
+                        <select name="userType" class="input-xlarge required">
+                            <option value="公司">公司</option>
+                            <option value="私人">私人</option>
+                            <option value="外包">外包</option>
+                        </select>
+
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">角色：</label>
+                    <div class="controls">
+
+                        <select name="role" class="input-xlarge required">
+                            <option value="代理商">代理商</option>
+                            <option value="管理">管理</option>
+                        </select>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">所属部门：</label>
+                    <div class="controls">
+                        <input id="attributionDepartment"
+                               name="attributionDepartment" class="input-xlarge" type="text" value="" maxlength="32"/>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">归属公司</label>
+                    <div class="controls">
+                        <input id="companyAffiliation"
+                               name="companyAffiliation" class="input-xlarge" type="text" value="" maxlength="32"/>
+                       <!-- <select name="companyAffiliation" class="input-xlarge required">
+                            <option value="公司账户">公司账户</option>
+                            <option value="个人账户">个人账户</option>
+                        </select>-->
+
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="control-group">
+
+        <label class="control-label">通道和费率设置：</label>
+        <div id="tabs">
+
+            <div class="content has-header">
+                <tr>
+                <div class="list">
+                    <label class="item item-radio">
+                        <input type="radio" name="wOrAlipay" value="0" checked="checked">
+                        <div class="radio-content">
+                            <div class="item-content">
+                                微信线下支付
+                            </div>
+                            <i class="radio-icon ion-checkmark"></i>
+                        </div>
+                    </label>
+
+                    <label class="item item-radio">
+                        <input type="radio" name="wOrAlipay" value="1">
+                        <div class="radio-content">
+                            <div class="item-content">
+                                支付宝
+                            </div>
+                            <i class="radio-icon ion-checkmark"></i>
+                        </div>
+                    </label>
+                </div>
+                </tr>
+            </div>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div class="control-group">
+                                <label class="control-label">进件权限：</label>
+                                <div class="controls">
+
+                                    <select id="intoPermissions" name="intoPermissions" class="input-xlarge required">
+                                        <option value="可进件">可进件</option>
+                                        <option value="不可进件">不可进件</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <label class="control-label">分润权限：</label>
+                                <div class="controls">
+
+                                    <select id="shareBenefit" name="shareBenefit" class="input-xlarge required">
+                                        <option value="可分润">可分润</option>
+                                        <option value="不可分润">不可分润</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="control-group">
+                                <label class="control-label">是否开通：</label>
+                                <div class="controls">
+                                    <select id="whetherDredge" name="whetherDredge" class="input-xlarge required">
+                                        <option value="1">开通</option>
+                                        <option value="0">未开通</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td><div class="control-group">
+                            <label class="control-label">签约费率%：</label>
+                            <div class="controls">
+                                <input id="rate" name="rate" onblur="checkrate(this)"
+                                       class="input-xlarge required" type="text" value="" maxlength="255"/>
+                                <span class="help-inline"><font color="red">*</font> </span>
+                            </div>
+                        </div></td>
+                        <td>
+                            <div class="control-group">
+                                <label class="control-label">T+0状态：</label>
+                                <div class="controls">
+                                    <select id="tAndOStatus" name="tAndOStatus" class="input-xlarge required">
+                                        <option value="1">开通</option>
+                                        <option value="0">未开通</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+        </div>
+    </div>
+    <hr width="100%" style="border:1px solid #008fe2;"/>
+    <table>
+    <div class="control-group">
+        <tr>
+        <label class="control-label">代理商个人信息填写：</label>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商名字：</label>
+                    <div class="controls">
+                        <input id="name" onblur="checkname(this)"
+                               name="name" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商电话：</label>
+                    <div class="controls">
+                        <input id="phone" name="phone" onblur="checkphone(this)"
+                               class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商手机：</label>
+                    <div class="controls">
+                        <input id="mobilePhone" onblur="checkmobilePhone(this)"
+                               name="mobilePhone" class="input-xlarge" type="text" value="" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">代理商登录密码：</label>
+                    <div class="controls">
+                        <input id="password1" onblur="checkp()"
+                               name="password" class="input-xlarge"
+                               type="password"maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">密码重复：</label>
+                    <div class="controls">
+                        <input id="password2" onblur="checkp()"
+                               name="password2" class="input-xlarge"
+                               type="password" maxlength="32"/>
+                        <span class="help-inline"><font color="red">*</font> </span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="control-group">
+                    <label class="control-label">备注：</label>
+                    <div class="controls">
+                        <textarea name="remark" maxlength="255">
+                        </textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </div>
+
+    </table>
+</form>
+<input id="tyssb" value="tyssb" type="hidden"/>
+<button class="btn btn-primary" onclick="submitForm()">提交</button>
+<button class="btn" onclick="">返回</button>
+</body>
+<script src="../../../static/agentAddCheck.js"
+        th:src="@{/static/agentAddCheck.js}"></script>
+</html>

@@ -112,7 +112,28 @@
                     });
                 }
             });
-
+            $("#provinceSel").change(function () {
+                var areaCode= $(this).val();
+                //$("#s2id_city1").children().children().get(0).html("--请选择市--");
+                $.post("../TbAreaDictionary/findByAreaOde",{areaCode:areaCode},function(data){
+                    $("#city1").html("<option value='' selected='selected'>&#45;&#45;请选择市&#45;&#45;</option>")
+                    $("#district1").html("<option value='' selected='selected'>&#45;&#45;请选择区&#45;&#45;</option>")
+                    for (var i=0 ; i<data.length ; i++){
+                        var $option = "<option value='"+data[i].areaCode+"'>"+data[i].upAreaName+"</option>";
+                        $("#city1").append($option);
+                    }
+                })
+            })
+            $("#city1").change(function () {
+                var areaCode= $(this).val();
+                $.post("../TbAreaDictionary/findByAreaOde",{areaCode:areaCode},function(data){
+                    $("#district1").html("<option value='' selected='selected'>&#45;&#45;请选择区&#45;&#45;</option>")
+                    for (var i=0 ; i<data.length ; i++){
+                        var $option = "<option value='"+data[i].areaCode+"'>"+data[i].upAreaName+"</option>";
+                        $("#district1").append($option);
+                    }
+                })
+            })
 
             /*初始化银行大行列表*/
             $.ajax({
@@ -218,7 +239,7 @@
                 if(customerTypeSel == 'ENTERPRISE' && accountType== 'PERSONAL'){
                     if(accountName != legalName){
                         window.top.openDialog('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
-                        alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
+                       /* alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');*/
                         return;
                     }
                 }
@@ -284,10 +305,39 @@
 
             // 手机号码验证
             jQuery.validator.addMethod("isMobile", function(value, element) {
+                var phone = value;
+                $.ajax({
+                    type:"post",//请求类型：post或者get
+                    data:{contactPhone:phone},
+                    dataType:"json",
+                    url:"/brcd/businessUser/findBusinessUserBycontactPhone",//请求的方法get_name
+                    success:function(data)
+                    {
+                        if(data==true){
+                            $("#div").html("<font color='red' style='font-weight:bold;'>*手机号已存在</font>");
+                            return false;
+                        }else{
+                            $("#div").html("<font></font>");
+                            return;
+                        }
+                    }
+                });
                 var length = value.length;
                 var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
                 return this.optional(element) || (length == 11 && mobile.test(value));
+
             }, "请输入正确的手机号码");
+
+            // 营业执照编码验证
+            jQuery.validator.addMethod("licenseNo", function(value, element) {
+                var reg = /^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$/;
+                return this.optional(element) || (reg.test(value));
+            }, "请输入正确营业执照号,执照号为18位");
+            // 微信号验证
+            jQuery.validator.addMethod("wechatid", function(value, element) {
+                var reg=/^[a-zA-Z\d_]{5,}$/;
+                return this.optional(element) || (reg.test(value));
+            }, "请输入正确微信号");
 
             // 金额验证  两位小数
             jQuery.validator.addMethod("money", function(value, element) {
@@ -754,15 +804,16 @@
             <td><div class="control-group">
                 <label class="control-label">手机号：</label>
                 <div class="controls">
-                    <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="" maxlength="50"/>
-                    <span class="help-inline"><font color="red">*</font> </span>
+                    <input id="contactPhone" name="contactPhone" class="input-xlarge required isMobile" type="text" value="" maxlength="50" />
+                    <span class="help-inline" id="div"><font color="red">*</font> </span>
+                    <!--<div id="div"></div>-->
                 </div>
             </div></td>
             <td>
                 <div class="control-group">
                     <label class="control-label">联系邮箱：</label>
                     <div class="controls">
-                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" value="" maxlength="50"/>
+                        <input id="contactEmail" name="contactMail" class="input-xlarge email" type="text" maxlength="50"/>
                         <!-- <span class="help-inline"><font color="red">*</font> </span> -->
                     </div>
                 </div>
@@ -772,7 +823,7 @@
             <td><div class="control-group">
                 <label class="control-label">商户密码：</label>
                 <div class="controls">
-                    <input id="passWord" name="passWord" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="password" name="password" class="input-xlarge required" type="password"  maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -794,77 +845,49 @@
                 </div>
             </div></td>
         </tr>
-        <tr data-toggle="distpicker">
-            <td><div class="control-group">
-                <label class="control-label">经营省名称：</label>
-                <div class="controls">
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
+        <tr>
 
-
-                <div class="control-group">
-                    <label class="control-label">经营市名称：</label>
-                    <div class="controls">
-                        <select id="district1" name="manageCity" class="input-xlarge">
-                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
-                        </select>
-                    </div>
-                </div>
-
-            </td>
             <td>
 
                 <div class="control-group">
-                    <label class="control-label">经营区名称：</label>
+                    <label class="control-label">经营省名称：</label>
                     <div class="controls">
-
-                        <select id="city1" name="manageDistrict" class="input-xlarge">
-                            <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                        <select id="provinceSel"  name="manageProvince" class="input-xlarge required">
+                            <option  value=""  selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
+                            <option  th:each="province:${provinceList}" th:text="${province.upAreaName}" th:value="${province.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
                         </select>
                     </div>
                 </div>
-
-                <div class="control-group" style="height: 30px;">
+                <div class="control-group">
+                    <label class="control-label" ></label>
+                    <div class="controls">
+                        <dl></dl>
                     </div>
                 </div>
             </td>
-
-
-        </tr>
-        <!--<tr>
-            <td><div class="control-group">
-                <label class="control-label">经营省名称：</label>
-                <div class="controls">
-
-                    <select id="provinceSel" name="manageProvince" class="input-xlarge">
-                        <option value="" selected="selected">&#45;&#45;请选择省份&#45;&#45;</option>
-                    </select>
+            <td>
+                <div class="control-group">
+                    <label class="control-label" >经营市名称：</label>
+                    <div class="controls">
+                        <select id="city1" name="manageCity" class="input-xlarge required">
+                            <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
+                            <option  th:each="city:${cityList}" th:text="${city.upAreaName}" th:value="${city.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
+                        </select>
+                    </div>
                 </div>
-            </div></td>
-            <td><div class="control-group">
-                <label class="control-label">经营市名称：</label>
-                <div class="controls">
+                <div class="control-group">
+                    <label class="control-label" >经营区名称：</label>
+                    <div class="controls">
+                        <select id="district1" name="manageDistrict" class="input-xlarge required">
+                            <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
+                            <option   th:each="district:${districtList}" th:text="${district.upAreaName}" th:value="${district.areaCode}"  value=""  >&#45;&#45;请选择省份&#45;&#45;</option>
+                        </select>
+                    </div>
 
-                    <select id="citySel" name="manageCity" class="input-xlarge">
-                        <option value="" selected="selected">&#45;&#45;请选择市&#45;&#45;</option>
-                    </select>
+
                 </div>
-            </div></td>
-        </tr>
-        <tr>
-            <td><div class="control-group">
-                <label class="control-label">经营区名称：</label>
-                <div class="controls">
-                    <select id="areaSel" name="manageDistrict" class="input-xlarge">
-                        <option value="" selected="selected">&#45;&#45;请选择区&#45;&#45;</option>
-                    </select>
-                </div>
-            </div>
             </td>
-        </tr>-->
+        </tr>
     </table>
 
     <table id="enterpriseTable">
@@ -872,7 +895,7 @@
             <td><div class="control-group">
                 <label class="control-label">营业执照编号：</label>
                 <div class="controls">
-                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge required" type="text" value="" maxlength="50"/>
+                    <input id="licenseNo" name="businessLicenseNo" class="input-xlarge licenseNo" type="text" value="" maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
@@ -969,7 +992,7 @@
                                 <div class="control-group">
                                     <label class="control-label">联系人微信账号：</label>
                                     <div class="controls">
-                                        <input id="brcbChannelFeeList0.contactId" name="wechatNum" data-index="1" class="input-xlarge" type="text" value=""/>
+                                        <input id="brcbChannelFeeList0.contactId" name="wechatNum" data-index="1" class="input-xlarge wechatid" type="text" value=""/>
                                     </div>
                                 </div>
                             </td>

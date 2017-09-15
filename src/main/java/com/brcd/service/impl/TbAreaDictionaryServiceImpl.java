@@ -22,7 +22,7 @@ public class TbAreaDictionaryServiceImpl implements TbAreaDictionaryService{
     }
 
     @Override
-    public List<TbAreaDictionary> findByAreaOde(Integer areaCode) {
+    public List<TbAreaDictionary> findByAreaOde(String areaCode) {
         return tbAreaDictionaryMapper.findByAreaOde(areaCode);
     }
 

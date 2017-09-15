@@ -1,3 +1,4 @@
+/*
 package com.brcd.interceptor;
 
 
@@ -19,20 +20,20 @@ public class AgentInterceptor implements HandlerInterceptor {
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
         if (url.indexOf("toAgentLogin") >= -1) {
             return true;
-        }
-        if (url.indexOf("AgentLogin") >= -1) {
+       }
+       if (url.indexOf("AgentLogin") >= -1) {
             return true;
-        }if (url.indexOf("goToIndex") > -1) {
+       }if (url.indexOf("goToIndex") > -1) {
             return true;
-        }if (url.indexOf("scan_param") > -1) {
+       }if (url.indexOf("scan_param") > -1) {
+           return true;
+       }if (url.indexOf("scan") > -1) {
+          return true;
+       }if (url.indexOf("scan_qrcode") > -1) {
             return true;
-        }if (url.indexOf("scan") > -1) {
+       }if (url.indexOf("loginBusiness") >= -1) {
             return true;
-        }if (url.indexOf("scan_qrcode") > -1) {
-            return true;
-        }if (url.indexOf("loginBusiness") > -1) {
-            return true;
-        }
+      }
         if (agentLogin == null) {
             request.getRequestDispatcher("toAgentLogin").forward(request, response);
             return false;
@@ -51,3 +52,4 @@ public class AgentInterceptor implements HandlerInterceptor {
 
     }
 }
+*/

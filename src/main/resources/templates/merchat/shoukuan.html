@@ -168,119 +168,124 @@
             background-color: #DEE1E9;
         }
     </style>
-    <script>
+    <!--<script>
         var num =   $("#div").html(parseInt($("#div").html()));
         $("#money").val(num);
 
-    </script>
+    </script>-->
 </head>
 <body>
 
 <div class="wrap">
-    <form action="scan" class="edit_cash">
+    <form action="" class="edit_cash" name="Form" id="form1">
         <h3>请输入收款金额</h3>
         <div class="shuru">
             <span>&yen;<input style="width: 300px;" id="total_fee" name="total_fee"></span>
             <div id="div"></div>
         </div>
-        <table>
+       <!-- <table>
         <tr>
-            <!--<td align="right">key:-->
+            &lt;!&ndash;<td align="right">key:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender;" id="key" name="key" th:value="${key }"/>
         </tr>
         <tr>
-            <!--<td align="right">service_type:-->
+            &lt;!&ndash;<td align="right">service_type:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender;" id="service_type" name="service_type"
                         th:value="${scan.service_type }"/>
         </tr>
         <tr>
-           <!-- <td align="right">appid:-->
+           &lt;!&ndash; <td align="right">appid:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender;" id="appid" name="appid" th:value="${scan.appid }"/>
             
         </tr>
         <tr>
-            <!--<td align="right">mch_id:-->
+            &lt;!&ndash;<td align="right">mch_id:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender;" id="mch_id" name="mch_id" th:value="${scan.mch_id }" />
             
         </tr>
         <tr>
-            <!--<td align="right">out_trade_no:-->
+            &lt;!&ndash;<td align="right">out_trade_no:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="out_trade_no" name="out_trade_no" th:value="${scan.out_trade_no }"/>
             
         </tr>
         <tr>
-           <!-- <td align="right">device_info:-->
+           &lt;!&ndash; <td align="right">device_info:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="device_info" name="device_info" th:value="${scan.device_info }"/>
         </tr>
         <tr>
-           <!-- <td align="right">body:-->
+           &lt;!&ndash; <td align="right">body:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="body" name="body" th:value="${scan.body }" />
         </tr>
         <tr>
-           <!-- <td align="right">detail:-->
+           &lt;!&ndash; <td align="right">detail:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="detail" name="detail"  th:value="${scan.detail }"/>
         </tr>
         <tr>
-            <!--<td align="right">attach:-->
+            &lt;!&ndash;<td align="right">attach:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="attach" name="attach" th:value="${scan.attach }"/>
         </tr>
         <tr>
-            <!--td align="right">fee_type:-->
+            &lt;!&ndash;td align="right">fee_type:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender" id="fee_type" name="fee_type"
                        th:value="${scan.fee_type }"/>
         </tr>
-        <!--<tr>
+        &lt;!&ndash;<tr>
             <td align="right">total_fee:
             <input style="width: 300px;" id="total_fee" name="total_fee" th:value="${scan.total_fee }"/>
-        </tr>-->
+        </tr>&ndash;&gt;
         <tr>
-            <!--<td align="right">spbill_create_ip:-->
+            &lt;!&ndash;<td align="right">spbill_create_ip:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender" id="spbill_create_ip" name="spbill_create_ip"
                        th:value="${scan.spbill_create_ip }"/>
         </tr>
         <tr>
-            <!--<td align="right">notify_url:-->
+            &lt;!&ndash;<td align="right">notify_url:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="notify_url" name="notify_url"  th:value="${scan.notify_url }"/>
         </tr>
         <tr>
-           <!-- <td align="right">time_start:-->
+           &lt;!&ndash; <td align="right">time_start:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="time_start" name="time_start" th:value="${scan.time_start }"/>
         </tr>
         <tr>
-            <!--<td align="right">time_expire:-->
+            &lt;!&ndash;<td align="right">time_expire:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="time_expire" name="time_expire"th:value="${scan.time_expire }" />
         </tr>
         <tr>
-            <!--<td align="right">op_user_id:-->
+            &lt;!&ndash;<td align="right">op_user_id:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="op_user_id" name="op_user_id" th:value="${scan.op_user_id }" />
         </tr>
         <tr>
-            <!--<td align="right">goods_tag:-->
+            &lt;!&ndash;<td align="right">goods_tag:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="goods_tag" name="goods_tag" th:value="${scan.goods_tag }"/>
         </tr>
         <tr>
-            <!--<td align="right">product_id:-->
+            &lt;!&ndash;<td align="right">product_id:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="product_id" name="product_id" th:value="${scan.product_id }" />
         </tr>
         <tr>
-            <!--<td align="right">limit_pay:-->
+            &lt;!&ndash;<td align="right">limit_pay:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="limit_pay" name="limit_pay" th:value="${scan.limit_pay }"/>
         </tr>
         <tr>
-            <!--<td align="right">nonce_str:-->
+            &lt;!&ndash;<td align="right">nonce_str:&ndash;&gt;
             <input type="hidden" style="width: 300px;" id="nonce_str" name="nonce_str" th:value="${scan.nonce_str }" />
         </tr>
         <tr>
-            <!--<td align="right">sign:-->
+            &lt;!&ndash;<td align="right">sign:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender" id="sign" name="sign" th:value="${scan.sign }"  />
         </tr>
-        </table>
+
+
+
+        </table>-->
         <img src="../../static/images/weixinlogo.png" style="width: 25%; height: auto;max-width: 100%; display: block;" th:src="@{/images/weixinlogo.png}">
-        <input type="submit" value="微信支付"  style="background: #80D983;"  class="submit">
+       <!-- <input type="submit" value="微信支付"  style="background: #80D983;"  class="submit">-->
+        <input type='button' id='btn'  value="微信支付" style="background: #80D983;" class="submit" onclick='check()'>
 
         <hr >
         <img src="../../static/images/zhifubaologo.jpg" style="width: 25%; height: auto;max-width: 100%; display: block;" th:src="@{/images/zhifubaologo.jpg}">
-        <input type="submit" value="支付宝支付"  style="background: #00bbee;"  class="submit">
+       <!-- <input type="submit" value="支付宝支付"  style="background: #00bbee;"  class="submit">-->
+        <input type='button' id='btn2'  value="支付宝支付" style="background: #00bbee;" class="submit" onclick='check2()'>
 
     </form>
 <!--        <input type="submit" value="微信支付" class="submit" style="background: #80D983" />
@@ -313,6 +318,17 @@
 </div>
 <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
 <script>
+    <!--判断进入那个方法-->
+    function check(){
+        //js判断
+        form1.action="/brcd/wechat/scan";
+        document.Form.submit(); //判断后提交 Formname 为form的name
+    }
+    function check2(){
+        //js判断
+        form1.action="/zhangsan";
+        document.Form.submit(); //判断后提交 Formname 为form的name
+    }
     $(function(){
 
         //填写信息

@@ -63,10 +63,40 @@ public class Constant {
      * 订单类型
      */
     public static String BRCB_ORDER_TYPE_WECHAT = "WECHAT";//微信
+
     /**
      * 货币单位
      */
     public static String BRCB_FEE_TYPE = "CNY";//微信
 
+    //支付宝
 
+    /**
+     * 支付宝网关
+     */
+    public static String ALIPAY_URL = PropertiesUtil.getString("brcd.alipay.url");
+     /**
+     支付宝APP_ID
+     */
+     public static String ALIPAY_APP_ID = PropertiesUtil.getString("brcd.alipay.app_id");
+    /**
+     应用私钥
+     */
+    public static String ALIPAY_APP_PRIVATE_KEY = PropertiesUtil.getString("brcd.alipay.app_private_key");
+    /**
+     参数返回格式，只支持json
+     */
+    public static String ALIPAY_FORMAT = PropertiesUtil.getString("brcd.alipay.format");
+    /**
+     请求和签名使用的字符编码格式，支持GBK和UTF-8
+     */
+    public static String ALIPAY_CHARSET = PropertiesUtil.getString("brcd.alipay.charset");
+    /**
+     支付宝公钥，由支付宝生成
+     */
+    public static String ALIPAY_PUBLIC_KEY = PropertiesUtil.getString("brcd.alipay.alipay_public_key");
+    /**
+     商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2
+     */
+    public static String ALIPAY_SIGN_TYPE = PropertiesUtil.getString("brcd.alipay.sign_type");
 }

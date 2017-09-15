@@ -11,7 +11,6 @@ import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,15 +39,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     /**
      * 添加商户基本信息
      *
-     * @param tbBusinessUser
+     * @param
      * @param business
      * @param bankcardInfo
      */
     @Override
-    public void insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+    public void insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
         //设置主键ID'
         String sid = IDUtils.genItemId();
-        tbBusinessUser.setBusinessUid(sid);
+        businessUser.setBusinessUid(sid);
 
         //设置外键的值
         business.setBusinessUid(sid);
@@ -56,15 +55,15 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         //设置外键的值
         bankcardInfo.setBusinessUid(sid);
         insertBankcardInfo(bankcardInfo);
-        tbBusinessUser.setStartTime(new Date());
-        tbBusinessUser.setEndTime(new Date());
-        tbBusinessUser=upload(tbBusinessUser);
+        businessUser.setStartTime(new Date());
+        businessUser.setEndTime(new Date());
+        businessUser=upload(businessUser);
         //将MD5加密商户密码
-        if (tbBusinessUser.getPassword() != null && tbBusinessUser.getPassword() != "") {
-            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassword());
-            tbBusinessUser.setPassword(md5Encode);
+        if (businessUser.getPassword() != null && businessUser.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(businessUser.getPassword());
+            businessUser.setPassword(md5Encode);
         }
-        tbBusinessUserMapper.insertBusinessUser(tbBusinessUser);
+        tbBusinessUserMapper.insertBusinessUser(businessUser);
     }
 
 
@@ -102,7 +101,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Override
     public void updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         /**
-         * 上传省份证等图片信息
+         * 上传身份证等图片信息
          */
         tbBusinessUser= upload(tbBusinessUser);
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
@@ -113,13 +112,17 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     }
 
     @Override
-    public boolean loginBusinessUser(TbBusinessUser tbBusinessUser) {
-
+    public TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser) {
+        //将MD5加密
+        if (tbBusinessUser.getPassword() != null && tbBusinessUser.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassword());
+            tbBusinessUser.setPassword(md5Encode);
+        }
         TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
         if(BusinessUser != null){
-            return true;
+            return BusinessUser;
         }
-        return false;
+        return null;
     }
 
 
@@ -127,6 +130,21 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     public TbBusinessUser findByBusinessUid(String businessUid) {
         return tbBusinessUserMapper.findByBusinessUid(businessUid);
     }
+
+    /**
+     * 验证手机号是否存在
+     * @param contactPhone
+     * @return
+     */
+    @Override
+    public TbBusinessUser findBusinessUserBycontactPhone(String contactPhone) {
+        TbBusinessUser phone = tbBusinessUserMapper.findBusinessUserBycontactPhone(contactPhone);
+        if(phone != null){
+            return phone;
+        }
+        return null;
+    }
+
     public TbBusinessUser upload(TbBusinessUser tbBusinessUser){
         try {
             String bankCardFront = this.upload.getUpload(tbBusinessUser.getBankCardFrontImg());
@@ -151,5 +169,6 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         }
         return tbBusinessUser;
     }
+
 }
 
