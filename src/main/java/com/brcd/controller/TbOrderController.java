@@ -26,6 +26,7 @@ import java.util.List;
  * Created by ${崔帅} on 2017/9/6.
  */
 @Controller
+@RequestMapping("a/operate/order")
 public class TbOrderController {
     @Autowired
     private TbOrderService tbOrderService;
@@ -46,7 +47,7 @@ public class TbOrderController {
      * @param request
      * @return
      */
-    @RequestMapping("a/operate/order/list")
+    @RequestMapping("/list")
     public ModelAndView find(TbOrder order, @RequestParam(value="pageno",defaultValue="1")Integer pageno,
                              @RequestParam(value="pagesize",defaultValue="3")Integer pagesize, HttpServletRequest request,Model model){
        if (order==null){
@@ -54,7 +55,6 @@ public class TbOrderController {
        }
         Integer listCount = tbOrderService.findAll(order).size();
         Integer pageCount = listCount /pagesize+(listCount % pagesize != 0 ? 1 : 0);
-        System.out.println("============================"+listCount);
         PageHelper.startPage(pageno,pagesize);
         List<TbOrder> ords = tbOrderService.findAll(order);
         ModelAndView mv = new ModelAndView("menu/jiaoyiguanli/jiaoyijilu.html");
@@ -67,7 +67,7 @@ public class TbOrderController {
 
     }
 
-    @RequestMapping("a/operate/order/exportExcel")
+    @RequestMapping("/exportExcel")
     public void exportExcel(TbOrder order, HttpServletRequest request, HttpServletResponse response)throws Exception{
 
         String[] headers = {"订单编号","商户编号","渠道商单号","渠道商编号","订单类型","订单状态","总金额","结算方式","对账状态","结算状态","创建时间"};
