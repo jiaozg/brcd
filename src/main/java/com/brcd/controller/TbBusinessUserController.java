@@ -254,7 +254,7 @@ public class TbBusinessUserController {
 //                } else {
                 session.setAttribute("BusinessUser", BusinessUser);
 //                }
-//               System.err.println(session.getAttribute("BusinessUser"));
+
                 return "redirect:/wechat/scan_param";
             }
         }

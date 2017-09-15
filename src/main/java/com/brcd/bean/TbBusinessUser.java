@@ -4,10 +4,11 @@ package com.brcd.bean;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class TbBusinessUser {
+public class TbBusinessUser implements Serializable{
     private String businessUid;
 
     private String affiliationAgent;

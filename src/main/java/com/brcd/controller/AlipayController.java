@@ -5,6 +5,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.brcd.bean.TbBusinessUser;
 import com.brcd.common.constant.Constant;
 import com.brcd.common.util.DateUtil;
 import com.brcd.common.util.JSONUtil;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -42,7 +44,7 @@ public class AlipayController {
      * @return
      */
     @RequestMapping("/aliPayScan")
-    public String aliPayScan(HttpServletRequest request) throws Exception {
+    public String aliPayScan(HttpServletRequest request, HttpSession session) throws Exception {
         //支付宝网关
         String URL = Constant.ALIPAY_URL;
 
@@ -90,7 +92,8 @@ public class AlipayController {
         /**
          * 订单标题
          */
-        String subject = "张三付款";
+        TbBusinessUser businessUser = (TbBusinessUser) session.getAttribute("BusinessUser");
+        String subject = businessUser.getBusinessUsername()+"收款";
         /**
          * 商品描述
          */
