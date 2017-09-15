@@ -52,7 +52,7 @@ public class TbSettleController {
             pageNo = 1;
         }
 
-        Integer pageSize = 15;
+        Integer pageSize =5;
         PageHelper.startPage(pageNo,pageSize);
         List<TbSettle> pageList = tbSettleService.selectSettleList(settle);
         model.addAttribute("pageList", pageList);

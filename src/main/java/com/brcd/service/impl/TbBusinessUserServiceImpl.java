@@ -11,7 +11,6 @@ import com.brcd.mapper.TbBusinessMapper;
 import com.brcd.mapper.TbBusinessUserMapper;
 import com.brcd.service.TbBusinessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,7 +101,7 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
     @Override
     public void updateTbBusinessUser(TbBusinessUser tbBusinessUser) {
         /**
-         * 上传省份证等图片信息
+         * 上传身份证等图片信息
          */
         tbBusinessUser= upload(tbBusinessUser);
         tbBusinessUserMapper.updateTbBusinessUser(tbBusinessUser);
@@ -114,7 +113,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
     @Override
     public TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser) {
-
+        //将MD5加密
+        if (tbBusinessUser.getPassword() != null && tbBusinessUser.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassword());
+            tbBusinessUser.setPassword(md5Encode);
+        }
         TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
         if(BusinessUser != null){
             return BusinessUser;
@@ -166,5 +169,6 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
         }
         return tbBusinessUser;
     }
+
 }
 

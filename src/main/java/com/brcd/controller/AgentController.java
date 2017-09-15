@@ -1,3 +1,4 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.*;
@@ -70,6 +71,7 @@ public class AgentController {
      */
     @RequestMapping(value="/getAgent")
     public String getAgent(TbAgent agent, Model model, Integer pageNo,HttpSession session){
+
         //分页查询
         if(pageNo==null){
             pageNo=1;
@@ -94,7 +96,9 @@ public class AgentController {
         model.addAttribute("status",agentStatus);
         return "menu/agent/dailishangxinxiguanli";
     }
-    /**
+
+
+/**
      * 根据id查询代理商详细信息
      * @param id
      * @param model
@@ -232,6 +236,7 @@ public class AgentController {
                 return null;
             }
         }
+
          return agentService.classificationQuery(id);
     }
 

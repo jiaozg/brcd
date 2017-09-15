@@ -251,32 +251,93 @@
     </tr>
     </tbody>
 </table>
-<!--
-<ul>
-    <li><a href="#" onclick="page('p')" disabled="true">&#171; 上一页</a></li>
-    <li class="active"><a href="javascript:" th:text="${#request.getAttribute('currentPage')}">1</a></li>
-    <li ><a href="#" onclick="page('n')">下一页 &#187;</a></li>
-    <li class="disabled controls"><a href="javascript:">共 <span th:text="${#request.getAttribute('listCount')}"></span> 条， 共 <span id="pageCount" th:text="${#request.getAttribute('pageCount')}"></span> 页，跳转至 <input id="skipPage" type="text"/> 页</a></li>
-    <li><a class="btn" href="#" onclick="skip()">GO</a></li>
-</ul>
--->
+
 <input type="hidden" id="num" th:value="${total}">
 <input type="hidden" id="pageNum" th:value="${pages}">
 <input type="hidden" id="pageNo1" th:value="${pageNo}">
 <div class="pagination">
     <ul>
-        <li><a href="#" onclick="page('p')" disabled="true">&#171; 上一页</a></li>
-        <li class="active"><a href="javascript:" th:text="${pageNo}">1</a></li>
-        <li><a href="#" onclick="page('n')">下一页 &#187;</a></li>
-        <li class="disabled controls"><a href="javascript:">共 <span
-                th:text="${total}"></span> 条， 共 <span id="pageCount"
-                                                      th:text="${pages}"></span>
-            页，跳转至 <input id="skipPage" type="text"/> 页</a></li>
-        <li><a class="btn" href="#" onclick="skip()">GO</a></li>
+
+        <!--<li  class="btns"><a href="#" role="button"  class="btn btn-primary" th:href="@{settle/selectTbSettleList(pageNo=1)}"  >&#171; 首页</a></li>
+        <li  class="btns"><a href="#" onclick="page('p')" class="btn btn-primary" >&#171; 上一页</a></li>
+       &lt;!&ndash; <li class="active"><a href="javascript:" th:text="${pageNo}">1</a></li>&ndash;&gt;
+        <li  class="btns"><a href="#" onclick="page('n')" class="btn btn-primary" >下一页 &#187;</a></li>
+        <li  class="btns"><a href="#" role="button"  class="btn btn-primary" th:href="@{settle/selectTbSettleList(pageNo=${pages})}" >&#171; 末页</a></li>-->
+        <li class="btns"><input class="btn btn-primary"  type="button" value="首页" onclick="pageSplit('f')"/></li>
+        <li class="btns"><input class="btn btn-primary"  type="button" value="&#171; 上一页" onclick="pageSplit('l')"/></li>
+        <li class="btns"><input class="btn btn-primary" type="button" value="下一页 &#187;" onclick="pageSplit('n')"/></li>
+        <li class="btns"><input class="btn btn-primary"  id="pageEnd" type="button" value="末页" onclick="pageSplit('e')"/></li>
+        <li class="btns">共<div th:text="${total}" style="display: inline-block"></div>条， 共<div th:text="${pages}"  style="display: inline-block"></div>页</li>
+        <li class="btns">跳转至
+            <input id="skipPage" type="text" style="width: 10px"/>
+            </li>
+        <li class="btns">
+            <input class="btn btn-primary"  type="button" value="GO" onclick="skip()"/>页</li>
+        <!-- <li class="disabled controls"><a href="javascript:">共 <span
+                 th:text="${total}"></span> 条， 共 <span id="pageCount"
+                                                       th:text="${pages}"></span>
+             页，跳转至 <input id="skipPage" type="text"/> 页</a></li>
+         <li class="btns"><a class="btn" href="#" onclick="skip()">GO</a></li>-->
     </ul>
     <div style="clear:both;"></div>
     <script>
-        function page(s) {
+        function pageSplit(a){
+            if(a=='f'){
+              $("#pageNo1").value=1;
+              $("#searchForm").submit();
+              return ;
+            }
+            if(a=='l'){
+              $("#pageNo1").val($("#pageNo1").value-1);
+              $("#searchForm").submit();
+              return ;
+            }
+            if(a=='n'){
+              $("#pageNo1").val($("#pageNo1").value+1);
+              $("#searchForm").submit();
+              return ;
+            }
+            if(a=='e'){
+                $("#pageNo1").val($("#num").value);
+                $("#searchForm").submit();
+                return ;
+            }
+        }
+
+       /*
+        if(a == 's'){
+        document.getElementById("pageNo").value=1;
+        $("#searchForm").submit();
+        return;
+        }
+        if(a == 'e'){
+        document.getElementById("pageNo").value= document.getElementById("pageNum").value;
+        $("#searchForm").submit();
+        return;
+        }
+        if(a == 'u'){
+        var n = document.getElementById("pageNo1").value;
+        if(n <= 1){
+        return;
+        }
+        n=n-1;
+        document.getElementById("pageNo").value= n;
+        $("#searchForm").submit();
+        return;
+        }
+        if(a == 'd'){
+        var n = document.getElementById("pageNo1").value;
+        var t = document.getElementById("pageNum").value;
+        if(n >= t){
+        return;
+        }
+        n=n-1+2;
+        document.getElementById("pageNo").value= n;
+        $("#searchForm").submit();
+        return;
+        }
+
+       function page(s) {
             var pageCount = $("#pageCount").text();
 
             if (s == "n" && parseInt($("#pageNo").val()) < pageCount) {
@@ -294,7 +355,7 @@
                 $("#searchForm").submit();
             })
 
-        })
+        })*/
     </script>
 
 </div>

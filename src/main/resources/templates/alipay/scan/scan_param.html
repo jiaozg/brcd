@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>扫码</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/404/cmstop-error.css" th:href="@{/css/404/cmstop-error.css}" media="all">
+</head>
+<body class="body-bg">
+
+<div align="center">
+    <a href="${pageContext.request.contextPath}/index.jsp" style="margin: 50px 0 0 0;" class="btn">返回网站首页</a>
+    <h1 style="margin-top: 10px;">扫码请求参数</h1>
+
+    <form action="/brcd/wechat/scan" method="post">
+        <table>
+            <tr>
+                <td align="right">key:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender;" id="key" name="key"
+                           value="acc503c56b0c4fd399f7f7093d25223c" th:value="${key}"/></td>
+            </tr>
+            <tr>
+                <td align="right">service_type:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender;" id="service_type" name="service_type"
+                           value="WECHAT_SCANNED" th:value="${scan.service_type }"/></td>
+            </tr>
+            <tr>
+                <td align="right">appid:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender;" id="appid" name="appid" value="" th:value="${scan.appid }"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">mch_id:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender;" id="mch_id" name="mch_id" value="C149628461779610201" th:value="${scan.mch_id }"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">out_trade_no:</td>
+                <td><input style="width: 300px;" id="out_trade_no" name="out_trade_no" value="ORDER20170912144430290103818" th:value="${scan.out_trade_no }"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">device_info:</td>
+                <td><input style="width: 300px;" id="device_info" name="device_info" value="SN1234567890098765" th:value="${scan.device_info }"/></td>
+            </tr>
+            <tr>
+                <td align="right">body:</td>
+                <td><input style="width: 300px;" id="body" name="body" value="Ipad_mini_16G_白色" th:value="${scan.body }"/></td>
+            </tr>
+            <tr>
+                <td align="right">detail:</td>
+                <td><input style="width: 300px;" id="detail" name="detail" value="" th:value="${scan.detail }"/></td>
+            </tr>
+            <tr>
+                <td align="right">attach:</td>
+                <td><input style="width: 300px;" id="attach" name="attach" value="北京分店" th:value="${scan.attach }"/></td>
+            </tr>
+            <tr>
+                <td align="right">fee_type:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender" id="fee_type" name="fee_type"
+                           value="CNY" th:value="${scan.fee_type }"/></td>
+            </tr>
+            <tr>
+                <td align="right">total_fee:</td>
+                <td><input style="width: 300px;" id="total_fee" name="total_fee" value="1" th:value="${scan.total_fee }"/></td>
+            </tr>
+            <tr>
+                <td align="right">spbill_create_ip:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender" id="spbill_create_ip" name="spbill_create_ip"
+                           value="10.1.5.195" th:value="${scan.spbill_create_ip }"/></td>
+            </tr>
+            <tr>
+                <td align="right">notify_url:</td>
+                <td><input style="width: 300px;" id="notify_url" name="notify_url" value="http://www.baidu.com" th:value="${scan.notify_url }"/></td>
+            </tr>
+            <tr>
+                <td align="right">time_start:</td>
+                <td><input style="width: 300px;" id="time_start" name="time_start" value="20170912144430" th:value="${scan.time_start }"/></td>
+            </tr>
+            <tr>
+                <td align="right">time_expire:</td>
+                <td><input style="width: 300px;" id="time_expire" name="time_expire" value="20170912145430" th:value="${scan.time_expire }"/></td>
+            </tr>
+            <tr>
+                <td align="right">op_user_id:</td>
+                <td><input style="width: 300px;" id="op_user_id" name="op_user_id" value="C149628461779610201" th:value="${scan.op_user_id }"/></td>
+            </tr>
+            <tr>
+                <td align="right">goods_tag:</td>
+                <td><input style="width: 300px;" id="goods_tag" name="goods_tag" value="WECHAT" th:value="${scan.goods_tag }"/></td>
+            </tr>
+            <tr>
+                <td align="right">product_id:</td>
+                <td><input style="width: 300px;" id="product_id" name="product_id" value="8m7enzha3r" th:value="${scan.product_id }"/></td>
+            </tr>
+            <tr>
+                <td align="right">limit_pay:</td>
+                <td><input style="width: 300px;" id="limit_pay" name="limit_pay" value="" th:value="${scan.limit_pay }"/></td>
+            </tr>
+            <tr>
+                <td align="right">nonce_str:</td>
+                <td><input style="width: 300px;" id="nonce_str" name="nonce_str" value="04a3dba0102a482ea93713fe55a7ab55" th:value="${scan.nonce_str }"/></td>
+            </tr>
+            <tr>
+                <td align="right">sign:</td>
+                <td><input readonly="readonly" style="width: 300px;color: lavender" id="sign" name="sign" value="5295D015172BBCF676BF029C99A7149D" th:value="${scan.sign }"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" value="提交"/>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+    <table>
+        <tr></tr>
+    </table>
+</div>
+</body>
+</html>

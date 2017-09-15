@@ -51,7 +51,7 @@ public class AgentLoginController {
     public String agentLogin(TbAgent tbAgent, HttpSession session, Model model) {
         if (tbAgent != null) {
             TbAgent agentLogin = agentLoginService.AgentLogin(tbAgent);
-            boolean exists = redisTemplate.hasKey("agentLogin");//判断Redis中是否有数据
+           boolean exists = redisTemplate.hasKey("agentLogin");//判断Redis中是否有数据
             if (agentLogin != null) {
                 if (agentLogin.getAuditStatus() != 1) {//审核状态=1才是审核通过状态
                     model.addAttribute("errorMsg", "审核状态未通过");
