@@ -147,17 +147,17 @@
         <li ><label>订单类型：</label>
             <select id="orderType" name="orderType" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option th:selected="${history.orderType=WECHAT}" value="WECHAT">微信</option>
-                <option th:selected="${history.orderType=ALIPAY}" value="ALIPAY">支付宝</option>
+                <option th:selected="${history.orderType=='WECHAT'}" value="WECHAT">微信</option>
+                <option th:selected="${history.orderType=='ALIPAY'}" value="ALIPAY">支付宝</option>
             </select>
         </li>
         <li style="margin-left: 60px;"><label>订单状态：</label>
-            <select id="orderStatus" name="orderStatus" style="width:168px;" class="input-medium">
+            <select id="orderStatus" name="orderState" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="INIT">未支付</option>
-                <option value="USERPAYING">支付中</option>
-                <option value="SUCCESS">成功</option>
-                <option value="FAIL">失败</option>
+                <option th:selected="${history.orderState=='INIT'}" value="INIT">未支付</option>
+                <option th:selected="${history.orderState=='USERPAYING'}" value="USERPAYING">支付中</option>
+                <option th:selected="${history.orderState=='SUCCESS'}" value="SUCCESS">成功</option>
+                <option th:selected="${history.orderState=='FAIL'}" value="FAIL">失败</option>
             </select>
         </li>
         <li style="margin-left: 60px;">
@@ -167,11 +167,11 @@
     </ul>
     <ul class="ul-form">
         <li><label>结算状态：</label>
-            <select id="settleStatus" name="settleStatus" style="width:168px;" class="input-medium">
+            <select id="settleStatus" name="settleState" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="INIT">未结算</option>
-                <option value="DOING">结算中</option>
-                <option value="FINISH">已结算</option>
+                <option th:selected="${history.settleState=='INIT'}" value="INIT">未结算</option>
+                <option th:selected="${history.settleState=='DOING'}" value="DOING">结算中</option>
+                <option th:selected="${history.settleState=='FINISH'}" value="FINISH">已结算</option>
             </select>
         </li>
         <li style="margin-left: 60px;">
@@ -195,9 +195,9 @@
         <li><label>结算方式：</label>
             <select id="settleMode" name="settleMode" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="T1_AUTO">T1结算</option>
-                <option value="T0_BATCH">T0批量</option>
-                <option value="T0_HANDING">T0单笔</option>
+                <option th:selected="${history.settleState=='T1_AUTO'}" value="T1_AUTO">T1结算</option>
+                <option th:selected="${history.settleState=='T0_BATCH'}" value="T0_BATCH">T0批量</option>
+                <option th:selected="${history.settleState=='T0_HANDING'}" value="T0_HANDING">T0单笔</option>
             </select>
         </li>
         <li style="margin-left: 742px;clear:left;" class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
