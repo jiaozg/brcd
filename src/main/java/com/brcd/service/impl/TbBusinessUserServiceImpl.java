@@ -113,7 +113,11 @@ public class TbBusinessUserServiceImpl implements TbBusinessUserService {
 
     @Override
     public TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser) {
-
+        //将MD5加密
+        if (tbBusinessUser.getPassword() != null && tbBusinessUser.getPassword() != "") {
+            String md5Encode = MD5Util.MD5Encode(tbBusinessUser.getPassword());
+            tbBusinessUser.setPassword(md5Encode);
+        }
         TbBusinessUser BusinessUser = tbBusinessUserMapper.loginBusinessUser(tbBusinessUser);
         if(BusinessUser != null){
             return BusinessUser;

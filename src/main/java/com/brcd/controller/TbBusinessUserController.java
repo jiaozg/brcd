@@ -255,11 +255,11 @@ public class TbBusinessUserController {
                 session.setAttribute("BusinessUser", BusinessUser);
 //                }
 
-                return "redirect:/wechat/scan_param";
+                return "merchat/shoukuan";
             }
         }
         model.addAttribute("errorMsg", "用户名或密码错误");
-        return "/merchat/login";
+        return "/merchant/login";
     }
 
     /**
