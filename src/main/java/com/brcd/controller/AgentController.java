@@ -281,7 +281,7 @@ public class AgentController {
 
         String[] headers = {"代理商编号","代理商简称","电话","代理商级别","审核状态","代理区域","进件权限","分润权限","费率"};
 
-        String fileName="结算记录.xls";
+        String fileName="代理商信息记录.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
