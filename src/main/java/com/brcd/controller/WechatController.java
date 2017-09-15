@@ -61,7 +61,7 @@ public class WechatController {
         String detail = null;
         String attach = "北京分店";
         String fee_type = Constant.BRCB_FEE_TYPE;
-        String total_fee = String.valueOf(1);//支付金额
+        String total_fee = request.getParameter("total_fee");//支付金额
         String spbill_create_ip = null;
         try {
             spbill_create_ip = InetAddress.getLocalHost().getHostAddress();
@@ -81,7 +81,7 @@ public class WechatController {
         request.setAttribute("key", key);
         request.setAttribute("scan", scannedRequest);
         log.info("===> scannedResponse: {}", JSONUtil.toJSONString(scannedRequest));
-        return "merchat/shoukuan";
+        return "forward:/scan";
     }
 
     /**
@@ -92,7 +92,7 @@ public class WechatController {
      */
     @RequestMapping("/scan")
     public String scan(HttpServletRequest request) {
-        String key = Constant.BRCB_KEY;
+        /*String key = Constant.BRCB_KEY;
         String service_type = Constant.BRCB_SERVICE_TYPE_SCANNED;
         String appid = "";
         String mch_id = Constant.BRCB_MCH_ID;
@@ -102,7 +102,6 @@ public class WechatController {
         String detail = request.getParameter("detail");
         String attach = request.getParameter("attach");
         String fee_type =String.valueOf(request.getParameter("fee_type"));
-
         String total_fee = request.getParameter("total_fee");
         String spbill_create_ip = request.getParameter("spbill_create_ip");
         String notify_url = Constant.BRCB_NOTIFY_URL;
@@ -112,8 +111,41 @@ public class WechatController {
         String goods_tag = request.getParameter("goods_tag");
         String product_id = request.getParameter("product_id");
         String nonce_str = request.getParameter("nonce_str");
-        String limit_pay = request.getParameter("limit_pay");
+        String limit_pay = request.getParameter("limit_pay");*/
+        Date now = new Date();
+        String key = Constant.BRCB_KEY;
+        String service_type = Constant.BRCB_SERVICE_TYPE_SCANNED;
+        String appid = "";
+        String mch_id = Constant.BRCB_MCH_ID;//商户ID
+        String out_trade_no = RandomUtil.getOrderNum(Constant.ORDER_PREFIX);
+        String device_info = "SN1234567890098765";
+        String body = "Ipad_mini_16G_白色";
+        String detail = null;
+        String attach = "北京分店";
+        String fee_type = Constant.BRCB_FEE_TYPE;
+        String total_fee = request.getParameter("total_fee");//支付金额
+        String spbill_create_ip = null;
+        try {
+            spbill_create_ip = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        String notify_url = Constant.BRCB_NOTIFY_URL;
+        String time_start = DateUtil.format(now, DateUtil.DATE_STYLE_YYYYMMDDHHMMSS);
+        String time_expire = DateUtil.format(DateUtil.addMinutes(now, 10), DateUtil.DATE_STYLE_YYYYMMDDHHMMSS);
+        String op_user_id = mch_id;
+        String goods_tag = Constant.BRCB_ORDER_TYPE_WECHAT;
+        String product_id = RandomUtil.getRandomStringByLength(10);
+        String nonce_str = RandomUtil.randomUUID();
+        String limit_pay = "";
         WechatScannedRequest scannedRequest = new WechatScannedRequest(key, service_type, appid, mch_id, device_info, nonce_str, body, detail, attach, out_trade_no, fee_type, total_fee, spbill_create_ip, time_start, time_expire, op_user_id, goods_tag, notify_url, product_id, limit_pay, log);
+
+        request.setAttribute("key", key);
+        request.setAttribute("scan", scannedRequest);
+        log.info("===> scannedResponse: {}", JSONUtil.toJSONString(scannedRequest));
+
+
+        //WechatScannedRequest scannedRequest = new WechatScannedRequest(key, service_type, appid, mch_id, device_info, nonce_str, body, detail, attach, out_trade_no, fee_type, total_fee, spbill_create_ip, time_start, time_expire, op_user_id, goods_tag, notify_url, product_id, limit_pay, log);
         WechatScannedResponse scannedResponse = wechatService.doScanned(scannedRequest, log);
         request.setAttribute("scan", scannedResponse);
         return "wechat/scan/scan_qrcode";

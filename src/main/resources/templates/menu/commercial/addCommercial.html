@@ -239,7 +239,7 @@
                 if(customerTypeSel == 'ENTERPRISE' && accountType== 'PERSONAL'){
                     if(accountName != legalName){
                         window.top.openDialog('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
-                        alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');
+                       /* alert('提示：企业个人账户 ，法人姓名必须和开户户名一致！');*/
                         return;
                     }
                 }
@@ -332,7 +332,7 @@
             jQuery.validator.addMethod("licenseNo", function(value, element) {
                 var reg = /^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$/;
                 return this.optional(element) || (reg.test(value));
-            }, "请输入正确营业执照号");
+            }, "请输入正确营业执照号,执照号为18位");
             // 微信号验证
             jQuery.validator.addMethod("wechatid", function(value, element) {
                 var reg=/^[a-zA-Z\d_]{5,}$/;
@@ -823,7 +823,7 @@
             <td><div class="control-group">
                 <label class="control-label">商户密码：</label>
                 <div class="controls">
-                    <input id="password" name="password" class="input-xlarge required" type="text"  maxlength="50"/>
+                    <input id="password" name="password" class="input-xlarge required" type="password"  maxlength="50"/>
                     <span class="help-inline"><font color="red">*</font> </span>
                 </div>
             </div></td>
