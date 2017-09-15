@@ -43,6 +43,25 @@ public class AgentController {
     }
 
     /**
+     * 跳转的按结构查询
+     * @return
+     */
+    @RequestMapping("/toAgetnSeach")
+    public String toAgetnSeach(){
+
+        return "menu/agent/agentSeach";
+    }
+    /**
+     * 显示结构树页面
+     * @return
+     */
+    @RequestMapping("/toAgetnTree")
+    public String toAgetnTree(){
+
+        return "menu/agent/select";
+    }
+
+    /**
      * 显示所有代理商列表
      * 按条件查询
      * 分页
@@ -86,10 +105,9 @@ public class AgentController {
      * @return
      */
     @RequestMapping("/findAgentById")
-    public String findAgentById(Long id,Model model,HttpSession session){
+    public String findAgentById(Long id,Model model){
         TbAgent agent = agentService.findAgentById(id);
          model.addAttribute("agent",agent);
-        //session.setAttribute("loginAgent",agent);
          return "menu/agent/agentInfo";
     }
 
@@ -132,7 +150,7 @@ public class AgentController {
               }
             agentService.addAgent(agent);
             session.removeAttribute("token");
-            return "redirect:brcd/agent/getAgent";
+            return "redirect:http://localhost:8080/brcd/agent/getAgent";
         }
             model.addAttribute("msg","您已经提交过了信息了请勿重复提交");
         //跳到错误页面
@@ -192,7 +210,7 @@ public class AgentController {
              if(updateToken!=null&&updateToken.equals(token)){
                  agentService.updateAgent(agent);
                  session.removeAttribute("updateToken");
-                 return "redirect:brcd/agent/getAgent";
+                 return "redirect:http://localhost:8080/brcd/agent/getAgent";
              }
               //跳到错误页面
                model.addAttribute("msg","您已经提交过了信息了请勿重复提交");

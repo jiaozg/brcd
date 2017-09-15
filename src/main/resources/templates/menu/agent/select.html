@@ -19,6 +19,10 @@
                 type: "post",
                 url: "./classificationQuery",
                 autoParam:["id", "pid"]
+            },
+            view: {
+                showIcon:false,
+                showLine:false
             }
         };
         $(document).ready(function(){
@@ -29,6 +33,6 @@
 
 <body>
 <h3 style="color: #00B83F;">按结构选择代理商</h3>
-<ul id="ztree" class="ztree"></ul>
+<ul id="ztree" class="ztree" style="width:160px"></ul>
 </body>
 </html>
