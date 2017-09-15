@@ -29,9 +29,9 @@ public class TbOrder {
 
     //private String businessNum;   //交易编号
 
-    private volatile Date beginDate;
+    private Date beginDate;
 
-    private volatile Date endDate;
+    private Date endDate;
 
 
 }
