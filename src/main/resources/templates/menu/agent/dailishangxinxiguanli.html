@@ -94,50 +94,8 @@
     </script>
     <link rel="stylesheet" href="../../../static/select/css/demo.css" type="text/css"
           th:href="@{../../brcd/select/css/demo.css}">
-    <link rel="stylesheet" href="../../../static/select/css/zTreeStyle/zTreeStyle.css" type="text/css"
-          th:href="@{../../brcd/select/css/zTreeStyle/zTreeStyle.css}">
-    <!--    <script type="text/javascript" src="../../../static/select/js/jquery-1.4.4.min.js"
-                th:src="@{../../brcd/select/js/jquery-1.4.4.min.js}"></script>-->
-    <script type="text/javascript" src="../../../static/select/js/jquery.ztree.core.js"
-            th:src="@{../../brcd/select/js/jquery.ztree.core.js}"></script>
-    <script type="text/javascript">
-        var setting = {
-            async: {
-                enable: true,
-                type: "post",
-                url: "./classificationQuery",
-                autoParam:["id", "pid"]
-            }
-        };
-        $(document).ready(function(){
-            $.fn.zTree.init($("#ztree"), setting);
-        });
-    </script>
 </head>
 <body>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    按组织选择
-                </h4>
-            </div>
-            <div class="modal-body">
-                <ul id="ztree" class="ztree"></ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-
 <ul class="nav nav-tabs">
     <li class="active"><a href="javascript:void(0)">所属代理商信息列表</a></li>
 </ul>
@@ -199,10 +157,10 @@
                   window.location.href="/brcd/agent/exportData";
               });
         </script>
-        <li class="clearfix">
+        <!--<li class="clearfix">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">按组织结构选择
             </button>
-        </li>
+        </li>-->
     </ul>
 </form>
 <script type="text/javascript">top.$.jBox.closeTip();</script>
@@ -225,7 +183,7 @@
         <td th:text="${agent.agentNumber}">11111111</td>
         <td th:text="${agent.shortName}">景云传媒</td>
         <td th:text="${agent.agentContactPhone}">13875485621</td>
-        <td th:text="${agent.agentGrade}">3</td>
+        <td ><span th:text="${agent.agentGrade}"></span>级代理</td>
         <td th:switch="${agent.auditStatus}">
         <span th:case="0">待审核</span>
         <span th:case="1">审核通过</span>

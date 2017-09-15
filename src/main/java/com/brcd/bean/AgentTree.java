@@ -13,7 +13,7 @@ public class AgentTree {
     private Boolean isParent=true;
     private String url;
     private String agentNumber;
-    private String target ="_self";
+    private String target ="iframeContent";
 
     public String getTarget() {
         return target;

@@ -1,4 +1,4 @@
-function checkAgentFullName(a) {
+ function checkAgentFullName(a) {
     if(a.value == '' && a.value.trim() == '') {
         $("#agentFullName").next().html("<font color='red'>代理商名称不能为空</font>");
         var tt = $("#tyssb").val(false);
@@ -7,14 +7,14 @@ function checkAgentFullName(a) {
     $("#agentFullName").next().html("<font color='green'>√</font>");
 }
 
-function checkshortName(a) {
-    if(a.value == '' && a.value.trim() == '') {
-        $("#shortName").next().html("<font color='red'>代理商简称不能为空</font>");
-        var tt = $("#tyssb").val(false);return;
-    }
-    $("#shortName").next().html("<font color='green'>√</font>");
-}
-
+function checkshortName(a)
+ {
+     if(a.value == '' && a.value.trim() == '') {
+         $("#shortName").next().html("<font color='red'>代理商简称不能为空</font>");
+         var tt = $("#tyssb").val(false);return;
+     }
+     $("#shortName").next().html("<font color='green'>√</font>");
+ }
 function checkagentContactPhone(a) {
     if(a.value == '' && a.value.trim() == '') {
         $("#agentContactPhone").next().html("<font color='red'>代理商联系电话不能为空</font>");
