@@ -30,7 +30,7 @@ public interface TbBusinessUserService {
     /**
      * 商户登录
      */
-    boolean loginBusinessUser(TbBusinessUser tbBusinessUser);
+    TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser);
 
      /* 根据主键查询商户
      * @param businessUid
@@ -38,5 +38,10 @@ public interface TbBusinessUserService {
      */
     TbBusinessUser findByBusinessUid(String businessUid);
 
-
+    /**
+     * 手机号是否存在
+     * @param contactPhone
+     * @return
+     */
+    TbBusinessUser findBusinessUserBycontactPhone(String contactPhone);
 }

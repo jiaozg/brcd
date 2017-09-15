@@ -107,12 +107,7 @@
                 type: "post",
                 url: "./classificationQuery",
                 autoParam:["id", "pid"]
-            },
-            view: {
-                showLine: false,
-                showIcon: false
             }
-
         };
         $(document).ready(function(){
             $.fn.zTree.init($("#ztree"), setting);
@@ -195,13 +190,19 @@
                          th:attr="selected=${x.dictDataCode == showBack.auditStatus}"></option>
             </select>
         </li>
-        <li class="btns" style="margin-left: 60px;"><input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary" type="button" value="查询"/></li>
-        <li class="btns"><input class="btn btn-primary" type="button" value="导出excel" onclick="exportExcel()"/></li>
-        <li>
+        <li class="btns" style="margin-left: 60px;">
+            <input id="btnSubmit" style="margin-left: 16px" class="btn btn-primary btn-lg" type="button" value="查询"/></li>
+        <li class="btns">
+            <input class="btn btn-primary btn-lg" id="poi" type="button" value="导出excel" /></li>
+        <script>
+              $("#poi").click(function () {
+                  window.location.href="/brcd/agent/exportData";
+              });
+        </script>
+        <li class="clearfix">
             <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">按组织结构选择
             </button>
         </li>
-        <li class="clearfix"></li>
     </ul>
 </form>
 <script type="text/javascript">top.$.jBox.closeTip();</script>

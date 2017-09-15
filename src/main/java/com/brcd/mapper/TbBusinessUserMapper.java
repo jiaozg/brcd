@@ -35,4 +35,10 @@ public interface TbBusinessUserMapper {
      * 商户登录
      */
     TbBusinessUser loginBusinessUser(TbBusinessUser tbBusinessUser);
+
+
+    /**
+     * 验证手机号是否存在
+     */
+    TbBusinessUser findBusinessUserBycontactPhone(String contactPhone);
 }
