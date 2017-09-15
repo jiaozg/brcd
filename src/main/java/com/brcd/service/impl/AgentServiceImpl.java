@@ -1,9 +1,6 @@
 package com.brcd.service.impl;
 
-import com.brcd.bean.AgentTree;
-import com.brcd.bean.Bank;
-import com.brcd.bean.TbDictionary;
-import com.brcd.bean.TbAgent;
+import com.brcd.bean.*;
 import com.brcd.common.util.MD5Util;
 import com.brcd.mapper.AgentMapper;
 import com.brcd.service.AgentService;
@@ -132,6 +129,21 @@ public class AgentServiceImpl implements AgentService{
             }
         }
         return unionpayNos;
+    }
+
+    @Override
+    public List<ExportAgent> getAgentForExl(TbAgent agent) {
+        Page<TbAgent> result=agentMapper.getAgent(agent);
+        List<ExportAgent> agents=new ArrayList<>();
+        for (int i=0;i<result.size();i++){
+            agents.add(new ExportAgent(result.get(i).getAgentNumber(),
+                    result.get(i).getShortName(),result.get(i).getAgentContactPhone(),
+                    result.get(i).getAgentGrade(),result.get(i).getAuditStatus(),
+                    result.get(i).getBusinessArea(),result.get(i).getIntoPermissions(),
+                    result.get(i).getShareBenefit(),result.get(i).getRate()
+                    ));
+        }
+        return agents;
     }
 
 }

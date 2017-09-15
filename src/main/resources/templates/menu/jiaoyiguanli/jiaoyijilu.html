@@ -111,14 +111,14 @@
         }
 
         function exportExcel() {
-            top.$.jBox.confirm("确认要导出用户数据吗？","系统提示",function(v,h,f){
+            top.$.jBox.confirm("确认要导出交易数据吗？","系统提示",function(v,h,f){
                 if(v=="ok"){
                     alert(111)
-                    $("#searchForm").attr("action","exportExcel");
+                    $("#searchForm").attr("action","/brcd/a/operate/order/exportExcel");
                     $("#searchForm").submit();
-
+                    $("#searchForm").attr("action","/brcd/a/operate/order/list");  //修改action
                 }
-            },{buttonsFocus:1});
+            })
         }
     </script>
 
@@ -126,9 +126,9 @@
 <body>
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="/a/operate/order/toList">订单查询列表</a></li>
+    <li class="active"><a href="#">订单查询列表</a></li>
 </ul>
-<form id="searchForm" class="breadcrumb form-search" action="list" method="post">
+<form id="searchForm" class="breadcrumb form-search" th:action="@{/a/operate/order/list}" action="#" method="post">
 
 
     <ul class="ul-form">
@@ -147,31 +147,31 @@
         <li ><label>订单类型：</label>
             <select id="orderType" name="orderType" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="WECHAT">微信</option>
-                <option value="ALIPAY">支付宝</option>
+                <option th:selected="${history.orderType=='WECHAT'}" value="WECHAT">微信</option>
+                <option th:selected="${history.orderType=='ALIPAY'}" value="ALIPAY">支付宝</option>
             </select>
         </li>
         <li style="margin-left: 60px;"><label>订单状态：</label>
-            <select id="orderStatus" name="orderStatus" style="width:168px;" class="input-medium">
+            <select id="orderStatus" name="orderState" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="INIT">未支付</option>
-                <option value="USERPAYING">支付中</option>
-                <option value="SUCCESS">成功</option>
-                <option value="FAIL">失败</option>
+                <option th:selected="${history.orderState=='INIT'}" value="INIT">未支付</option>
+                <option th:selected="${history.orderState=='USERPAYING'}" value="USERPAYING">支付中</option>
+                <option th:selected="${history.orderState=='SUCCESS'}" value="SUCCESS">成功</option>
+                <option th:selected="${history.orderState=='FAIL'}" value="FAIL">失败</option>
             </select>
         </li>
         <li style="margin-left: 60px;">
             <label>渠道商单号：</label>
-            <input id="outTradeNo" name="proxyNo"  style="width:155px;" class="input-medium" type="text" value="" maxlength="32"/>
+            <input id="outTradeNo" name="proxyNo" style="width:155px;" th:value="${history.proxyNo}" class="input-medium" type="text" value="" maxlength="32"/>
         </li>
     </ul>
     <ul class="ul-form">
         <li><label>结算状态：</label>
-            <select id="settleStatus" name="settleStatus" style="width:168px;" class="input-medium">
+            <select id="settleStatus" name="settleState" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="INIT">未结算</option>
-                <option value="DOING">结算中</option>
-                <option value="FINISH">已结算</option>
+                <option th:selected="${history.settleState=='INIT'}" value="INIT">未结算</option>
+                <option th:selected="${history.settleState=='DOING'}" value="DOING">结算中</option>
+                <option th:selected="${history.settleState=='FINISH'}" value="FINISH">已结算</option>
             </select>
         </li>
         <li style="margin-left: 60px;">
@@ -179,7 +179,7 @@
             <!--<input id="beginDate"  name="beginDate"  type="text" readonly="readonly" maxlength="20" class="input-medium Wdate" style="width:155px;position: relative;"
                    value="2017-08-29 00:00:00"
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>-->
-            <input class="laydate-icon" id="demo" value="" style="width:143px;position: relative;">
+            <input name="beginDate" class="laydate-icon" th:value="${#dates.format(history.beginDate, 'yyyy-MM-dd')}" id="demo" value="" style="width:143px;position: relative;">
 
         </li>
         <li style="margin-left: 56px;">
@@ -187,7 +187,7 @@
             <!--<input id="endDate" name="endDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"  style="width:155px;position: relative;"
                    value="2017-09-05 23:59:59"
                    onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>-->
-            <input class="laydate-icon" id="demo2" value="" style="width:143px;position: relative;">
+            <input class="laydate-icon" name="endDate" th:value="${#dates.format(history.endDate, 'yyyy-MM-dd')}" id="demo2" value="" style="width:143px;position: relative;">
 
         </li>
     </ul>
@@ -195,9 +195,9 @@
         <li><label>结算方式：</label>
             <select id="settleMode" name="settleMode" style="width:168px;" class="input-medium">
                 <option value="" selected="selected">全部</option>
-                <option value="T1_AUTO">T1结算</option>
-                <option value="T0_BATCH">T0批量</option>
-                <option value="T0_HANDING">T0单笔</option>
+                <option th:selected="${history.settleState=='T1_AUTO'}" value="T1_AUTO">T1结算</option>
+                <option th:selected="${history.settleState=='T0_BATCH'}" value="T0_BATCH">T0批量</option>
+                <option th:selected="${history.settleState=='T0_HANDING'}" value="T0_HANDING">T0单笔</option>
             </select>
         </li>
         <li style="margin-left: 742px;clear:left;" class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -205,18 +205,6 @@
         <li class="clearfix"></li>
     </ul>
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>扫码</title>
+    <link rel="stylesheet" type="text/css" href="../../css/404/cmstop-error.css" th:href="@{/css/404/cmstop-error.css}" media="all">
+    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+    <script type="text/javascript" src="../../js/jquery.qrcode.js" th:src="@{/js/jquery.qrcode.js}"></script>
+    <script type="text/javascript" src="../../js/qrcode.js" th:src="@{/js/qrcode.js}"></script>
+    <script type="text/javascript">
+        $(function() {
+            var codeUrl = $('#code_url').val();
+            $('#qrcode').qrcode(codeUrl);
+        })
+
+        $(document).ready(function () {
+            alert(1);
+            setInterval("ajaxstatus()", 3000);
+        });
+
+       //        function ajaxstatus() {
+        //            if ($("#out_trade_no").val() != 0) {
+        //                $.ajax({
+        //                    //url: "URL?tradeno=" + $("#out_trade_no").val(),
+        //                    url: "/brcd/wechatNotify",
+        //                    type: "GET",
+        //                    dataType:"json",
+        //                    data: "",
+        //                    success: function (data) {
+        //// 	            	alert(data);
+        //                        if (data==1) { //订单状态为1表示支付成功
+        //                            window.location.href = "wxScanSuccessUrl.action"; //页面跳转
+        //                        }
+        //                    },
+        //                    error: function () {
+        //                        alert("请求订单状态出错");
+        //                    }
+        //                });
+        //            }
+
+  //      }
+    </script>
+</head>
+<body class="body-bg">
+
+<div align="center">
+    <a href="${pageContext.request.contextPath}/index.jsp" style="margin: 50px 0 0 0;" class="btn">返回网站首页</a>
+    <h1 style="margin-top: 10px;">打开支付宝扫一扫进行支付:</h1>
+
+    <div id="qrcode" style="margin-top: 10px; text-align: center;">
+
+    </div>
+    <br/> <br/>
+    <table>
+        <tr>
+            <td>return_code</td>
+            <td><b th:text="${scan.code}" ></b></td>
+        </tr>
+        <tr>
+            <td>return_msg</td>
+            <td><b th:text="${scan.msg}"></b></td>
+        </tr>
+       <!-- <tr>
+            <td>result_code</td>
+            <td><b th:text="${scan.result_code}"></b></td>
+        </tr>-->
+        <tr>
+            <td>code_url</td>
+            <td><b th:text="${qr_code}"></b></td>
+        </tr>
+    </table>
+    <input type="hidden" id="code_url" th:value="${qr_code}"/>
+</div>
+
+</body>
+</html>

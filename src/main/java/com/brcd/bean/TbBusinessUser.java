@@ -4,10 +4,11 @@ package com.brcd.bean;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class TbBusinessUser {
+public class TbBusinessUser implements Serializable{
     private String businessUid;
 
     private String affiliationAgent;
@@ -15,6 +16,8 @@ public class TbBusinessUser {
     private String businessUserType;
 
     private String manageName;
+
+    private String password;
 
     private String businessUsername;
 
@@ -32,9 +35,9 @@ public class TbBusinessUser {
 
     private String manageAddress;
 
-    private Integer manageProvince;
+    private String manageProvince;
 
-    private Integer manageCity;
+    private String manageCity;
 
     private Integer manageDistrict;
 
@@ -56,7 +59,6 @@ public class TbBusinessUser {
 
     private String registerLicensePicture;
 
-    private String password;
 
     private Integer businessUserStatus;
 
@@ -72,6 +74,9 @@ public class TbBusinessUser {
 
     private TbBankcardInfo tbBankcardInfo;
 
+
+
+
     private volatile MultipartFile identityCardFrontImg;
 
     private volatile MultipartFile identityCardReverseImg;
@@ -85,7 +90,6 @@ public class TbBusinessUser {
     private volatile MultipartFile doorPictureImg;
 
     private volatile MultipartFile registerLicensePictureImg;
-
 
 
 

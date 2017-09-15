@@ -1,22 +1,25 @@
+
 package com.brcd.controller;
 
 import com.brcd.bean.*;
 
-import com.brcd.common.util.AccountUtil;
-import com.brcd.common.util.IDUtils;
-import com.brcd.common.util.MD5Util;
-import com.brcd.common.util.Uid;
+import com.brcd.common.util.*;
 import com.brcd.service.AgentService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.OutputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,6 +52,7 @@ public class AgentController {
      */
     @RequestMapping(value="/getAgent")
     public String getAgent(TbAgent agent, Model model, Integer pageNo,HttpSession session){
+
         //分页查询
         if(pageNo==null){
             pageNo=1;
@@ -73,7 +77,9 @@ public class AgentController {
         model.addAttribute("status",agentStatus);
         return "menu/agent/dailishangxinxiguanli";
     }
-    /**
+
+
+/**
      * 根据id查询代理商详细信息
      * @param id
      * @param model
@@ -119,6 +125,10 @@ public class AgentController {
             if(agent.getRate()==null||agent.getRate()<loginAgent.getRate()) {
                 //返回添加页面
                 return "/menu/agent/addAgent";
+              }
+              if(loginAgent.getAgentGrade()>4 || loginAgent.getAgentGrade()<0){
+                  session.removeAttribute("token");
+                  return "/menu/agent/addAgent";
               }
             agentService.addAgent(agent);
             session.removeAttribute("token");
@@ -262,5 +272,41 @@ public class AgentController {
     @ResponseBody
    public List<String> getUnionpayNo(Bank bank){
         return agentService.getUnionpayNo(bank);
+    }
+
+    /**
+     * 导出数据
+     * @param agent
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/exportData")
+    public void exportExcel( TbAgent agent,HttpServletRequest request, HttpSession session,HttpServletResponse response)throws Exception{
+
+        String[] headers = {"代理商编号","代理商简称","电话","代理商级别","审核状态","代理区域","进件权限","分润权限","费率"};
+
+        String fileName="代理商信息记录.xls";
+        String userAgent = request.getHeader("User-Agent");
+        //针对IE或者以IE为内核的浏览器：
+        if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
+            fileName = URLEncoder.encode(fileName, "GBK");
+        } else {//非IE浏览器的处理：
+            fileName = new String(fileName.getBytes("GBK"),"ISO-8859-1");
+        }
+
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+        response.setContentType("application/vnd.ms-excel;charset=GBK");
+        response.setCharacterEncoding("GBK");
+
+        ExportExcel<ExportAgent> ex = new ExportExcel<>();
+        TbAgent agentLogin=(TbAgent) session.getAttribute("agentLogin");
+        agent.setId(agentLogin.getId());
+        List<ExportAgent> pageList = agentService.getAgentForExl(agent);
+        OutputStream out = response.getOutputStream();
+
+        ex.exportExcel(headers,pageList,out);
+
+        out.close();
     }
 }

@@ -22,9 +22,9 @@
       <!-- 判断结算方式-->
          <if test="settleMode != null and settleMode !=''"> and settle_mode = #{settleMode}</if>
       <!-- 判断查询开始时间-->
-          <if test="beginDate != null and beginDate !=''"> and create_time > #{beginDate}</if>
+          <if test="beginDate != null"> and create_time &gt; #{beginDate}</if>
       <!-- 判断结束时间 -->
-        <if test="endDate != null and endDate !=''"> and create_time &lt; #{endDate}</if>
+          <if test="endDate != null"> and create_time &lt; #{endDate}</if>
     </select>
 
 
