@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.brcd.mapper.SettleMentMapper">
+    <!--添加sql-->
+    <sql id="insertSql">
+       settle_time,
+       customer_num,
+       facility_num,pay_proxy,proxy_num,
+       agent_num,order_num,settle_type,settle_status,settle_mode,order_amount,product_name,settle_fee,trade_fee,customer_rare,proxy_rare,count_order,count_money,count_return_money,count_fee_profit_money
+    </sql>
+    <sql id="valueSql">
+        #{SettleTime},
+        #{CustomerNum},
+        #{FacilityNum},
+        #{PayProxy},
+        #{ProxyNum},
+        #{AgentNum},
+        #{OrderNum},
+        #{SettleType},
+        #{SettleStatus},
+        #{SettleMode},
+        #{OrderAmount},
+        #{ProductName},
+        #{SettleFee},
+        #{TradeFee},
+        #{CustomerRare},
+        #{ProxyRare},
+        #{CountOrder},
+        #{CountMoney},
+        #{CountReturnMoney},
+        #{CountFeeProfitMoney}
+    </sql>
+
+    <insert id="insertSettleMent" parameterType="com.brcd.bean.SettleMent">
+        INSERT INTO tb_settlement (<include refid="insertSql"/>) VALUE (<include refid="valueSql"/>)
+    </insert>
+
+
+ </mapper>
