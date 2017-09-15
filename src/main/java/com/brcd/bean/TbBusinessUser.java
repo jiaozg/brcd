@@ -39,7 +39,7 @@ public class TbBusinessUser implements Serializable{
 
     private String manageCity;
 
-    private Integer manageDistrict;
+    private String manageDistrict;
 
     private String businessLicenseNo;
 

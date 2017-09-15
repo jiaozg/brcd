@@ -64,7 +64,7 @@ public class AgentLoginController {
                     session.setAttribute("agentLogin", agentLogin);
                 }
                 return "home/home";
-            }
+           }
         }
 
         model.addAttribute("errorMsg", "用户名或密码错误");

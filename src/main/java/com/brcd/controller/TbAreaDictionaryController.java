@@ -30,7 +30,6 @@ public class TbAreaDictionaryController {
     }
 
     /**
-     * 根据省名称查询市
      * @param areaName
      * @return
      */

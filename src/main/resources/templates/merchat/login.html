@@ -27,9 +27,9 @@
 
         <div class="page-container">
             <h1>欢迎商户登陆</h1>
-            <form th:action="@{loginBusiness}" method="post">
-                <input type="text" name="contactPhone" class="username" value="15510262415" placeholder="手机号">
-                <input type="password" name="password" class="password" value="123" placeholder="密码">
+            <form action="loginBusiness" method="post">
+                <input type="text" name="contactPhone" class="username"  placeholder="手机号">
+                <input type="password" name="password" class="password"  placeholder="密码">
                 <button type="submit">登录</button>
                 <div class="error"><span>+</span></div>
             </form>
