@@ -25,7 +25,7 @@ public class TbAreaDictionaryController {
      */
     @RequestMapping("findByAreaOde")
     @ResponseBody
-    public List<TbAreaDictionary> findByAreaOde(Integer areaCode){
+    public List<TbAreaDictionary> findByAreaOde(String areaCode){
         return tbAreaDictionaryService.findByAreaOde(areaCode);
     }
 

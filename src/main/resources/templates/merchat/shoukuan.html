@@ -274,6 +274,9 @@
             &lt;!&ndash;<td align="right">sign:&ndash;&gt;
             <input type="hidden" readonly="readonly" style="width: 300px;color: lavender" id="sign" name="sign" th:value="${scan.sign }"  />
         </tr>
+
+
+
         </table>-->
         <img src="../../static/images/weixinlogo.png" style="width: 25%; height: auto;max-width: 100%; display: block;" th:src="@{/images/weixinlogo.png}">
        <!-- <input type="submit" value="微信支付"  style="background: #80D983;"  class="submit">-->
@@ -283,6 +286,7 @@
         <img src="../../static/images/zhifubaologo.jpg" style="width: 25%; height: auto;max-width: 100%; display: block;" th:src="@{/images/zhifubaologo.jpg}">
        <!-- <input type="submit" value="支付宝支付"  style="background: #00bbee;"  class="submit">-->
         <input type='button' id='btn2'  value="支付宝支付" style="background: #00bbee;" class="submit" onclick='check2()'>
+
     </form>
 <!--        <input type="submit" value="微信支付" class="submit" style="background: #80D983" />
         <input type="submit" value="支付宝" class="submit" style="background: #00BBF1" />-->

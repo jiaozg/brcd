@@ -25,7 +25,7 @@ public interface TbAreaDictionaryMapper {
      * @param areaCode
      * @return
      */
-    List<TbAreaDictionary> findByAreaOde(Integer areaCode);
+    List<TbAreaDictionary> findByAreaOde(String areaCode);
 
     /**
      * 根据省名称查询市
