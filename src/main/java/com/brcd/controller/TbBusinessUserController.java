@@ -3,19 +3,11 @@ package com.brcd.controller;
 
 
 import com.brcd.bean.*;
-import com.brcd.bean.Bank;
-import com.brcd.bean.TbBankcardInfo;
-import com.brcd.bean.TbBusiness;
-import com.brcd.bean.TbBusinessUser;
-import com.brcd.common.util.Upload;
-import com.brcd.service.*;
-
 import com.brcd.common.util.ExportExcel;
-import com.brcd.service.BankService;
+import com.brcd.service.*;
 import com.github.pagehelper.PageHelper;
 import com.sun.deploy.net.URLEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -72,7 +65,6 @@ public class TbBusinessUserController {
         model.addAttribute("bankNameList",bankNameList);
         TbAgent agentLogin = (TbAgent) session.getAttribute("agentLogin");
         model.addAttribute("agentLogin",agentLogin);
-
         return "menu/commercial/addCommercial";
     }
 
@@ -80,8 +72,8 @@ public class TbBusinessUserController {
      * 将接收的商户信息插入到数据库
      */
     @RequestMapping("/insertBusinessUser")
-    public String insertBusinessUser(TbBusinessUser businessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
-        tbBusinessUserService.insertBusinessUser(businessUser, business, bankcardInfo);
+    public String insertBusinessUser(TbBusinessUser tbBusinessUser, TbBusiness business, TbBankcardInfo bankcardInfo) {
+        tbBusinessUserService.insertBusinessUser(tbBusinessUser, business, bankcardInfo);
         return "redirect:/businessUser/query";
     }
 
@@ -286,4 +278,3 @@ public class TbBusinessUserController {
     }
 
 }
-

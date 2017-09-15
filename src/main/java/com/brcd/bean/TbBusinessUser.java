@@ -34,9 +34,9 @@ public class TbBusinessUser {
 
     private String manageAddress;
 
-    private Integer manageProvince;
+    private String manageProvince;
 
-    private Integer manageCity;
+    private String manageCity;
 
     private Integer manageDistrict;
 
