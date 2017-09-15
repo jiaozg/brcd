@@ -122,6 +122,10 @@ public class AgentController {
                 //返回添加页面
                 return "/menu/agent/addAgent";
               }
+              if(loginAgent.getAgentGrade()>4 || loginAgent.getAgentGrade()<0){
+                  session.removeAttribute("token");
+                  return "/menu/agent/addAgent";
+              }
             agentService.addAgent(agent);
             session.removeAttribute("token");
             return "redirect:brcd/agent/getAgent";

@@ -84,7 +84,7 @@ public class TbSettleController {
 
         String[] headers = {"结算批次号","结算流水","结算时间","商户编号","商户类型","结算类型","结算模式","订单总金额","订单总笔数","手续费","结算金额","结算状态","备注"};
 
-        String fileName="结算记录.xls";
+        String fileName="代理商信息记录.xls";
         String userAgent = request.getHeader("User-Agent");
         //针对IE或者以IE为内核的浏览器：
         if (userAgent.contains("MSIE")||userAgent.contains("Trident")) {
