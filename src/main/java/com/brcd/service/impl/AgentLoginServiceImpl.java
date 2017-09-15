@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AgentLoginServiceImpl implements AgentLoginService {
 
-    @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+   @Autowired
+   private RedisTemplate<Object, Object> redisTemplate;
 
     @Autowired
     private AgentLoginMapper agentLoginMapper;

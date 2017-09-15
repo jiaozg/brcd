@@ -120,7 +120,7 @@ SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=
         start_time, end_time, business_user_key)
         VALUES (#{businessUid}, #{affiliationAgent}, #{businessUserType},
         #{manageName}, #{businessUsername}, #{legalPeopleName},
-        #{legalPeopleIdentityCard}, #{contactPeople},#{passWord},
+        #{legalPeopleIdentityCard}, #{contactPeople},#{password},
         #{contactPhone}, #{contactMail}, #{servicePhone},
         #{manageAddress}, #{manageProvince}, #{manageCity},
         #{manageDistrict}, #{businessLicenseNo}, #{registerAddress},
@@ -161,5 +161,10 @@ SELECT * FROM tb_business_user us LEFT JOIN  tb_business bus ON us.business_uid=
     <!--商户登录-->
     <select id="loginBusinessUser" resultType="com.brcd.bean.TbBusinessUser" parameterType="com.brcd.bean.TbBusinessUser">
         SELECT * FROM tb_business_user WHERE contact_phone=#{contactPhone} AND password=#{password}
+    </select>
+
+    <!--验证手机号是否存在-->
+    <select id="findBusinessUserBycontactPhone" parameterType="java.lang.String" resultType="com.brcd.bean.TbBusinessUser">
+        SELECT * FROM tb_business_user WHERE contact_phone=#{contactPhone}
     </select>
 </mapper>
